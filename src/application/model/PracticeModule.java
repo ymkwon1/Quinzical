@@ -19,8 +19,9 @@ public class PracticeModule {
 
 	private List<String> categories = new ArrayList<String>();
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
-	private String currentQuestion;
+	private String[] currentAnswers;
 	private String currentAnswer;
+	private String currentQuestion;
 	private String currentCategory;
 	private String currentTag;
 	private int currentValue;
@@ -30,12 +31,12 @@ public class PracticeModule {
 		initialiseCategories();
 		readCategories();
 		loadRandomQuestionAndAnswer("Fauna");
-//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
-//			String key = entry.getKey();
-//			List<String> values = entry.getValue();
-//			System.out.println("Key = " + key);
-//			System.out.println(values);
-//		}
+		//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
+		//			String key = entry.getKey();
+		//			List<String> values = entry.getValue();
+		//			System.out.println("Key = " + key);
+		//			System.out.println(values);
+		//		}
 	}
 	public void loadRandomQuestionAndAnswer(String category) {
 		List<String> questionSets = new ArrayList<String>();
@@ -45,20 +46,24 @@ public class PracticeModule {
 		int randomIndex = rand.nextInt(size);
 		String RandomQuestionSet = questionSets.get(randomIndex);
 		String[] splitString = RandomQuestionSet.split("[\\(\\)]");
-		
+
 		String question = splitString[0].trim();
 		String answer = splitString[2].trim();
 		question = question.replaceAll("[,]$|[.]$","");
 		answer = answer.replaceAll("[,]$|[.]$","");
-		
+
+		currentAnswers = answer.split("/");
+
 		setCurrentQuestion(question);
+		setCurrentAnswers(currentAnswers);
 		setCurrentAnswer(answer);
 		setCurrentTag(splitString[1].trim());
-		
+
 		System.out.println(question);
 		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
-		System.out.println(answer);
-		
+		for (String answers: currentAnswers) {
+			System.out.println(answers.trim());
+		}
 	}
 	/**
 	 * checkAnswers check if the string userInput is equal case insensitive 
@@ -67,14 +72,14 @@ public class PracticeModule {
 	 * @return true if userInput is the correct answer false otherwise
 	 */
 	public boolean checkAnswer(String userInput) {
-		if (userInput.equalsIgnoreCase(this.getCurrentAnswer())) {
-			attempts=0;
-			return true;
+		for (String answer: currentAnswers) {
+			if (userInput.equalsIgnoreCase(answer.trim())) {
+				attempts=0;
+				return true;
+			}
 		}
-		else {	
-			attempts++;
-			return false;
-		}
+		attempts++;
+		return false;
 	}
 
 
@@ -112,6 +117,21 @@ public class PracticeModule {
 	 * set current answer
 	 * @param answer
 	 */
+	public void setCurrentAnswers(String[] answers) {
+		currentAnswers = answers;
+	}	
+	/**
+	 * get current answer
+	 * @return currentAnswer
+	 */
+	public String[] getCurrentAnswers() {
+		return currentAnswers;
+	}
+	
+	/**
+	 * set current answer
+	 * @param answer
+	 */
 	public void setCurrentAnswer(String answer) {
 		currentAnswer = answer;
 	}	
@@ -137,7 +157,7 @@ public class PracticeModule {
 	public int getCurrentValue() {
 		return currentValue;
 	}
-	
+
 	/**
 	 * set currentTag
 	 * @param value is the value of the current question
@@ -160,7 +180,7 @@ public class PracticeModule {
 	public void setAttempts(int numberOfAttempts) {
 		attempts = numberOfAttempts;
 	}
-	
+
 	/**
 	 * get String of attempts
 	 * @return winnings
@@ -180,7 +200,7 @@ public class PracticeModule {
 
 
 
-	
+
 	/**
 	 * using bash command to find the names of the categories in the category folder
 	 * each category is added to the list
@@ -218,7 +238,7 @@ public class PracticeModule {
 		}
 	}
 
-	
+
 	/**
 	 * executes bash command that generates an output into a list of strings
 	 * @param command the command we are executing in bash
@@ -253,8 +273,8 @@ public class PracticeModule {
 		}
 		return bashOutput;
 	}
-	
-	
+
+
 	/**
 	 * execute a bash command that doesn't have an output
 	 * @param command
@@ -268,7 +288,7 @@ public class PracticeModule {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	/**
 	 * text to speech a string
@@ -276,7 +296,7 @@ public class PracticeModule {
 	public void tts(String string) {
 		executeBashCmdNoOutput(String.format("echo \"%s\" | festival --tts", string));
 	}
-	
+
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Jeopardy 
