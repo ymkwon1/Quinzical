@@ -29,6 +29,10 @@ public class PracticeModuleViewController implements Initializable{
 	@FXML
 	private GridPane gridPane;
 
+    @FXML
+    private Button returnBtn;
+
+	
 	private PracticeModule model;
 
 	@Override
@@ -87,5 +91,16 @@ public class PracticeModuleViewController implements Initializable{
     	window.setScene(askQuestionScene);
     	window.show();
 	}
+	
+    @FXML
+    void returnBtnClick(ActionEvent event) throws IOException {
+    	Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+    	Scene menuScene = new Scene(menuView);
+    	
+    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    	
+    	window.setScene(menuScene);
+    	window.show();
+    }
 
 }

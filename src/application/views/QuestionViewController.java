@@ -44,11 +44,30 @@ public class QuestionViewController implements Initializable{
     @FXML
     private Label tagLabel;
     
+    @FXML
+    private Label answerLabel;
+    
     Alert alert = new Alert(AlertType.INFORMATION);
 
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		try {
+			model = PracticeModule.createInstance();
+			model.tts(model.getCurrentQuestion());
+			questionLabel.setText(model.getCurrentQuestion());
+			tagLabel.setText(model.getCurrentTag());
+			hintsLabel.setText("");
+			attemptsLabel.setText(String.format("Attempts: %s/3",model.getAttempts()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+    	model.setAttempts(0);
+    	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -56,17 +75,6 @@ public class QuestionViewController implements Initializable{
     	window.setScene(menuScene);
     	window.show();
     }
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			model = PracticeModule.createInstance();
-			questionLabel.setText(model.getCurrentQuestion());
-			tagLabel.setText(model.getCurrentTag());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
     /**
      * fires when the submit button is clicked
@@ -76,27 +84,32 @@ public class QuestionViewController implements Initializable{
      */
     @FXML
     void checkAnswer(ActionEvent event) throws IOException {
-    	if (answerField.getText().isEmpty() || answerField.getText() == null) {
-    		alert.setTitle("Answer");
-        	alert.setHeaderText(null);
-        	alert.setContentText("Please enter an answer");
-        	alert.showAndWait();	
-    	}
-    	else if (model.checkAnswer(answerField.getText())) {
+    	if (model.checkAnswer(answerField.getText())) {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
         	alert.setContentText("Correct!");
-        	model.ttsAnswerIsCorrect();
+        	model.tts("Correct");
         	alert.showAndWait();
         	returnToPractice(event);
     	}
     	else {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
-        	alert.setContentText(String.format("Incorrect, the answer is %s", model.getCurrentAnswer()));
-        	model.ttsAnswerIsIncorrect();
+        	int attemptsLeft = 3 - Integer.parseInt(model.getAttempts());
+        	alert.setContentText(String.format("Incorrect you have %d attempts remaining", attemptsLeft));
+        	model.tts("Incorrect");
         	alert.showAndWait();	
-        	returnToPractice(event);
+        	attemptsLabel.setText(String.format("Attempts: %s/3",model.getAttempts()));
+        	if (model.getAttempts().equals("2")) {
+        		hintsLabel.setText(String.format("Hint: The answer starts with the letter \"%s\"", model.getCurrentAnswer().charAt(0)));
+        	}
+        	if (model.getAttempts().equals("3")) {
+        		model.setAttempts(0);
+        		answerLabel.setText(String.format("The answer was \"%s\"", model.getCurrentAnswer()));
+        		model.tts(String.format("The answer was %s", model.getCurrentAnswer()));
+        		submitBtn.setDisable(true);
+        	}
+        	
     	}
     }
     
@@ -104,7 +117,7 @@ public class QuestionViewController implements Initializable{
      * returns to Practice model screen
      */
     void returnToPractice(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("PractiseModelView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

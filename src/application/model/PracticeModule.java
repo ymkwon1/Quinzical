@@ -24,7 +24,7 @@ public class PracticeModule {
 	private String currentCategory;
 	private String currentTag;
 	private int currentValue;
-	private int winnings = 0;
+	private int attempts = 0;
 
 	public PracticeModule() throws Exception {
 		initialiseCategories();
@@ -62,9 +62,11 @@ public class PracticeModule {
 	 */
 	public boolean checkAnswer(String userInput) {
 		if (userInput.equalsIgnoreCase(this.getCurrentAnswer())) {
+			attempts=0;
 			return true;
 		}
 		else {	
+			attempts++;
 			return false;
 		}
 	}
@@ -146,11 +148,19 @@ public class PracticeModule {
 	}
 
 	/**
-	 * get String of current winnings
+	 * get String of attempts
 	 * @return winnings
 	 */
-	public String getWinnings() {
-		return String.valueOf(winnings);
+	public void setAttempts(int numberOfAttempts) {
+		attempts = numberOfAttempts;
+	}
+	
+	/**
+	 * get String of attempts
+	 * @return winnings
+	 */
+	public String getAttempts() {
+		return String.valueOf(attempts);
 	}
 
 
@@ -163,41 +173,6 @@ public class PracticeModule {
 	}
 
 
-	/**
-	 * get the question given the inputs
-	 * @param category the category we are getting the question from
-	 * @param value the value from the category we are getting the question from
-	 * @return the question given the inputs
-	 */
-//	public String getQuestion(int category, int value) {
-//		String line = data[category][value];
-//		String[] lineArr = line.split(",");
-//		return lineArr[1].trim();
-//	}
-
-	/**
-	 * get the answer given the inputs
-	 * @param category the category we are getting the answer from
-	 * @param value the value from the category we are getting the answer from
-	 * @return the answer given the inputs
-	 */
-//	public String getAnswer(int category, int value) {
-//		String line = data[category][value];
-//		String[] lineArr = line.split(",");
-//		return lineArr[2].trim();
-//	}
-
-	/**
-	 * get the value given the inputs
-	 * @param category the category we are getting the value from
-	 * @param value the value from the category we are getting the value from
-	 * @return the value given the inputs
-	 */
-//	public int getValue(int category, int value) {
-//		String line = data[category][value];
-//		String[] lineArr = line.split(",");
-//		return Integer.valueOf(lineArr[0].trim());
-//	}
 
 	
 	/**
@@ -290,24 +265,10 @@ public class PracticeModule {
 	
 
 	/**
-	 * text to speech question
+	 * text to speech a string
 	 */
-	public void ttsQuestion() {
-		executeBashCmdNoOutput(String.format("echo \"%s\" | festival --tts", this.getCurrentQuestion()));
-	}
-	
-	/**
-	 * text to speech when answer is correct
-	 */
-	public void ttsAnswerIsCorrect() {
-		executeBashCmdNoOutput("echo \"Correct!\" | festival --tts");
-	}
-	
-	/**
-	 * text to speech when answer is Incorrect
-	 */
-	public void ttsAnswerIsIncorrect() {
-		executeBashCmdNoOutput(String.format("echo \"Incorrect, the answer is %s\" | festival --tts", this.getCurrentAnswer()));
+	public void tts(String string) {
+		executeBashCmdNoOutput(String.format("echo \"%s\" | festival --tts", string));
 	}
 	
 	/**
