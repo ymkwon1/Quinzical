@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class PracticeModule {
@@ -21,12 +22,14 @@ public class PracticeModule {
 	private String currentQuestion;
 	private String currentAnswer;
 	private String currentCategory;
+	private String currentTag;
 	private int currentValue;
 	private int winnings = 0;
 
 	public PracticeModule() throws Exception {
 		initialiseCategories();
 		readCategories();
+		loadRandomQuestionAndAnswer("Fauna");
 //		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
 //			String key = entry.getKey();
 //			List<String> values = entry.getValue();
@@ -34,7 +37,23 @@ public class PracticeModule {
 //			System.out.println(values);
 //		}
 	}
-
+	public void loadRandomQuestionAndAnswer(String category) {
+		List<String> questionSets = new ArrayList<String>();
+		questionSets = data.get(category);
+		int size = questionSets.size();
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(size);
+		String RandomQuestionSet = questionSets.get(randomIndex);
+		String[] splitString = RandomQuestionSet.split("[\\(\\)]");
+		setCurrentQuestion(splitString[0].trim().replace("[,]$|^[,]", ""));
+		setCurrentAnswer(splitString[2].trim().replace("[^a-zA-Z0-9 ]", ""));
+		setCurrentTag(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
+		
+		System.out.println(splitString[0].trim().replace("[,]$|^[,]", ""));
+		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
+		System.out.println(splitString[2].trim().replace("[^a-zA-Z0-9 ]", ""));
+		
+	}
 	/**
 	 * checkAnswers check if the string userInput is equal case insensitive 
 	 * to the current answer
@@ -109,6 +128,21 @@ public class PracticeModule {
 	 */
 	public int getCurrentValue() {
 		return currentValue;
+	}
+	
+	/**
+	 * set currentTag
+	 * @param value is the value of the current question
+	 */
+	public void setCurrentTag(String tag) {
+		currentTag = tag;
+	}
+	/**
+	 * get current tag
+	 * @return currentValue
+	 */
+	public String getCurrentTag() {
+		return currentTag;
 	}
 
 	/**
