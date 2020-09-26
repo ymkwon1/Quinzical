@@ -45,13 +45,19 @@ public class PracticeModule {
 		int randomIndex = rand.nextInt(size);
 		String RandomQuestionSet = questionSets.get(randomIndex);
 		String[] splitString = RandomQuestionSet.split("[\\(\\)]");
-		setCurrentQuestion(splitString[0].trim().replace("[,]$|^[,]", ""));
-		setCurrentAnswer(splitString[2].trim().replace("[^a-zA-Z0-9 ]", ""));
-		setCurrentTag(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
 		
-		System.out.println(splitString[0].trim().replace("[,]$|^[,]", ""));
+		String question = splitString[0].trim();
+		String answer = splitString[2].trim();
+		question = question.replaceAll("[,]$|[.]$","");
+		answer = answer.replaceAll("[,]$|[.]$","");
+		
+		setCurrentQuestion(question);
+		setCurrentAnswer(answer);
+		setCurrentTag(splitString[1].trim());
+		
+		System.out.println(question);
 		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
-		System.out.println(splitString[2].trim().replace("[^a-zA-Z0-9 ]", ""));
+		System.out.println(answer);
 		
 	}
 	/**

@@ -105,8 +105,8 @@ public class QuestionViewController implements Initializable{
         	}
         	if (model.getAttempts().equals("3")) {
         		model.setAttempts(0);
-        		answerLabel.setText(String.format("The answer was \"%s\"", model.getCurrentAnswer()));
         		model.tts(String.format("The answer was %s", model.getCurrentAnswer()));
+        		answerLabel.setText(String.format("The answer was \"%s\"", model.getCurrentAnswer()));
         		submitBtn.setDisable(true);
         	}
         	
