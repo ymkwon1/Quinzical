@@ -45,6 +45,17 @@ public class PracticeModuleViewController implements Initializable{
 					Button button = new Button(category);
 					button.setWrapText(true);
 					gridPane.add(button, col, row,1,1);
+					button.setOnAction(new EventHandler<ActionEvent>() {
+	    				@Override
+	    				public void handle(ActionEvent e) {
+	    					try {
+								model.setCurrentCategory(category);
+	    						askQuestion(e);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+	    				}
+	    			});
 					col++;
 					if (col > 2) {
 						col=0;
