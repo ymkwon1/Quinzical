@@ -9,15 +9,20 @@ import application.model.PracticeModule;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 public class PracticeModuleViewController implements Initializable{
 
@@ -66,6 +71,19 @@ public class PracticeModuleViewController implements Initializable{
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * fires when any category button is clicked to go the askQuestion scene
+	 */
+	void askQuestion(ActionEvent event) throws IOException {
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("QuestionView.fxml"));
+    	Scene askQuestionScene = new Scene(askQuestionView);
+    	
+    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    	
+    	window.setScene(askQuestionScene);
+    	window.show();
 	}
 
 }
