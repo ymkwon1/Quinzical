@@ -40,14 +40,15 @@ public class PracticeModuleViewController implements Initializable{
 		try {
 			model = PracticeModule.createInstance();
 			List<String> _categories = model.getCategory();
-			for (int i=0; i<2;i++) {
-				gridPane.getColumnConstraints().add(new ColumnConstraints(-1, -1, -1, Priority.ALWAYS, HPos.CENTER, false));
+			int numRows;
+			if (_categories.size()%3 == 0) {
+				numRows = _categories.size()/3;
 			}
-			for (int i=0; i<2;i++) {
-				gridPane.getRowConstraints().add(new RowConstraints(-1, -1, -1, Priority.ALWAYS, VPos.CENTER, false));
+			else {
+				numRows = _categories.size()/3 + 1;
 			}
 			
-			gridPane.setGridLinesVisible(true);
+
 			int col=0;
 			int row=0;
 			for (String category: _categories) {
@@ -73,6 +74,13 @@ public class PracticeModuleViewController implements Initializable{
 						row++;
 					}
 			}
+			RowConstraints rc = new RowConstraints();
+			rc.setPercentHeight(100d/numRows);
+			
+			for (int i = 0; i < numRows-1; i++) {
+				gridPane.getRowConstraints().add(rc);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
