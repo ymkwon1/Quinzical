@@ -19,5 +19,6 @@
       <Label fx:id="attemptsLabel" layoutX="103.0" layoutY="278.0" prefHeight="26.0" prefWidth="126.0" text="Attempts" />
       <Label fx:id="hintsLabel" layoutX="369.0" layoutY="278.0" prefHeight="26.0" prefWidth="126.0" text="Hint: " />
       <Button fx:id="returnBtn" layoutX="41.0" layoutY="344.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
+      <Label fx:id="tagLabel" layoutX="62.0" layoutY="200.0" prefHeight="26.0" prefWidth="65.0" text="Label" />
    </children>
 </AnchorPane>

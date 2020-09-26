@@ -55,7 +55,9 @@ public class PracticeModuleViewController implements Initializable{
 	    				public void handle(ActionEvent e) {
 	    					try {
 								model.setCurrentCategory(category);
+								model.loadRandomQuestionAndAnswer(category);
 	    						askQuestion(e);
+	    						
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
