@@ -30,7 +30,6 @@ public class PracticeModule {
 	public PracticeModule() throws Exception {
 		initialiseCategories();
 		readCategories();
-		loadRandomQuestionAndAnswer("Fauna");
 		//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
 		//			String key = entry.getKey();
 		//			List<String> values = entry.getValue();
