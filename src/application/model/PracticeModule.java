@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class PracticeModule {
 	private static PracticeModule instance = null;
 
 	private List<String> categories = new ArrayList<String>();
+	private List<String> fiveRandomCategories = new ArrayList<String>();
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
 	private String[] currentAnswers;
 	private String currentAnswer;
@@ -206,6 +208,22 @@ public class PracticeModule {
 	 */
 	private void initialiseCategories() {
 		categories = executeBashCmdWithOutput("ls categories");
+		System.out.println(categories);
+	}
+	
+	/**
+	 * Get five random categories for the games module.
+	 */
+	public List<String> getFiveRandomCategories () {
+		if (fiveRandomCategories.size() < 5 ) {
+			List<String> shuffledCategories = new ArrayList<String>(categories);
+			Collections.shuffle(shuffledCategories);
+			System.out.println(shuffledCategories);
+			for (int i = 0; i < 5; i++) {
+				fiveRandomCategories.add(shuffledCategories.get(i));
+			}
+		}
+		return fiveRandomCategories;
 	}
 
 	/**
