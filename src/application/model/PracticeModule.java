@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ public class PracticeModule {
 	private String currentQuestion;
 	private String currentCategory;
 	private String currentTag;
+	private List<String> _fiveRandomClues;
 	private int currentValue;
 	private int attempts = 0;
 
@@ -39,15 +41,10 @@ public class PracticeModule {
 		//			System.out.println(values);
 		//		}
 	}
-	public void loadRandomQuestionAndAnswer(String category) {
-		List<String> questionSets = new ArrayList<String>();
-		questionSets = data.get(category);
-		int size = questionSets.size();
-		Random rand = new Random();
-		int randomIndex = rand.nextInt(size);
-		String RandomQuestionSet = questionSets.get(randomIndex);
-		String[] splitString = RandomQuestionSet.split("[\\(\\)]");
-
+	
+	private void formatQuestionSet (String questionSet) {
+        String[] splitString = questionSet.split("[\\(\\)]");
+		
 		String question = splitString[0].trim();
 		String answer = splitString[2].trim();
 		question = question.replaceAll("[,]$|[.]$","");
@@ -66,6 +63,30 @@ public class PracticeModule {
 			System.out.println(answers.trim());
 		}
 	}
+	public void loadRandomQuestionAndAnswer(String category) {
+		List<String> questionSets = new ArrayList<String>();
+		questionSets = data.get(category);
+		int size = questionSets.size();
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(size);
+		String randomQuestionSet = questionSets.get(randomIndex);
+		formatQuestionSet(randomQuestionSet);
+	}
+	/**
+	 * Get five random clues and answers of a category
+	 */
+	public void getFiveRandomClues (String category){
+		List<String> questionSets = new ArrayList<String>();
+		questionSets = data.get(category);
+		Collections.shuffle(questionSets);
+		for (int i = 0; i<5;i++) {
+			if (_fiveRandomClues.size() >=5) {
+				_fiveRandomClues.clear();
+			}
+			_fiveRandomClues.add(questionSets.get(i));
+		}
+	}
+	
 	/**
 	 * checkAnswers check if the string userInput is equal case insensitive 
 	 * to the current answer
