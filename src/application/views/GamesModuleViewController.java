@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
@@ -38,37 +39,19 @@ public class GamesModuleViewController implements Initializable{
 			_categories = _model.getFiveRandomCategories();
 			System.out.println(_categories);
 			
-			int numRows;
-			if (_categories.size()%3 == 0) {
-				numRows = _categories.size()/3;
-			}
-			else {
-				numRows = _categories.size()/3 + 1;
-			}
-			int col=0;
+			int numRows=5;
 			int row=0;
 			for (String category: _categories) {
-					Button button = new Button(category);
-					button.setWrapText(true);
-					gridPane.add(button, col, row,1,1);
-					button.setOnAction(new EventHandler<ActionEvent>() {
-	    				@Override
-	    				public void handle(ActionEvent e) {
-	    					try {
-								_model.setCurrentCategory(category);
-								_model.loadRandomQuestionAndAnswer(category);
-	    						askQuestion(e);
-	    						
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-	    				}
-	    			});
-					col++;
-					if (col > 2) {
-						col=0;
-						row++;
-					}
+				Label label = new Label(category);
+				label.setWrapText(true);
+				gridPane.add(label, 0, row,1,1);
+				
+				for (int col = 0;col < 5; col++) {
+					String value = String.valueOf(100*(col+1));
+					Button button = new Button(value);
+					gridPane.add(button, col+1, row,1,1);
+				}
+				row++;
 			}
 			RowConstraints rc = new RowConstraints();
 			rc.setPercentHeight(100d/numRows);
