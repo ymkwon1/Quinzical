@@ -30,6 +30,8 @@ public class GamesModuleViewController implements Initializable{
 	
 	private PracticeModule _model;
 	private List<String> _categories;
+	//number of questions answered for each categories
+	private int [] _answered = {0,0,0,0,0};
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -46,10 +48,15 @@ public class GamesModuleViewController implements Initializable{
 				label.setWrapText(true);
 				gridPane.add(label, 0, row,1,1);
 				
-				for (int col = 0;col < 5; col++) {
-					String value = String.valueOf(100*(col+1));
+				for (int col = 1;col < 6; col++) {
+					String value = String.valueOf(100*(col));
 					Button button = new Button(value);
-					gridPane.add(button, col+1, row,1,1);
+					if(Integer.valueOf(value)/100 == _answered[row]+1) {
+						button.setDisable(false);
+					} else {
+						button.setDisable(true);
+					}
+					gridPane.add(button, col, row,1,1);
 				}
 				row++;
 			}
