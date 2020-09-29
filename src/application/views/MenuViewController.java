@@ -16,6 +16,8 @@ public class MenuViewController {
 
     @FXML
     private Button practiceBtn;
+    @FXML
+    private Button gamesBtn;
 
     @FXML
     void practiceBtnClick(ActionEvent event) throws IOException {
@@ -25,6 +27,17 @@ public class MenuViewController {
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(practiceModuleScene);
+		window.show();
+    }
+    
+    @FXML
+    void gamesBtnClick(ActionEvent event) throws IOException {
+		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
+		Scene gamesModuleScene = new Scene(gamesModuleView);
+		
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(gamesModuleScene);
 		window.show();
     }
 
