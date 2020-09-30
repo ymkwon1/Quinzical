@@ -73,18 +73,25 @@ public class QuinzicalModel {
 		formatQuestionSet(randomQuestionSet);
 	}
 	/**
-	 * Get five random clues and answers of a category
+	 * Set five random clues and answers of a category
 	 */
-	public void getFiveRandomClues (String category){
+	public void setFiveRandomClues (String category){
 		List<String> questionSets = new ArrayList<String>();
 		questionSets = data.get(category);
 		Collections.shuffle(questionSets);
+		List<String> temp = new ArrayList<String>();
 		for (int i = 0; i<5;i++) {
-			if (_fiveRandomClues.size() >=5) {
-				_fiveRandomClues.clear();
-			}
-			_fiveRandomClues.add(questionSets.get(i));
+			temp.add(questionSets.get(i));
 		}
+		_fiveRandomClues = temp;
+		System.out.println(_fiveRandomClues);
+	}
+	/**
+	 * Load the question set from five randomly chosen questions.
+	 */
+	public void loadQuestionSet(int index) {
+		String questionSet = _fiveRandomClues.get(index);
+		formatQuestionSet(questionSet);
 	}
 	
 	/**

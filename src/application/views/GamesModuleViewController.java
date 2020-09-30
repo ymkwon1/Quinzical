@@ -57,6 +57,20 @@ public class GamesModuleViewController implements Initializable{
 					} else {
 						button.setDisable(true);
 					}
+					int index = col-1;
+					button.setOnAction(new EventHandler<ActionEvent>() {
+	    				@Override
+	    				public void handle(ActionEvent e) {
+	    					_model.setFiveRandomClues(category);
+	    					_model.loadQuestionSet(index);
+	    					try {
+								askQuestion(e);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+	    				}
+	    			});
 					gridPane.add(button, col, row,1,1);
 				}
 				row++;
