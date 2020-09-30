@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.model.PracticeModule;
+import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 public class QuestionViewController implements Initializable{
 
-	private PracticeModule model;
+	private QuinzicalModel model;
 	
     @FXML
     private Label questionLabel;
@@ -53,7 +53,7 @@ public class QuestionViewController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
-			model = PracticeModule.createInstance();
+			model = QuinzicalModel.createInstance();
 			model.tts(model.getCurrentQuestion());
 			questionLabel.setText(model.getCurrentQuestion());
 			tagLabel.setText(model.getCurrentTag());

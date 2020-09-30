@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import application.model.PracticeModule;
+import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ public class GamesModuleViewController implements Initializable{
 	@FXML
 	private GridPane gridPane;
 	
-	private PracticeModule _model;
+	private QuinzicalModel _model;
 	private List<String> _categories;
 	//number of questions answered for each categories
 	private int [] _answered = {0,0,0,0,0};
@@ -37,7 +37,7 @@ public class GamesModuleViewController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
-			_model = PracticeModule.createInstance();
+			_model = QuinzicalModel.createInstance();
 			_categories = _model.getFiveRandomCategories();
 			System.out.println(_categories);
 			
@@ -48,6 +48,7 @@ public class GamesModuleViewController implements Initializable{
 				label.setWrapText(true);
 				gridPane.add(label, 0, row,1,1);
 				
+				//The only button available is the lowest value unanswered question.
 				for (int col = 1;col < 6; col++) {
 					String value = String.valueOf(100*(col));
 					Button button = new Button(value);

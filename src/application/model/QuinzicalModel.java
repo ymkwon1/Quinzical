@@ -14,10 +14,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-public class PracticeModule {
+public class QuinzicalModel {
 
 	// for singleton class
-	private static PracticeModule instance = null;
+	private static QuinzicalModel instance = null;
 
 	private List<String> categories = new ArrayList<String>();
 	private List<String> fiveRandomCategories = new ArrayList<String>();
@@ -31,7 +31,7 @@ public class PracticeModule {
 	private int currentValue;
 	private int attempts = 0;
 
-	public PracticeModule() throws Exception {
+	public QuinzicalModel() throws Exception {
 		initialiseCategories();
 		readCategories();
 		//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
@@ -339,9 +339,9 @@ public class PracticeModule {
 	 *  this static method is for creating a 
 	 *  singleton class of Jeopardy 
 	 */ 
-	public static PracticeModule createInstance() throws Exception {
+	public static QuinzicalModel createInstance() throws Exception {
 		if (instance == null) {
-			instance = new PracticeModule();
+			instance = new QuinzicalModel();
 		}
 		return instance;
 	}

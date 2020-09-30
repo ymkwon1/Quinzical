@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import application.model.PracticeModule;
+import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,12 +33,12 @@ public class PracticeModuleViewController implements Initializable{
     private Button returnBtn;
 
 	
-	private PracticeModule model;
+	private QuinzicalModel model;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
-			model = PracticeModule.createInstance();
+			model = QuinzicalModel.createInstance();
 			List<String> _categories = model.getCategory();
 			int numRows;
 			if (_categories.size()%3 == 0) {
