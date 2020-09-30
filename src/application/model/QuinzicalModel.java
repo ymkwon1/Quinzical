@@ -30,6 +30,7 @@ public class QuinzicalModel {
 	private List<String> _fiveRandomClues;
 	private int currentValue;
 	private int attempts = 0;
+	private int [] _answeredQuestions = {0,0,0,0,0};
 
 	public QuinzicalModel() throws Exception {
 		initialiseCategories();
@@ -226,7 +227,14 @@ public class QuinzicalModel {
 	public List<String> getCategory(){
 		return categories;
 	}
+	
+	public int getAnsweredQuestions(int index){
+		return _answeredQuestions[index];
+	}
 
+	public void setAnsweredQuetsions(int index) {
+		_answeredQuestions[index]++;
+	}
 
 
 

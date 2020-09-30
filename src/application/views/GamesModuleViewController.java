@@ -30,8 +30,7 @@ public class GamesModuleViewController implements Initializable{
 	
 	private QuinzicalModel _model;
 	private List<String> _categories;
-	//number of questions answered for each categories
-	private int [] _answered = {0,0,0,0,0};
+
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -52,17 +51,19 @@ public class GamesModuleViewController implements Initializable{
 				for (int col = 1;col < 6; col++) {
 					String value = String.valueOf(100*(col));
 					Button button = new Button(value);
-					if(Integer.valueOf(value)/100 == _answered[row]+1) {
+					if(Integer.valueOf(value)/100 == _model.getAnsweredQuestions(row)+1) {
 						button.setDisable(false);
 					} else {
 						button.setDisable(true);
 					}
-					int index = col-1;
+					int categoryIndex = row;
+					int questionIndex = col-1;
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					_model.setFiveRandomClues(category);
-	    					_model.loadQuestionSet(index);
+	    					_model.loadQuestionSet(questionIndex);
+	    					_model.setAnsweredQuetsions(categoryIndex);
 	    					try {
 								askQuestion(e);
 							} catch (IOException e1) {
@@ -91,7 +92,7 @@ public class GamesModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("QuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("PracticeQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

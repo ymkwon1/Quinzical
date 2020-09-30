@@ -91,7 +91,7 @@ public class PracticeModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("QuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("PracticeQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
