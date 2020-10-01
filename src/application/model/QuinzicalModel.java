@@ -32,6 +32,7 @@ public class QuinzicalModel {
 	private int attempts = 0;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private String _command;
+	public int ttsSpeed = 175;
 
 	public QuinzicalModel() throws Exception {
 		initialiseCategories();
@@ -349,7 +350,7 @@ public class QuinzicalModel {
 	 * text to speech a string
 	 */
 	public void tts(String string) {
-		executeBashCmdNoOutput(String.format("echo \"%s\" | festival --tts", string));
+		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, ttsSpeed));
 		
 	}
 
