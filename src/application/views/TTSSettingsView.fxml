@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.TTSSettingsViewController">
+   <children>
+      <Button fx:id="testBtn" layoutX="255.0" layoutY="200.0" mnemonicParsing="false" onAction="#testBtnClick" text="Test Speed" />
+      <Label layoutX="226.0" layoutY="74.0" text="Text Speed">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="decreaseBtn" layoutX="62.0" layoutY="110.0" mnemonicParsing="false" onAction="#decreaseBtnClick" prefHeight="86.0" prefWidth="73.0" text="&lt;" />
+      <Button fx:id="increaseBtn" layoutX="463.0" layoutY="110.0" mnemonicParsing="false" onAction="#increaseBtnClick" prefHeight="86.0" prefWidth="73.0" text="&gt;" />
+      <Label fx:id="speedLabel" layoutX="166.0" layoutY="141.0" prefHeight="25.0" prefWidth="263.0" text="Label" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
