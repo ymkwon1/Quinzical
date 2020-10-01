@@ -221,6 +221,27 @@ public class QuinzicalModel {
 		return String.valueOf(attempts);
 	}
 
+	/**
+	 * increase tts speed
+	 */
+	public void increaseTTSSpeed() {
+		ttsSpeed = ttsSpeed + 10;
+	}
+
+	/**
+	 * decrease tts speed
+	 */
+	public void decreaseTTSSpeed() {
+		ttsSpeed = ttsSpeed - 10;
+	}
+	
+	/**
+	 * get tts speed
+	 * @return ttsSpeed
+	 */
+	public int getTTSSpeed() {
+		return ttsSpeed;
+	}
 
 	/**
 	 * get all categories in the game as a list of strings
