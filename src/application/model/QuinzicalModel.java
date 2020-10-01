@@ -31,6 +31,7 @@ public class QuinzicalModel {
 	private int currentValue;
 	private int attempts = 0;
 	private int [] _answeredQuestions = {0,0,0,0,0};
+	private String _command;
 
 	public QuinzicalModel() throws Exception {
 		initialiseCategories();
@@ -335,19 +336,21 @@ public class QuinzicalModel {
 	@SuppressWarnings("unused")
 	private void executeBashCmdNoOutput(String command) {
 		try {
+			_command = command;
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			Process process = pb.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 
 	/**
 	 * text to speech a string
 	 */
 	public void tts(String string) {
 		executeBashCmdNoOutput(String.format("echo \"%s\" | festival --tts", string));
+		
 	}
 
 	/**

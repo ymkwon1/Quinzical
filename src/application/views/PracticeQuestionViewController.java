@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class QuestionViewController implements Initializable{
+public class PracticeQuestionViewController implements Initializable{
 
 	private QuinzicalModel model;
 	

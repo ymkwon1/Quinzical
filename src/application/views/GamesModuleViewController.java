@@ -92,7 +92,7 @@ public class GamesModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("PracticeQuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("GamesQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
