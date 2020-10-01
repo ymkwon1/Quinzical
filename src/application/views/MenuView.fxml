@@ -14,5 +14,6 @@
       </Label>
       <Button fx:id="gamesBtn" layoutX="84.0" layoutY="155.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="20.0" prefWidth="121.0" text="Games module" />
       <Button fx:id="practiceBtn" layoutX="87.0" layoutY="253.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="26.0" prefWidth="175.0" text="Practice model" />
+      <Button fx:id="ttsSettingsBtn" layoutX="84.0" layoutY="324.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="Text to speech settings" />
    </children>
 </AnchorPane>

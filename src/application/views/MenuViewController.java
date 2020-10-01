@@ -16,6 +16,8 @@ public class MenuViewController {
     private Button practiceBtn;
     @FXML
     private Button gamesBtn;
+    @FXML
+    private Button ttsSettingsBtn;
 
     @FXML
     void practiceBtnClick(ActionEvent event) throws IOException {
@@ -39,4 +41,8 @@ public class MenuViewController {
 		window.show();
     }
 
+    @FXML
+    void ttsSettingsBtnClick(ActionEvent event) {
+
+    }
 }
