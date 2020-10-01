@@ -42,7 +42,13 @@ public class MenuViewController {
     }
 
     @FXML
-    void ttsSettingsBtnClick(ActionEvent event) {
-
+    void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Scene TtsSettingsScene = new Scene(TtsSettingsView);
+		
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(TtsSettingsScene);
+		window.show();
     }
 }
