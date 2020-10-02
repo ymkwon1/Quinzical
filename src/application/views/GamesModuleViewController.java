@@ -37,7 +37,7 @@ public class GamesModuleViewController implements Initializable{
 		// TODO Auto-generated method stub
 		try {
 			_model = QuinzicalModel.createInstance();
-			_categories = _model.getFiveRandomcategories();
+			_categories = _model.getFiveRandomCategories();
 			System.out.println(_categories);
 			
 			int numRows=5;
