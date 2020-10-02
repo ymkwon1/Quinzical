@@ -80,21 +80,6 @@ public class QuinzicalModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * set current category
-	 * @param category
-	 */
-	public void setCurrentCategory(String category){
-		_currentCategory = category;
-	}	
-	/**
-	 * get currentCategory
-	 * @return currentCategory
-	 */
-	public String getCurrentCategory() {
-		return _currentCategory;
 	}	
 
 	/**
