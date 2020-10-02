@@ -1,14 +1,11 @@
-package application;
+package application.model;
 
-import application.model.QuinzicalModel;
-import javafx.scene.control.Label;
 
 public class Clue {
 	private String _clue;
 	private String[] _answers;
 	private String _answer;
 	private String _question;
-	private String _category;
 	private String _tag;
 	private String _hint;
 	private int _attempts;
@@ -36,34 +33,34 @@ public class Clue {
 		_model.tts(String.format("The answer was %s", _answer));
 	}
 	
-	public void setQuestionLabel(Label label) {
-		label.setText(_question);
+	public String getQuestion() {
+		return _question;
 	}
 	
-	public void setTagLabel (Label label) {
-		label.setText(_tag);
+	public String getTag() {
+		return _tag;
 	}
 	
-	public void setHintLabel (Label label) {
+	public String getHint() {
 		if (_attempts == 2) {
 			_hint = String.format("Hint: The answer starts with the letter \"%s\"", _answer.charAt(0));
 		} 
 		else {
 			_hint = "";
 		}
-		label.setText(_hint);
+		return _hint;
 	}
 	
-	public void setAttemptsLabel (Label label) {
-		label.setText (String.format("Attempts: %s/3",_attempts));
+	public String getAttempts () {
+		return String.format("Attempts: %s/3",_attempts);
 	}
 	
-	public void setAnswerLabel (Label label) {
+	public String getAnswer () {
 		if (_attempts == 3) {
-			label.setText(String.format("The answer was %s", _answer));
+			return String.format("The answer was %s", _answer);
 		}
 		else {
-			label.setText(null);
+			return null;
 		}
 	}
 	

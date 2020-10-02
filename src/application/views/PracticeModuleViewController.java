@@ -39,7 +39,7 @@ public class PracticeModuleViewController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
 			model = QuinzicalModel.createInstance();
-			List<String> _categories = model.getCategory();
+			List<String> _categories = model.getCategories();
 			int numRows;
 			if (_categories.size()%3 == 0) {
 				numRows = _categories.size()/3;
@@ -59,7 +59,7 @@ public class PracticeModuleViewController implements Initializable{
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					try {
-								model.loadRandomQuestionAndAnswer(category);
+								model.loadRandomClue(category);
 	    						askQuestion(e);    						
 							} catch (IOException e1) {
 								e1.printStackTrace();

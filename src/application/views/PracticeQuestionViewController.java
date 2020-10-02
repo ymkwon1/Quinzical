@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Clue;
+import application.model.Clue;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,10 +59,10 @@ public class PracticeQuestionViewController implements Initializable{
 			_model = QuinzicalModel.createInstance();
 			_clue = _model.getCurrentClue();
 			_clue.ttsQuestion();
-			_clue.setQuestionLabel(questionLabel);
-			_clue.setTagLabel(tagLabel);
-			_clue.setHintLabel(hintsLabel);
-			_clue.setAttemptsLabel(attemptsLabel);
+			questionLabel.setText(_clue.getQuestion());;
+			tagLabel.setText(_clue.getTag());;
+			hintsLabel.setText(_clue.getHint());
+			attemptsLabel.setText(_clue.getAttempts());;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,6 +71,7 @@ public class PracticeQuestionViewController implements Initializable{
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	_clue.resetAttempts();
+    	_model.stopTts();
     	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
@@ -88,6 +89,7 @@ public class PracticeQuestionViewController implements Initializable{
      */
     @FXML
     void checkAnswer(ActionEvent event) throws IOException {
+    	_model.stopTts();
     	if (_clue.checkAnswer(answerField.getText())) {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
@@ -102,9 +104,9 @@ public class PracticeQuestionViewController implements Initializable{
         	alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
         	_model.tts("Incorrect");
         	alert.showAndWait();	
-        	_clue.setAttemptsLabel(attemptsLabel);
-        	_clue.setHintLabel(hintsLabel);
-        	_clue.setAnswerLabel(answerLabel);
+        	attemptsLabel.setText(_clue.getAttempts());
+        	hintsLabel.setText(_clue.getHint());
+        	answerLabel.setText(_clue.getAnswer());
         	if (answerLabel.getText() != null) {
         		_clue.resetAttempts();
         		_clue.ttsAnswer();
@@ -118,6 +120,7 @@ public class PracticeQuestionViewController implements Initializable{
      * returns to Practice _model screen
      */
     void returnToPractice(ActionEvent event) throws IOException {
+    	_model.stopTts();
     	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	

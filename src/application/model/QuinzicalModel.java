@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
-import application.Clue;
+import java.util.stream.Stream;
 
 public class QuinzicalModel {
 
@@ -22,11 +21,10 @@ public class QuinzicalModel {
 	private static QuinzicalModel instance = null;
 
 	private List<String> categories = new ArrayList<String>();
-	private List<String> fiveRandomcategories = new ArrayList<String>();
-	private Map<String, List<String>> data = new HashMap<String, List<String>>();
-	private String _currentCategory;
-	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
+	private List<String> fiveRandomCategories = new ArrayList<String>();
 	private List<String> _fiveRandomClues;
+	private Map<String, List<String>> _practiceData = new HashMap<String, List<String>>();
+	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
 	private Clue _currentClue;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	public int ttsSpeed = 175;
@@ -42,86 +40,6 @@ public class QuinzicalModel {
 		//		}
 	}
 
-	public void loadRandomQuestionAndAnswer(String category) {
-		List<String> Clues = new ArrayList<String>();
-		Clues = data.get(category);
-		int size = Clues.size();
-		Random rand = new Random();
-		int randomIndex = rand.nextInt(size);
-		try {
-			_currentClue = new Clue(Clues.get(randomIndex));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * Set five random clues and answers of a category
-	 */
-	public void setFiveRandomClues (String category){
-		List<String> questionSets = new ArrayList<String>();
-		questionSets = data.get(category);
-		Collections.shuffle(questionSets);
-		List<String> temp = new ArrayList<String>();
-		for (int i = 0; i<5;i++) {
-			temp.add(questionSets.get(i));
-		}
-		_fiveRandomClues = temp;
-		System.out.println(_fiveRandomClues);
-	}
-	/**
-	 * Load the question set from five randomly chosen questions.
-	 */
-	public void loadQuestionSet(String category,int index) {
-		String clue = _gamesData.get(category).get(index);
-	    try {
-			_currentClue = new Clue (clue);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
-
-	/**
-	 * increase tts speed
-	 */
-	public void increaseTTSSpeed() {
-		ttsSpeed = ttsSpeed + 10;
-	}
-
-	/**
-	 * decrease tts speed
-	 */
-	public void decreaseTTSSpeed() {
-		ttsSpeed = ttsSpeed - 10;
-	}
-	
-	/**
-	 * get tts speed
-	 * @return ttsSpeed
-	 */
-	public int getTTSSpeed() {
-		return ttsSpeed;
-	}
-
-	/**
-	 * get all categories in the game as a list of strings
-	 * @return categories
-	 */
-	public List<String> getCategory(){
-		return categories;
-	}
-	
-	public int getAnsweredQuestions(int index){
-		return _answeredQuestions[index];
-	}
-
-	public void setAnsweredQuetsions(int index) {
-		_answeredQuestions[index]++;
-	}
-
-
-
 	/**
 	 * using bash command to find the names of the categories in the category folder
 	 * each category is added to the list
@@ -129,23 +47,6 @@ public class QuinzicalModel {
 	private void initialisecategories() {
 		categories = executeBashCmdWithOutput("ls categories");
 		System.out.println(categories);
-	}
-	
-	/**
-	 * Get five random categories for the games module.
-	 */
-	public List<String> getFiveRandomcategories () {
-		if (fiveRandomcategories.size() < 5 ) {
-			List<String> shuffledCategories = new ArrayList<String>(categories);
-			Collections.shuffle(shuffledCategories);
-			System.out.println(shuffledCategories);
-			for (int i = 0; i < 5; i++) {
-				fiveRandomcategories.add(shuffledCategories.get(i));
-				setFiveRandomClues(shuffledCategories.get(i));
-				_gamesData.put(fiveRandomcategories.get(i), _fiveRandomClues);
-			}
-		}
-		return fiveRandomcategories;
 	}
 
 	/**
@@ -155,7 +56,7 @@ public class QuinzicalModel {
 	 * countries line line line line line]
 	 */
 	private void readcategories() throws Exception {
-		if (this.getCategory().size() > 0) {
+		if (categories.size() > 0) {
 			for (String category: categories) {
 
 				try {
@@ -167,7 +68,7 @@ public class QuinzicalModel {
 						allLines.add(fileLine);
 					}
 					List<String> copy = new ArrayList<String>(allLines);
-					data.put(category, copy);
+					_practiceData.put(category, copy);
 					allLines.clear();
 					myReader.close();
 				} catch (FileNotFoundException e) {
@@ -176,7 +77,83 @@ public class QuinzicalModel {
 			}
 		}
 	}
+	
+	/**
+	 * Get five random categories for the games module.
+	 */
+	public List<String> getFiveRandomcategories () {
+		if (fiveRandomCategories.size() < 5 ) {
+			List<String> shuffledCategories = new ArrayList<String>(categories);
+			Collections.shuffle(shuffledCategories);
+			System.out.println(shuffledCategories);
+			for (int i = 0; i < 5; i++) {
+				fiveRandomCategories.add(shuffledCategories.get(i));
+				setFiveRandomClues(shuffledCategories.get(i));
+				_gamesData.put(fiveRandomCategories.get(i), _fiveRandomClues);
+			}
+		}
+		return fiveRandomCategories;
+	}
+	
+	public void loadRandomClue(String category) {
+		List<String> clues = new ArrayList<String>();
+		clues = _practiceData.get(category);
+		int size = clues.size();
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(size);
+		try {
+			_currentClue = new Clue(clues.get(randomIndex));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Set five random clues and answers of a category
+	 */
+	public void setFiveRandomClues (String category){
+		List<String> clues = new ArrayList<String>();
+		clues = _practiceData.get(category);
+		Collections.shuffle(clues);
+		List<String> temp = new ArrayList<String>();
+		for (int i = 0; i<5;i++) {
+			temp.add(clues.get(i));
+		}
+		_fiveRandomClues = temp;
+		System.out.println(_fiveRandomClues);
+	}
+	/**
+	 * Load the clue from five randomly chosen clues.
+	 */
+	public void loadClue(String category,int index) {
+		String clue = _gamesData.get(category).get(index);
+	    try {
+			_currentClue = new Clue (clue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
+	
+	public Clue getCurrentClue() {
+		return _currentClue;
+	}
+	
+	public int getAnsweredQuestions(int index){
+		return _answeredQuestions[index];
+	}
 
+	public void setAnsweredQuetsions(int index) {
+		_answeredQuestions[index]++;
+	}
+	
+	/**
+	 * get all categories in the game as a list of strings
+	 * @return categories
+	 */
+	public List<String> getCategories(){
+		return categories;
+	}
 
 	/**
 	 * executes bash command that generates an output into a list of strings
@@ -212,8 +189,7 @@ public class QuinzicalModel {
 		}
 		return bashOutput;
 	}
-
-
+	
 	/**
 	 * execute a bash command that doesn't have an output
 	 * @param command
@@ -235,19 +211,47 @@ public class QuinzicalModel {
 		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, ttsSpeed));
 		
 	}
+	
+	public void stopTts () {
+//		String command = "pkill -f espeak";
+//		executeBashCmdNoOutput(command);
+		Stream<ProcessHandle> descendents = ProcessHandle.current().descendants();
+		descendents.filter(ProcessHandle::isAlive).forEach(ph -> {
+			ph.destroy();
+		});
+	}
+	
+
+	/**
+	 * increase tts speed
+	 */
+	public void increaseTTSSpeed() {
+		ttsSpeed = ttsSpeed + 10;
+	}
+
+	/**
+	 * decrease tts speed
+	 */
+	public void decreaseTTSSpeed() {
+		ttsSpeed = ttsSpeed - 10;
+	}
+	
+	/**
+	 * get tts speed
+	 * @return ttsSpeed
+	 */
+	public int getTTSSpeed() {
+		return ttsSpeed;
+	}
 
 	/**
 	 *  this static method is for creating a 
-	 *  singleton class of Jeopardy 
+	 *  singleton class of Quinzical
 	 */ 
 	public static QuinzicalModel createInstance() throws Exception {
 		if (instance == null) {
 			instance = new QuinzicalModel();
 		}
 		return instance;
-	}
-
-	public Clue getCurrentClue() {
-		return _currentClue;
 	}
 }

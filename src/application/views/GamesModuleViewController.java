@@ -61,7 +61,7 @@ public class GamesModuleViewController implements Initializable{
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
 	    				public void handle(ActionEvent e) {
-	    					_model.loadQuestionSet(category,questionIndex);
+	    					_model.loadClue(category,questionIndex);
 	    					_model.setAnsweredQuetsions(categoryIndex);
 	    					try {
 								askQuestion(e);
