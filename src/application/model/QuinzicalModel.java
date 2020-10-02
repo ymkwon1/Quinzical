@@ -14,20 +14,23 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import application.Clue;
+
 public class QuinzicalModel {
 
 	// for singleton class
 	private static QuinzicalModel instance = null;
 
 	private List<String> categories = new ArrayList<String>();
-	private List<String> fiveRandomCategories = new ArrayList<String>();
+	private List<String> fiveRandomcategories = new ArrayList<String>();
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
-	private String[] currentAnswers;
-	private String currentAnswer;
-	private String currentQuestion;
-	private String currentCategory;
-	private String currentTag;
+	private String[] _currentAnswers;
+	private String _currentAnswer;
+	private String _currentQuestion;
+	private String _currentCategory;
+	private String _currentTag;
 	private List<String> _fiveRandomClues;
+	private Clue _currentClue;
 	private int currentValue;
 	private int attempts = 0;
 	private int [] _answeredQuestions = {0,0,0,0,0};
@@ -35,8 +38,8 @@ public class QuinzicalModel {
 	public int ttsSpeed = 175;
 
 	public QuinzicalModel() throws Exception {
-		initialiseCategories();
-		readCategories();
+		initialisecategories();
+		readcategories();
 		//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
 		//			String key = entry.getKey();
 		//			List<String> values = entry.getValue();
@@ -53,27 +56,31 @@ public class QuinzicalModel {
 		question = question.replaceAll("[,]$|[.]$","");
 		answer = answer.replaceAll("[,]$|[.]$","");
 
-		currentAnswers = answer.split("/");
+		_currentAnswers = answer.split("/");
 
 		setCurrentQuestion(question);
-		setCurrentAnswers(currentAnswers);
+		setCurrentAnswers(_currentAnswers);
 		setCurrentAnswer(answer);
 		setCurrentTag(splitString[1].trim());
 
-		System.out.println(question);
-		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
-		for (String answers: currentAnswers) {
-			System.out.println(answers.trim());
-		}
+//		System.out.println(question);
+//		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
+//		for (String answers: currentAnswers) {
+//			System.out.println(answers.trim());
+//		}
 	}
 	public void loadRandomQuestionAndAnswer(String category) {
-		List<String> questionSets = new ArrayList<String>();
-		questionSets = data.get(category);
-		int size = questionSets.size();
+		List<String> Clues = new ArrayList<String>();
+		Clues = data.get(category);
+		int size = Clues.size();
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(size);
-		String randomQuestionSet = questionSets.get(randomIndex);
-		formatQuestionSet(randomQuestionSet);
+		try {
+			_currentClue = new Clue(Clues.get(randomIndex));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Set five random clues and answers of a category
@@ -104,7 +111,7 @@ public class QuinzicalModel {
 	 * @return true if userInput is the correct answer false otherwise
 	 */
 	public boolean checkAnswer(String userInput) {
-		for (String answer: currentAnswers) {
+		for (String answer: _currentAnswers) {
 			if (userInput.equalsIgnoreCase(answer.trim())) {
 				attempts=0;
 				return true;
@@ -120,14 +127,14 @@ public class QuinzicalModel {
 	 * @param category
 	 */
 	public void setCurrentCategory(String category){
-		currentCategory = category;
+		_currentCategory = category;
 	}	
 	/**
 	 * get currentCategory
 	 * @return currentCategory
 	 */
 	public String getCurrentCategory() {
-		return currentCategory;
+		return _currentCategory;
 	}	
 
 	/**
@@ -135,14 +142,14 @@ public class QuinzicalModel {
 	 * @param question
 	 */
 	public void setCurrentQuestion(String question){
-		currentQuestion = question;
+		_currentQuestion = question;
 	}	
 	/**
 	 * get currentQuestion
 	 * @return currentQuestion
 	 */
 	public String getCurrentQuestion() {
-		return currentQuestion;
+		return _currentQuestion;
 	}	
 
 	/**
@@ -150,14 +157,14 @@ public class QuinzicalModel {
 	 * @param answer
 	 */
 	public void setCurrentAnswers(String[] answers) {
-		currentAnswers = answers;
+		_currentAnswers = answers;
 	}	
 	/**
 	 * get current answer
 	 * @return currentAnswer
 	 */
 	public String[] getCurrentAnswers() {
-		return currentAnswers;
+		return _currentAnswers;
 	}
 	
 	/**
@@ -165,14 +172,14 @@ public class QuinzicalModel {
 	 * @param answer
 	 */
 	public void setCurrentAnswer(String answer) {
-		currentAnswer = answer;
+		_currentAnswer = answer;
 	}	
 	/**
 	 * get current answer
 	 * @return currentAnswer
 	 */
 	public String getCurrentAnswer() {
-		return currentAnswer;
+		return _currentAnswer;
 	}
 
 	/**
@@ -195,14 +202,14 @@ public class QuinzicalModel {
 	 * @param value is the value of the current question
 	 */
 	public void setCurrentTag(String tag) {
-		currentTag = tag;
+		_currentTag = tag;
 	}
 	/**
 	 * get current tag
 	 * @return currentValue
 	 */
 	public String getCurrentTag() {
-		return currentTag;
+		return _currentTag;
 	}
 
 	/**
@@ -265,7 +272,7 @@ public class QuinzicalModel {
 	 * using bash command to find the names of the categories in the category folder
 	 * each category is added to the list
 	 */
-	private void initialiseCategories() {
+	private void initialisecategories() {
 		categories = executeBashCmdWithOutput("ls categories");
 		System.out.println(categories);
 	}
@@ -273,16 +280,16 @@ public class QuinzicalModel {
 	/**
 	 * Get five random categories for the games module.
 	 */
-	public List<String> getFiveRandomCategories () {
-		if (fiveRandomCategories.size() < 5 ) {
-			List<String> shuffledCategories = new ArrayList<String>(categories);
-			Collections.shuffle(shuffledCategories);
-			System.out.println(shuffledCategories);
+	public List<String> getFiveRandomcategories () {
+		if (fiveRandomcategories.size() < 5 ) {
+			List<String> shuffledcategories = new ArrayList<String>(categories);
+			Collections.shuffle(shuffledcategories);
+			System.out.println(shuffledcategories);
 			for (int i = 0; i < 5; i++) {
-				fiveRandomCategories.add(shuffledCategories.get(i));
+				fiveRandomcategories.add(shuffledcategories.get(i));
 			}
 		}
-		return fiveRandomCategories;
+		return fiveRandomcategories;
 	}
 
 	/**
@@ -291,7 +298,7 @@ public class QuinzicalModel {
 	 * [animals line line line line line
 	 * countries line line line line line]
 	 */
-	private void readCategories() throws Exception {
+	private void readcategories() throws Exception {
 		if (this.getCategory().size() > 0) {
 			for (String category: categories) {
 
@@ -384,5 +391,9 @@ public class QuinzicalModel {
 			instance = new QuinzicalModel();
 		}
 		return instance;
+	}
+
+	public Clue getCurrentClue() {
+		return _currentClue;
 	}
 }
