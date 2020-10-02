@@ -75,6 +75,12 @@ public class Clue {
 		return 3-_attempts; 
 	}
 	
+	/**
+	 * checkAnswers check if the string userInput is equal case insensitive 
+	 * to the current answer
+	 * @param userInput is a string
+	 * @return true if userInput is the correct answer false otherwise
+	 */
 	public boolean checkAnswer(String userInput) {
 		for (String answer: _answers) {
 			if (userInput.equalsIgnoreCase(answer.trim())) {

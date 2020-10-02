@@ -24,17 +24,11 @@ public class QuinzicalModel {
 	private List<String> categories = new ArrayList<String>();
 	private List<String> fiveRandomcategories = new ArrayList<String>();
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
-	private String[] _currentAnswers;
-	private String _currentAnswer;
-	private String _currentQuestion;
 	private String _currentCategory;
-	private String _currentTag;
+	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
 	private List<String> _fiveRandomClues;
 	private Clue _currentClue;
-	private int currentValue;
-	private int attempts = 0;
 	private int [] _answeredQuestions = {0,0,0,0,0};
-	private String _command;
 	public int ttsSpeed = 175;
 
 	public QuinzicalModel() throws Exception {
@@ -47,28 +41,7 @@ public class QuinzicalModel {
 		//			System.out.println(values);
 		//		}
 	}
-	
-	private void formatQuestionSet (String questionSet) {
-        String[] splitString = questionSet.split("[\\(\\)]");
-		
-		String question = splitString[0].trim();
-		String answer = splitString[2].trim();
-		question = question.replaceAll("[,]$|[.]$","");
-		answer = answer.replaceAll("[,]$|[.]$","");
 
-		_currentAnswers = answer.split("/");
-
-		setCurrentQuestion(question);
-		setCurrentAnswers(_currentAnswers);
-		setCurrentAnswer(answer);
-		setCurrentTag(splitString[1].trim());
-
-//		System.out.println(question);
-//		System.out.println(splitString[1].trim().replace("[^a-zA-Z0-9 ]", ""));
-//		for (String answers: currentAnswers) {
-//			System.out.println(answers.trim());
-//		}
-	}
 	public void loadRandomQuestionAndAnswer(String category) {
 		List<String> Clues = new ArrayList<String>();
 		Clues = data.get(category);
@@ -99,28 +72,15 @@ public class QuinzicalModel {
 	/**
 	 * Load the question set from five randomly chosen questions.
 	 */
-	public void loadQuestionSet(int index) {
-		String questionSet = _fiveRandomClues.get(index);
-		formatQuestionSet(questionSet);
-	}
-	
-	/**
-	 * checkAnswers check if the string userInput is equal case insensitive 
-	 * to the current answer
-	 * @param userInput is a string
-	 * @return true if userInput is the correct answer false otherwise
-	 */
-	public boolean checkAnswer(String userInput) {
-		for (String answer: _currentAnswers) {
-			if (userInput.equalsIgnoreCase(answer.trim())) {
-				attempts=0;
-				return true;
-			}
+	public void loadQuestionSet(String category,int index) {
+		String clue = _gamesData.get(category).get(index);
+	    try {
+			_currentClue = new Clue (clue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		attempts++;
-		return false;
 	}
-
 
 	/**
 	 * set current category
@@ -136,97 +96,6 @@ public class QuinzicalModel {
 	public String getCurrentCategory() {
 		return _currentCategory;
 	}	
-
-	/**
-	 * set currentQuestion
-	 * @param question
-	 */
-	public void setCurrentQuestion(String question){
-		_currentQuestion = question;
-	}	
-	/**
-	 * get currentQuestion
-	 * @return currentQuestion
-	 */
-	public String getCurrentQuestion() {
-		return _currentQuestion;
-	}	
-
-	/**
-	 * set current answer
-	 * @param answer
-	 */
-	public void setCurrentAnswers(String[] answers) {
-		_currentAnswers = answers;
-	}	
-	/**
-	 * get current answer
-	 * @return currentAnswer
-	 */
-	public String[] getCurrentAnswers() {
-		return _currentAnswers;
-	}
-	
-	/**
-	 * set current answer
-	 * @param answer
-	 */
-	public void setCurrentAnswer(String answer) {
-		_currentAnswer = answer;
-	}	
-	/**
-	 * get current answer
-	 * @return currentAnswer
-	 */
-	public String getCurrentAnswer() {
-		return _currentAnswer;
-	}
-
-	/**
-	 * set currentValue
-	 * @param value is the value of the current question
-	 */
-	public void setCurrentValue(int value) {
-		currentValue = value;
-	}
-	/**
-	 * get current value
-	 * @return currentValue
-	 */
-	public int getCurrentValue() {
-		return currentValue;
-	}
-
-	/**
-	 * set currentTag
-	 * @param value is the value of the current question
-	 */
-	public void setCurrentTag(String tag) {
-		_currentTag = tag;
-	}
-	/**
-	 * get current tag
-	 * @return currentValue
-	 */
-	public String getCurrentTag() {
-		return _currentTag;
-	}
-
-	/**
-	 * get String of attempts
-	 * @return winnings
-	 */
-	public void setAttempts(int numberOfAttempts) {
-		attempts = numberOfAttempts;
-	}
-
-	/**
-	 * get String of attempts
-	 * @return winnings
-	 */
-	public String getAttempts() {
-		return String.valueOf(attempts);
-	}
 
 	/**
 	 * increase tts speed
@@ -282,11 +151,13 @@ public class QuinzicalModel {
 	 */
 	public List<String> getFiveRandomcategories () {
 		if (fiveRandomcategories.size() < 5 ) {
-			List<String> shuffledcategories = new ArrayList<String>(categories);
-			Collections.shuffle(shuffledcategories);
-			System.out.println(shuffledcategories);
+			List<String> shuffledCategories = new ArrayList<String>(categories);
+			Collections.shuffle(shuffledCategories);
+			System.out.println(shuffledCategories);
 			for (int i = 0; i < 5; i++) {
-				fiveRandomcategories.add(shuffledcategories.get(i));
+				fiveRandomcategories.add(shuffledCategories.get(i));
+				setFiveRandomClues(shuffledCategories.get(i));
+				_gamesData.put(fiveRandomcategories.get(i), _fiveRandomClues);
 			}
 		}
 		return fiveRandomcategories;
@@ -365,14 +236,12 @@ public class QuinzicalModel {
 	@SuppressWarnings("unused")
 	private void executeBashCmdNoOutput(String command) {
 		try {
-			_command = command;
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			Process process = pb.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	/**
 	 * text to speech a string

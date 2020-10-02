@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Clue;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 
@@ -38,15 +39,17 @@ public class GamesQuestionViewController implements Initializable {
 
 	private QuinzicalModel model;
 	
+	private Clue _clue;
+	
 	Alert alert = new Alert(AlertType.INFORMATION);
 	
 	@Override
 	public void initialize (URL arg0, ResourceBundle arg1) {
 		try {
 			model = QuinzicalModel.createInstance();
-			System.out.println(model.getCurrentAnswer());
-			model.tts(model.getCurrentQuestion());
-			tagLabel.setText(model.getCurrentTag());
+			_clue = model.getCurrentClue();
+			_clue.ttsQuestion();
+			_clue.setTagLabel(tagLabel);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,7 +57,7 @@ public class GamesQuestionViewController implements Initializable {
 	// Event Listener on Button[#submitBtn].onAction
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
-		if (model.checkAnswer(answerField.getText())) {
+		if (_clue.checkAnswer(answerField.getText())) {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
         	alert.setContentText("Correct!");
