@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -425,6 +426,14 @@ public class QuinzicalModel {
 		}
 		setFiveRandomCategories();
 	}
+	
+	public boolean gameCompleted() {
+		int[] expected = {5,5,5,5,5};
+		if(Arrays.equals(_answeredQuestions, expected)) {
+			return true;
+		}
+		return false;
+	}	
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Quinzical

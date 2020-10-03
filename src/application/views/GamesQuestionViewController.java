@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class GamesQuestionViewController implements Initializable {
 
 	private Clue _clue;
 
-	Alert _alert = new Alert(AlertType.INFORMATION);
+	private Alert _alert = new Alert(AlertType.INFORMATION);
 
 	@Override
 	public void initialize (URL arg0, ResourceBundle arg1) {
@@ -54,7 +55,7 @@ public class GamesQuestionViewController implements Initializable {
 			_model = QuinzicalModel.createInstance();
 			_clue = _model.getCurrentClue();
 			_clue.ttsQuestion();
-			tagLabel.setText(_clue.getTag());;
+			tagLabel.setText(_clue.getTag());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,6 +119,14 @@ public class GamesQuestionViewController implements Initializable {
 
 		window.setScene(menuScene);
 		window.show();
+		if (_model.gameCompleted()) {
+			_alert = new Alert(AlertType.INFORMATION);
+			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			_alert.setTitle("Congratulations");
+			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
+			_alert.setContentText("You have answered every question, return to menu to reset the game!");
+			_alert.showAndWait();
+		}
 	}
 
 

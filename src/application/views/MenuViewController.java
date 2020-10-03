@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import application.model.QuinzicalModel;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class MenuViewController {
@@ -29,6 +29,7 @@ public class MenuViewController {
     private Button resetBtn;
     
     private QuinzicalModel _model;
+    private Alert alert;
 
     @FXML
     void practiceBtnClick(ActionEvent event) throws IOException {
@@ -43,6 +44,11 @@ public class MenuViewController {
     
     @FXML
     void gamesBtnClick(ActionEvent event) throws IOException {
+    	try {
+			_model = QuinzicalModel.createInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
 		Scene gamesModuleScene = new Scene(gamesModuleView);
 		
@@ -50,6 +56,14 @@ public class MenuViewController {
 		
 		window.setScene(gamesModuleScene);
 		window.show();
+		if (_model.gameCompleted()) {
+			alert = new Alert(AlertType.INFORMATION);
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			alert.setTitle("Congratulations");
+			alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
+			alert.setContentText("You have answered every question, return to menu to reset the game!");
+			alert.showAndWait();
+		}
     }
 
     @FXML
