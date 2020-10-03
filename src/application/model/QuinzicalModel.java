@@ -23,7 +23,7 @@ public class QuinzicalModel {
 	private static QuinzicalModel instance = null;
 
 	private List<String> _categories;
-	private List<String> _fiveRandomCategories;
+	private List<String> _fiveRandomCategories = new ArrayList<String>();
 	private List<String> _fiveRandomClues;
 	private Map<String, List<String>> _practiceData = new HashMap<String, List<String>>();
 	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
@@ -100,7 +100,8 @@ public class QuinzicalModel {
 			}
 		}
 		if (five_random_categories.length() == 0) {
-			List<String> temp = new ArrayList<String> ();
+//			List<String> temp = new ArrayList<String> ();
+			String str = "";
 			for (int i = 0; i < 5; i++) {
 				try {
 					//create files that are used to store the clues of 
@@ -117,13 +118,29 @@ public class QuinzicalModel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				temp.add(shuffledCategories.get(i));
+				_fiveRandomCategories.add(shuffledCategories.get(i));
 				setFiveRandomClues(shuffledCategories.get(i));
-				executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",shuffledCategories.get(i)));
+				str = str + shuffledCategories.get(i) + ",";
 				_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
 			}
-			_fiveRandomCategories = temp;
+			executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+		}
+		else {
+			BufferedReader reader;
+			String str = "";
+			try {
+				reader = new BufferedReader(new FileReader("five_random_categories"));
+				String line = reader.readLine();
+				str = line;
+				System.out.println(str);
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String[] splitStr = str.split(",");
+			for (int i = 0; i<5;i++) {
+				_fiveRandomCategories.add(splitStr[i]);
+			}
 		}
 	}
 	
