@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MenuViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.MenuViewController">
    <children>
       <Label layoutX="174.0" layoutY="64.0" text="Menu">
          <font>
             <Font size="44.0" />
          </font>
       </Label>
-      <Button fx:id="gamesBtn" layoutX="84.0" layoutY="155.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="20.0" prefWidth="121.0" text="Games module" />
-      <Button fx:id="practiceBtn" layoutX="87.0" layoutY="253.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="26.0" prefWidth="175.0" text="Practice model" />
-      <Button fx:id="ttsSettingsBtn" layoutX="84.0" layoutY="324.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="Text to speech settings" />
+      <Button fx:id="gamesBtn" layoutX="82.0" layoutY="154.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="20.0" prefWidth="121.0" text="Games module" textAlignment="CENTER" />
+      <Button fx:id="practiceBtn" layoutX="82.0" layoutY="200.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="26.0" prefWidth="175.0" text="Practice module" />
+      <Button fx:id="ttsSettingsBtn" layoutX="82.0" layoutY="247.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="Text to speech settings" />
+      <Button fx:id="resetBtn" layoutX="82.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetBtnClick" text="Reset" />
    </children>
 </AnchorPane>
