@@ -394,7 +394,7 @@ public class QuinzicalModel {
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
 	}
 
-	public void reset() {
+	public void reset(){
 		executeBashCmdNoOutput("rm -r games_module");
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
 		executeBashCmdNoOutput("rm answered_questions");
@@ -404,6 +404,12 @@ public class QuinzicalModel {
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {
 			_answeredQuestions[i]=0;
+		}
+		initialisecategories();
+		try {
+			readcategories();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		setFiveRandomCategories();
 	}
