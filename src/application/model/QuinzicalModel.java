@@ -411,6 +411,20 @@ public class QuinzicalModel {
 		String strWinnings = Integer.toString(winnings);
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
 	}
+	
+	public void reset() {
+		executeBashCmdNoOutput("rm -r games_module");
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
+		executeBashCmdNoOutput("rm answered_questions");
+		executeBashCmdNoOutput("rm five_random_categories");
+		System.out.println(getWinnings());
+		_gamesData.clear();
+		_fiveRandomCategories.clear();
+		for (int i= 0; i<5;i++) {
+			_answeredQuestions[i]=0;
+		}
+		setFiveRandomCategories();
+	}
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Quinzical

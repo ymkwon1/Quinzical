@@ -77,7 +77,7 @@ public class MenuViewController {
     	alert.setContentText("Are you sure you want to reset the game?");
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK) {
-//    		_model.reset();
+    		_model.reset();
     	}
     }
 }
