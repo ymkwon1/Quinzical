@@ -39,13 +39,15 @@ public class GamesQuestionViewController implements Initializable {
 	private Label tagLabel;
 	@FXML
 	private Label answerLabel;
+	@FXML
+	private Button repeatBtn;
 
 	private QuinzicalModel _model;
-	
+
 	private Clue _clue;
-	
+
 	Alert _alert = new Alert(AlertType.INFORMATION);
-	
+
 	@Override
 	public void initialize (URL arg0, ResourceBundle arg1) {
 		try {
@@ -63,54 +65,60 @@ public class GamesQuestionViewController implements Initializable {
 		_model.stopTts();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
-    		_alert.setTitle("Answer");
-        	_alert.setHeaderText(null);
-        	_alert.setContentText("Correct! You have won "+ _clue.getValue());
-        	_model.tts("Correct! You have won "+ _clue.getValue());
-        	_alert.showAndWait();
-        	returnToGames(event);
-    	} else {
-    		_model.decreaseWinnings(_clue.getValue());
-    		_alert.setTitle("Answer");
-        	_alert.setHeaderText(null);
-        	_alert.setContentText("Incorrect! You have lost "+ _clue.getValue());
-        	_model.tts("Incorrect! You have lost "+ _clue.getValue());
-        	_alert.showAndWait();
-        	returnToGames(event);
-    	}
+			_alert.setTitle("Answer");
+			_alert.setHeaderText(null);
+			_alert.setContentText("Correct! You have won "+ _clue.getValue());
+			_model.tts("Correct! You have won "+ _clue.getValue());
+			_alert.showAndWait();
+			returnToGames(event);
+		} else {
+			_model.decreaseWinnings(_clue.getValue());
+			_alert.setTitle("Answer");
+			_alert.setHeaderText(null);
+			_alert.setContentText("Incorrect! You have lost "+ _clue.getValue());
+			_model.tts("Incorrect! You have lost "+ _clue.getValue());
+			_alert.showAndWait();
+			returnToGames(event);
+		}
 	}
+	@FXML
+	void repeatBtnClick(ActionEvent event) {
+		_clue.ttsQuestion();
+
+	}
+
 	// Event Listener on Button[#noIdeaBtn].onAction
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
-    	alert.setHeaderText(null);
-    	alert.setContentText("Are you sure you want to give up?");
-    	Optional<ButtonType> result = alert.showAndWait();
-    	if (result.get() == ButtonType.OK) {
-    		Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
-        	Scene menuScene = new Scene(menuView);
-        	
-        	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        	
-        	window.setScene(menuScene);
-        	window.show();
-    	}
+		alert.setHeaderText(null);
+		alert.setContentText("Are you sure you want to give up?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
+			Scene menuScene = new Scene(menuView);
+
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+			window.setScene(menuScene);
+			window.show();
+		}
 	}
-	
+
 	/**
-     * returns to Games model screen
-     */
-    void returnToGames(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
-    	Scene menuScene = new Scene(menuView);
-    	
-    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    	
-    	window.setScene(menuScene);
-    	window.show();
-    }
-	
-	
+	 * returns to Games model screen
+	 */
+	void returnToGames(ActionEvent event) throws IOException {
+		Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
+		Scene menuScene = new Scene(menuView);
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(menuScene);
+		window.show();
+	}
+
+
 }
