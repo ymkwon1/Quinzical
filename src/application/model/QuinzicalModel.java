@@ -21,7 +21,6 @@ public class QuinzicalModel {
 
 	// for singleton class
 	private static QuinzicalModel instance = null;
-
 	private List<String> _categories;
 	private List<String> _fiveRandomCategories = new ArrayList<String>();
 	private List<String> _fiveRandomClues;
@@ -46,6 +45,7 @@ public class QuinzicalModel {
 			executeBashCmdNoOutput("touch winnings");
 			executeBashCmdNoOutput("echo 0 >> winnings");
 		}
+		
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class QuinzicalModel {
 	 */
 	private void initialisecategories() {
 		_categories = executeBashCmdWithOutput("ls categories");
-		System.out.println(_categories);
+//		System.out.println(_categories);
 	}
 
 	/**
@@ -86,69 +86,104 @@ public class QuinzicalModel {
 		}
 	}
 	
-	public void setFiveRandomCategories () {
-		List<String> shuffledCategories = new ArrayList<String>(_categories);
-		Collections.shuffle(shuffledCategories);
-		//create a file to store the selected five categories
-		File five_random_categories = new File ("five_random_categories");
-		if (!five_random_categories.exists()) {
-			try {
-				five_random_categories.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if (five_random_categories.length() == 0) {
-//			List<String> temp = new ArrayList<String> ();
-			String str = "";
-			for (int i = 0; i < 5; i++) {
+		public void setFiveRandomCategories () {
+			//create a file to store the selected five categories
+			File five_random_categories = new File ("five_random_categories");
+			if (!five_random_categories.exists()) {
 				try {
-					//create files that are used to store the clues of 
-					//the selected five categories
-					File dir = new File ("games_module");
-					if (!dir.exists()) {
-						dir.mkdir();
-					}
-					File file = new File(dir,shuffledCategories.get(i));
-					if (!file.exists()) {
-						file.createNewFile();
-					}		
+					five_random_categories.createNewFile();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				_fiveRandomCategories.add(shuffledCategories.get(i));
-				setFiveRandomClues(shuffledCategories.get(i));
-				str = str + shuffledCategories.get(i) + ",";
-				_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
 			}
-			executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+			if (five_random_categories.length() == 0) {
+	//			List<String> temp = new ArrayList<String> ();
+				List<String> shuffledCategories = new ArrayList<String>(_categories);
+				Collections.shuffle(shuffledCategories);
+				String str = "";
+				for (int i = 0; i < 5; i++) {
+					try {
+						//create files that are used to store the clues of 
+						//the selected five categories
+						File dir = new File ("games_module");
+						if (!dir.exists()) {
+							dir.mkdir();
+						}
+						File file = new File(dir,shuffledCategories.get(i));
+						if (!file.exists()) {
+							file.createNewFile();
+						}		
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					_fiveRandomCategories.add(shuffledCategories.get(i));
+					setFiveRandomClues(shuffledCategories.get(i));
+					str = str + shuffledCategories.get(i) + ",";
+					_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
+				}
+				executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+			}
+			else {
+				BufferedReader reader;
+				String str = "";
+				try {
+					reader = new BufferedReader(new FileReader("five_random_categories"));
+					String line = reader.readLine();
+					str = line;
+					System.out.println(str);
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				String[] splitStr = str.split(",");
+				for (int i = 0; i<5;i++) {
+					_fiveRandomCategories.add(splitStr[i]);
+					setFiveRandomClues(splitStr[i]);
+					_gamesData.put(splitStr[i], _fiveRandomClues);
+				}
+			}
 		}
-		else {
-			BufferedReader reader;
-			String str = "";
-			try {
-				reader = new BufferedReader(new FileReader("five_random_categories"));
-				String line = reader.readLine();
-				str = line;
-				System.out.println(str);
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			String[] splitStr = str.split(",");
-			for (int i = 0; i<5;i++) {
-				_fiveRandomCategories.add(splitStr[i]);
-			}
-		}
-	}
 	
 	/**
 	 * Get five random categories for the games module.
 	 */
 	public List<String> getFiveRandomCategories () {
 		return _fiveRandomCategories;
+	}
+	
+	/**
+	 * Set five random clues and answers of a category
+	 */
+	public void setFiveRandomClues (String category){
+		File file = new File("games_module", category);
+		if (file.length() == 0) {
+			List<String> clues = new ArrayList<String>();
+			clues = _practiceData.get(category);
+			Collections.shuffle(clues);
+			List<String> temp = new ArrayList<String>();
+			for (int i = 0; i<5;i++) {
+				temp.add(clues.get(i));
+				executeBashCmdNoOutput(String.format("echo \"%s\" >> games_module/\"%s\"",clues.get(i), category));
+			}
+			_fiveRandomClues = temp;
+		}
+		else {
+			try {
+				Scanner myReader = new Scanner(file);
+				List<String> temp= new ArrayList<String>();
+				while(myReader.hasNextLine()) {
+					String fileLine = myReader.nextLine();
+					temp.add(fileLine);
+				}
+				_fiveRandomClues = new ArrayList<String>(temp);
+				myReader.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	public void loadRandomClue(String category) {
@@ -164,20 +199,7 @@ public class QuinzicalModel {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Set five random clues and answers of a category
-	 */
-	public void setFiveRandomClues (String category){
-		List<String> clues = new ArrayList<String>();
-		clues = _practiceData.get(category);
-		Collections.shuffle(clues);
-		List<String> temp = new ArrayList<String>();
-		for (int i = 0; i<5;i++) {
-			temp.add(clues.get(i));
-		}
-		_fiveRandomClues = temp;
-		System.out.println(_fiveRandomClues);
-	}
+
 	/**
 	 * Load the clue from five randomly chosen clues.
 	 */
@@ -197,10 +219,59 @@ public class QuinzicalModel {
 	
 	public int getAnsweredQuestions(int index){
 		return _answeredQuestions[index];
+
 	}
 
-	public void setAnsweredQuetsions(int index) {
-		_answeredQuestions[index]++;
+	public void setAnsweredQuestions(int index, boolean hasQuit) {
+		File file = new File ("answered_questions");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				_answeredQuestions[index]++;
+				for (int i = 0;i<5;i++) {
+					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} 
+		else {
+			try {
+				Scanner myReader = new Scanner(file);
+				int count  = 0;
+				while(myReader.hasNextLine()) {
+ 
+					String fileLine = myReader.nextLine();
+					_answeredQuestions[count] = Integer.parseInt(fileLine);
+					count++;
+				}
+				//if the user has quit the game and clicks on the games module again,
+				//set the numbers of time of each question attempted as saved in the file
+				//without adding 1
+				if (hasQuit== false) {
+					_answeredQuestions[index]++;
+				}
+				
+				for (int i = 0;i<5;i++ ) {
+					System.out.println(_answeredQuestions[i]);
+				}
+				myReader.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			file.delete();
+			try {
+				file.createNewFile();
+				for (int i = 0;i<5;i++) {
+					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**

@@ -38,6 +38,7 @@ public class GamesModuleViewController implements Initializable{
 		try {
 			_model = QuinzicalModel.createInstance();
 			_categories = _model.getFiveRandomCategories();
+			_model.setAnsweredQuestions(0,true);
 			System.out.println(_categories);
 			
 			int numRows=5;
@@ -51,18 +52,19 @@ public class GamesModuleViewController implements Initializable{
 				for (int col = 1;col < 6; col++) {
 					String value = String.valueOf(100*(col));
 					Button button = new Button(value);
+
 					if(Integer.valueOf(value)/100 == _model.getAnsweredQuestions(row)+1) {
 						button.setDisable(false);
 					} else {
 						button.setDisable(true);
 					}
-					int categoryIndex = row;
 					int questionIndex = col-1;
+					int categoryIndex = row;
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					_model.loadClue(category,questionIndex);
-	    					_model.setAnsweredQuetsions(categoryIndex);
+	    					_model.setAnsweredQuestions(categoryIndex,false);
 	    					try {
 								askQuestion(e);
 							} catch (IOException e1) {
