@@ -73,11 +73,15 @@ public class Clue {
 	
 	public String getAnswer () {
 		if (_attempts == 3) {
-			return String.format("The answer was %s", _answer);
+			return String.format("The answer was %s", getAnswers());
 		}
 		else {
 			return null;
 		}
+	}
+	
+	public String getAnswers () {
+		return _answer;
 	}
 	
 	public int getValue (){

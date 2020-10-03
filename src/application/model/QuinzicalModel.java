@@ -57,7 +57,7 @@ public class QuinzicalModel {
 	 */
 	private void initialisecategories() {
 		_categories = executeBashCmdWithOutput("ls categories");
-//		System.out.println(_categories);
+		//		System.out.println(_categories);
 	}
 
 	/**
@@ -88,74 +88,74 @@ public class QuinzicalModel {
 			}
 		}
 	}
-	
-		public void setFiveRandomCategories () {
-			//create a file to store the selected five categories
-			File five_random_categories = new File ("five_random_categories");
-			if (!five_random_categories.exists()) {
+
+	public void setFiveRandomCategories () {
+		//create a file to store the selected five categories
+		File five_random_categories = new File ("five_random_categories");
+		if (!five_random_categories.exists()) {
+			try {
+				five_random_categories.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (five_random_categories.length() == 0) {
+			//			List<String> temp = new ArrayList<String> ();
+			List<String> shuffledCategories = new ArrayList<String>(_categories);
+			Collections.shuffle(shuffledCategories);
+			String str = "";
+			for (int i = 0; i < 5; i++) {
 				try {
-					five_random_categories.createNewFile();
+					//create files that are used to store the clues of 
+					//the selected five categories
+					File dir = new File ("games_module");
+					if (!dir.exists()) {
+						dir.mkdir();
+					}
+					File file = new File(dir,shuffledCategories.get(i));
+					if (!file.exists()) {
+						file.createNewFile();
+					}		
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				_fiveRandomCategories.add(shuffledCategories.get(i));
+				setFiveRandomClues(shuffledCategories.get(i));
+				str = str + shuffledCategories.get(i) + ",";
+				_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
 			}
-			if (five_random_categories.length() == 0) {
-	//			List<String> temp = new ArrayList<String> ();
-				List<String> shuffledCategories = new ArrayList<String>(_categories);
-				Collections.shuffle(shuffledCategories);
-				String str = "";
-				for (int i = 0; i < 5; i++) {
-					try {
-						//create files that are used to store the clues of 
-						//the selected five categories
-						File dir = new File ("games_module");
-						if (!dir.exists()) {
-							dir.mkdir();
-						}
-						File file = new File(dir,shuffledCategories.get(i));
-						if (!file.exists()) {
-							file.createNewFile();
-						}		
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					_fiveRandomCategories.add(shuffledCategories.get(i));
-					setFiveRandomClues(shuffledCategories.get(i));
-					str = str + shuffledCategories.get(i) + ",";
-					_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
-				}
-				executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+			executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+		}
+		else {
+			BufferedReader reader;
+			String str = "";
+			try {
+				reader = new BufferedReader(new FileReader("five_random_categories"));
+				String line = reader.readLine();
+				str = line;
+				System.out.println(str);
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			else {
-				BufferedReader reader;
-				String str = "";
-				try {
-					reader = new BufferedReader(new FileReader("five_random_categories"));
-					String line = reader.readLine();
-					str = line;
-					System.out.println(str);
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				String[] splitStr = str.split(",");
-				for (int i = 0; i<5;i++) {
-					_fiveRandomCategories.add(splitStr[i]);
-					setFiveRandomClues(splitStr[i]);
-					_gamesData.put(splitStr[i], _fiveRandomClues);
-				}
+			String[] splitStr = str.split(",");
+			for (int i = 0; i<5;i++) {
+				_fiveRandomCategories.add(splitStr[i]);
+				setFiveRandomClues(splitStr[i]);
+				_gamesData.put(splitStr[i], _fiveRandomClues);
 			}
 		}
-	
+	}
+
 	/**
 	 * Get five random categories for the games module.
 	 */
 	public List<String> getFiveRandomCategories () {
 		return _fiveRandomCategories;
 	}
-	
+
 	/**
 	 * Set five random clues and answers of a category
 	 */
@@ -186,9 +186,9 @@ public class QuinzicalModel {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 	public void loadRandomClue(String category) {
 		List<String> clues = new ArrayList<String>();
 		clues = _practiceData.get(category);
@@ -208,89 +208,69 @@ public class QuinzicalModel {
 	 */
 	public void loadClue(String category,int index) {
 		String clue = _gamesData.get(category).get(index);
-	    try {
+		try {
 			_currentClue = new Clue (clue,(index+1)*100);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}	
-	
+
 	public Clue getCurrentClue() {
 		return _currentClue;
 	}
-	
+
 	public int getAnsweredQuestions(int index){
 		return _answeredQuestions[index];
 
 	}
 
 	public void setAnsweredQuestions() {
-		File file = new File ("answered_questions");
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				for (int i = 0;i<5;i++) {
-					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		File file = new File("answered_questions");
+		if(!file.exists()) {
+			executeBashCmdNoOutput("touch answered_questions");
+
+			String answeredQuestions = "";
+			for (int i = 0;i<5;i++) {
+				answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
 			}
-		} 
-		else {
-			try {
-				Scanner myReader = new Scanner(file);
-				int count  = 0;
-				while(myReader.hasNextLine()) {
-					String fileLine = myReader.nextLine();
-					_answeredQuestions[count] = Integer.parseInt(fileLine);
-					count++;
-				}
-				myReader.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-//			file.delete();
-//			try {
-//				file.createNewFile();
-//				for (int i = 0;i<5;i++) {
-//					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
-//				}
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			executeBashCmdNoOutput(String.format("echo \"%s\" >> answered_questions", answeredQuestions));
+
 		}
-	}
-	
-	public void addAnsweredQuestions (int index) {
-		File file = new File ("answered_questions");
-		FileWriter fw;
+		Scanner myReader;
 		try {
-			fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			_answeredQuestions[index]=_answeredQuestions[index]+1;
-			file.delete();
-			try {
-				file.createNewFile();
-				for (int i = 0;i<5;i++) {
-					bw.write(_answeredQuestions[i]);
-					if (i != 4) {
-						bw.newLine();
-					}
+			executeBashCmdNoOutput("touch answered_questions");
+			myReader = new Scanner(file);
+			while(myReader.hasNextLine()) {
+				String fileLine = myReader.nextLine();
+				String[] splitFileLine = fileLine.trim().split(" ");
+				for (int i=0; i<5; i++) {
+					_answeredQuestions[i] = Integer.parseInt(splitFileLine[i]);
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			bw.close();
-		} catch (IOException e1) {
+			myReader.close();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 	}
-	
+
+
+	public void addAnsweredQuestions (int index) {
+
+		_answeredQuestions[index]=_answeredQuestions[index]+1;
+		executeBashCmdNoOutput("rm answered_questions");
+		executeBashCmdNoOutput("touch answered_questions");
+		String answeredQuestions = "";
+		for (int i = 0;i<5;i++) {
+			answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
+		}
+		executeBashCmdNoOutput(String.format("echo \"%s\" >> answered_questions", answeredQuestions));
+
+
+
+	}
+
 	/**
 	 * get all categories in the game as a list of strings
 	 * @return categories
@@ -333,7 +313,7 @@ public class QuinzicalModel {
 		}
 		return bashOutput;
 	}
-	
+
 	/**
 	 * execute a bash command that doesn't have an output
 	 * @param command
@@ -353,12 +333,12 @@ public class QuinzicalModel {
 	 */
 	public void tts(String string) {
 		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, ttsSpeed));
-		
+
 	}
-	
+
 	public void stopTts () {
-//		String command = "pkill -f espeak";
-//		executeBashCmdNoOutput(command);
+		//		String command = "pkill -f espeak";
+		//		executeBashCmdNoOutput(command);
 		Stream<ProcessHandle> descendents = ProcessHandle.current().descendants();
 		descendents.filter(ProcessHandle::isAlive).forEach(ph -> {
 			ph.destroy();
@@ -378,7 +358,7 @@ public class QuinzicalModel {
 	public void decreaseTTSSpeed() {
 		ttsSpeed = ttsSpeed - 10;
 	}
-	
+
 	/**
 	 * get tts speed
 	 * @return ttsSpeed
@@ -399,21 +379,21 @@ public class QuinzicalModel {
 		}
 		return _winnings;
 	}
-	
+
 	public void addWinnings(int value) {
 		int winnings = getWinnings();
 		winnings = winnings + value;
 		String strWinnings = Integer.toString(winnings);
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
 	}
-	
+
 	public void decreaseWinnings(int value) {
-		 int winnings = getWinnings();
+		int winnings = getWinnings();
 		winnings = winnings - value;
 		String strWinnings = Integer.toString(winnings);
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
 	}
-	
+
 	public void reset() {
 		executeBashCmdNoOutput("rm -r games_module");
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
@@ -427,7 +407,7 @@ public class QuinzicalModel {
 		}
 		setFiveRandomCategories();
 	}
-	
+
 	public boolean gameCompleted() {
 		int[] expected = {5,5,5,5,5};
 		if(Arrays.equals(_answeredQuestions, expected)) {
