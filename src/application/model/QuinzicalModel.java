@@ -222,18 +222,14 @@ public class QuinzicalModel {
 
 	}
 
-	public void setAnsweredQuestions(int index, boolean hasQuit) {
+	public void setAnsweredQuestions() {
 		File file = new File ("answered_questions");
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-				if (hasQuit== false) {
-					_answeredQuestions[index]++;
-				}
 				for (int i = 0;i<5;i++) {
 					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
 				}
-				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -244,35 +240,52 @@ public class QuinzicalModel {
 				Scanner myReader = new Scanner(file);
 				int count  = 0;
 				while(myReader.hasNextLine()) {
- 
 					String fileLine = myReader.nextLine();
 					_answeredQuestions[count] = Integer.parseInt(fileLine);
 					count++;
-				}
-				//if the user has quit the game and clicks on the games module again,
-				//set the numbers of time of each question attempted as saved in the file
-				//without adding 1
-				if (hasQuit== false) {
-					_answeredQuestions[index]++;
-				}
-				
-				for (int i = 0;i<5;i++ ) {
-					System.out.println(_answeredQuestions[i]);
 				}
 				myReader.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			file.delete();
-			try {
-				file.createNewFile();
-				for (int i = 0;i<5;i++) {
-					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+//			file.delete();
+//			try {
+//				file.createNewFile();
+//				for (int i = 0;i<5;i++) {
+//					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
+//				}
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
+	}
+	
+	public void addAnsweredQuestions (int index) {
+//		File file = new File("answered_questions");
+//		try {
+//			Scanner myReader = new Scanner(file);
+//			int count  = 0;
+//			while(myReader.hasNextLine()) {
+//				String fileLine = myReader.nextLine();
+//				_answeredQuestions[count] = Integer.parseInt(fileLine);
+//				count++;
+//			}
+//			myReader.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		File file = new File ("answered_questions");
+		_answeredQuestions[index]=_answeredQuestions[index]+1;
+		file.delete();
+		try {
+			file.createNewFile();
+			for (int i = 0;i<5;i++) {
+				executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

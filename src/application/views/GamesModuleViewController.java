@@ -38,7 +38,7 @@ public class GamesModuleViewController implements Initializable{
 		try {
 			_model = QuinzicalModel.createInstance();
 			_categories = _model.getFiveRandomCategories();
-			_model.setAnsweredQuestions(0,true);
+			_model.setAnsweredQuestions();
 			System.out.println(_categories);
 			
 			int numRows=5;
@@ -64,7 +64,8 @@ public class GamesModuleViewController implements Initializable{
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					_model.loadClue(category,questionIndex);
-	    					_model.setAnsweredQuestions(categoryIndex,false);
+	    					_model.addAnsweredQuestions(categoryIndex);
+//	    					_model.setAnsweredQuestions();
 	    					try {
 								askQuestion(e);
 							} catch (IOException e1) {
