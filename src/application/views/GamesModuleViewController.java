@@ -27,6 +27,8 @@ public class GamesModuleViewController implements Initializable{
 	
 	@FXML
 	private GridPane gridPane;
+    @FXML
+    private Label winningsLabel;
 	
 	private QuinzicalModel _model;
 	private List<String> _categories;
@@ -39,6 +41,8 @@ public class GamesModuleViewController implements Initializable{
 			_model = QuinzicalModel.createInstance();
 			_categories = _model.getFiveRandomCategories();
 			_model.setAnsweredQuestions();
+			int currentWinnings = _model.getWinnings();
+			winningsLabel.setText(String.format("Current winnings: %d", currentWinnings));
 			System.out.println(_categories);
 			
 			int numRows=5;
