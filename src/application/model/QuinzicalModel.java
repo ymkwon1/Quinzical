@@ -28,6 +28,7 @@ public class QuinzicalModel {
 	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
 	private Clue _currentClue;
 	private int [] _answeredQuestions = {0,0,0,0,0};
+	private int _winnings = 0;
 	private int ttsSpeed = 175;
 
 	public QuinzicalModel() throws Exception {
@@ -45,7 +46,6 @@ public class QuinzicalModel {
 			executeBashCmdNoOutput("touch winnings");
 			executeBashCmdNoOutput("echo 0 >> winnings");
 		}
-		
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class QuinzicalModel {
 	public void loadClue(String category,int index) {
 		String clue = _gamesData.get(category).get(index);
 	    try {
-			_currentClue = new Clue (clue);
+			_currentClue = new Clue (clue,(index+1)*100);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,7 +227,9 @@ public class QuinzicalModel {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-				_answeredQuestions[index]++;
+				if (hasQuit== false) {
+					_answeredQuestions[index]++;
+				}
 				for (int i = 0;i<5;i++) {
 					executeBashCmdNoOutput(String.format("echo \"%d\" >> answered_questions", _answeredQuestions[i]));
 				}
@@ -370,6 +372,32 @@ public class QuinzicalModel {
 		return ttsSpeed;
 	}
 
+	public int getWinnings() {
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("winnings"));
+			String line = reader.readLine();
+			_winnings = Integer.parseInt(line.trim());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return _winnings;
+	}
+	
+	public void addWinnings(int value) {
+		int winnings = getWinnings();
+		winnings = winnings + value;
+		String strWinnings = Integer.toString(winnings);
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
+	}
+	
+	public void decreaseWinnings(int value) {
+		 int winnings = getWinnings();
+		winnings = winnings - value;
+		String strWinnings = Integer.toString(winnings);
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
+	}
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Quinzical

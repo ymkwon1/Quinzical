@@ -62,17 +62,19 @@ public class GamesQuestionViewController implements Initializable {
 	public void checkAnswer(ActionEvent event) throws IOException {
 		_model.stopTts();
 		if (_clue.checkAnswer(answerField.getText())) {
+			_model.addWinnings(_clue.getValue());
     		_alert.setTitle("Answer");
         	_alert.setHeaderText(null);
-        	_alert.setContentText("Correct!");
-        	_model.tts("Correct");
+        	_alert.setContentText("Correct! You have won "+ _clue.getValue());
+        	_model.tts("Correct! You have won "+ _clue.getValue());
         	_alert.showAndWait();
         	returnToGames(event);
     	} else {
+    		_model.decreaseWinnings(_clue.getValue());
     		_alert.setTitle("Answer");
         	_alert.setHeaderText(null);
-        	_alert.setContentText("Incorrect!");
-        	_model.tts("Incorrect");
+        	_alert.setContentText("Incorrect! You have lost "+ _clue.getValue());
+        	_model.tts("Incorrect! You have lost "+ _clue.getValue());
         	_alert.showAndWait();
         	returnToGames(event);
     	}

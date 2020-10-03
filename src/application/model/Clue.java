@@ -8,6 +8,7 @@ public class Clue {
 	private String _question;
 	private String _tag;
 	private String _hint;
+	private int _value;
 	private int _attempts;
 	private QuinzicalModel _model;
 	
@@ -23,6 +24,21 @@ public class Clue {
 		_tag = splitString[1].trim();
 		_hint = "";
 		_attempts = 0;
+	}
+	
+	public Clue (String clue,int value) throws Exception {
+		_model = QuinzicalModel.createInstance();
+		_clue = clue;
+		String[] splitString = _clue.split("[\\(\\)]");
+		String question = splitString[0].trim();
+		String answer = splitString[2].trim();
+		_question = question.replaceAll("[,]$|[.]$","");
+		_answer = answer.replaceAll("[,]$|[.]$","");
+		_answers = answer.split("/");
+		_tag = splitString[1].trim();
+		_hint = "";
+		_attempts = 0;
+		_value=value;
 	}
 	
 	public void ttsQuestion() {
@@ -64,6 +80,10 @@ public class Clue {
 		}
 	}
 	
+	public int getValue (){
+		return _value;
+	}
+	
 	public void resetAttempts () {
 		_attempts = 0;
 	}
@@ -79,14 +99,14 @@ public class Clue {
 	 * @return true if userInput is the correct answer false otherwise
 	 */
 	public boolean checkAnswer(String userInput) {
-		for (String answer: _answers) {
-			if (userInput.equalsIgnoreCase(answer.trim())) {
-				_attempts=0;
-				return true;
+			for (String answer: _answers) {
+				if (userInput.equalsIgnoreCase(answer.trim())) {
+					_attempts=0;
+					return true;
+				}
 			}
-		}
-		_attempts++;
-		return false;
+			_attempts++;
+			return false;	
 	}
 
 }
