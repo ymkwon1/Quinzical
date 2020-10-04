@@ -394,7 +394,6 @@ public class QuinzicalModel {
 				if(sc.hasNextLine()) {
 					String speed = sc.nextLine();
 					_ttsSpeed = Integer.parseInt(speed.trim());
-					System.out.println(_ttsSpeed);
 				}
 				else {
 					executeBashCmdNoOutput("> tts_speed");

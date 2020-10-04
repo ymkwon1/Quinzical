@@ -85,6 +85,7 @@ public class GamesQuestionViewController implements Initializable {
 	}
 	@FXML
 	void repeatBtnClick(ActionEvent event) {
+		_model.stopTts();
 		_clue.ttsQuestion();
 
 	}
