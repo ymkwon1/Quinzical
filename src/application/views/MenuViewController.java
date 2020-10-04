@@ -68,6 +68,11 @@ public class MenuViewController {
 
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+    	try {
+			_model = QuinzicalModel.createInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
 		

@@ -30,7 +30,7 @@ public class QuinzicalModel {
 	private Clue _currentClue;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
-	private int _ttsSpeed = 0;
+	private int _ttsSpeed = 175;
 	private int _previousScene = 1;
 
 	public QuinzicalModel() throws Exception {
@@ -48,11 +48,11 @@ public class QuinzicalModel {
 			executeBashCmdNoOutput("touch winnings");
 			executeBashCmdNoOutput("echo 0 >> winnings");
 		}
-		File tts_speed = new File("tts_speed");
-		if (!tts_speed.exists()) {
-			executeBashCmdNoOutput("touch tts_speed");
-			executeBashCmdNoOutput("echo 175 >> tts_speed");
-		}
+//		File tts_speed = new File("tts_speed");
+//		if (!tts_speed.exists()) {
+//			executeBashCmdNoOutput("touch tts_speed");
+//			executeBashCmdNoOutput("echo 175 >> tts_speed");
+//		}
 	}
 
 	/**
@@ -367,36 +367,43 @@ public class QuinzicalModel {
 	 * increase tts speed
 	 */
 	public void increaseTTSSpeed() {
-		int ttsSpeed = getTTSSpeed();
-		ttsSpeed = ttsSpeed + 10;
-		String strTtsSpeed = Integer.toString(ttsSpeed);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
+		_ttsSpeed = _ttsSpeed+10;
+//		int ttsSpeed = getTTSSpeed();
+//		ttsSpeed = ttsSpeed + 10;
+//		String strTtsSpeed = Integer.toString(ttsSpeed);
+//		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
 	}
 
 	/**
 	 * decrease tts speed
 	 */
 	public void decreaseTTSSpeed() {
-		int ttsSpeed = getTTSSpeed();
-		ttsSpeed = ttsSpeed - 10;
-		String strTtsSpeed = Integer.toString(ttsSpeed);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
+		_ttsSpeed = _ttsSpeed-10;
+//		int ttsSpeed = _ttsSpeed;
+//		executeBashCmdNoOutput("echo");
+//		_ttsSpeed = _ttsSpeed - 10;
+//		String strTtsSpeed = Integer.toString(ttsSpeed);
+//		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
 	}
+	
 
+//	public void setTTSpeed() {
+////		BufferedReader reader;
+////		try {
+////			reader = new BufferedReader(new FileReader("tts_speed"));
+////			String line = reader.readLine();
+////			_ttsSpeed = Integer.parseInt(line.trim());
+////			reader.close();
+////		} catch (IOException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//	}
 	/**
 	 * get tts speed
 	 * @return ttsSpeed
 	 */
 	public int getTTSSpeed() {
-		BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader("tts_speed"));
-			String line = reader.readLine();
-			_ttsSpeed = Integer.parseInt(line.trim());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return _ttsSpeed;
 	}
 
@@ -406,6 +413,7 @@ public class QuinzicalModel {
 			reader = new BufferedReader(new FileReader("winnings"));
 			String line = reader.readLine();
 			_winnings = Integer.parseInt(line.trim());
+			reader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
