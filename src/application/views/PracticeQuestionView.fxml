@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.PracticeQuestionViewController">
    <children>
       <Label fx:id="questionLabel" layoutX="52.0" layoutY="49.0" prefHeight="118.0" prefWidth="496.0" text="Label" wrapText="true">
@@ -21,5 +20,7 @@
       <Button fx:id="returnBtn" layoutX="41.0" layoutY="344.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
       <Label fx:id="tagLabel" layoutX="62.0" layoutY="200.0" prefHeight="26.0" prefWidth="65.0" text="Label" />
       <Label fx:id="answerLabel" layoutX="172.0" layoutY="336.0" prefHeight="16.0" prefWidth="402.0" wrapText="true" />
+      <Button fx:id="repeatBtn" layoutX="52.0" layoutY="147.0" mnemonicParsing="false" onAction="#repeatBtnClick" text="Repeat Question" />
+      <Button fx:id="ttsSettingsBtn" layoutX="229.0" layoutY="147.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="TTS settings" />
    </children>
 </AnchorPane>

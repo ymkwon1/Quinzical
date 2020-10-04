@@ -50,6 +50,12 @@ public class PracticeQuestionViewController implements Initializable{
     @FXML
     private Label answerLabel;
     
+    @FXML
+    private Button repeatBtn;
+
+    @FXML
+    private Button ttsSettingsBtn;
+    
     Alert alert = new Alert(AlertType.INFORMATION);
 
 
@@ -59,7 +65,6 @@ public class PracticeQuestionViewController implements Initializable{
 			_model = QuinzicalModel.createInstance();
 			_clue = _model.getCurrentClue();
 			_clue.ttsQuestion();
-			System.out.println(_clue.getAnswers());
 			questionLabel.setText(_clue.getQuestion());;
 			tagLabel.setText(_clue.getTag());;
 			hintsLabel.setText(_clue.getHint());
@@ -129,6 +134,24 @@ public class PracticeQuestionViewController implements Initializable{
     	
     	window.setScene(menuScene);
     	window.show();
+    }
+    
+
+    @FXML
+    void repeatBtnClick(ActionEvent event) {
+    	_clue.ttsQuestion();
+    }
+
+    @FXML
+    void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+    	_model.setPreviousScene(3);
+		Parent settingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Scene settingsScene = new Scene(settingsView);
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(settingsScene);
+		window.show();
     }
 
 }

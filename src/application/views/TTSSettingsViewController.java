@@ -35,7 +35,6 @@ public class TTSSettingsViewController implements Initializable{
 
 	private QuinzicalModel model;
 	
-	private QuinzicalModel _model;
 
 	@FXML
 	void decreaseBtnClick(ActionEvent event) {
@@ -67,15 +66,19 @@ public class TTSSettingsViewController implements Initializable{
 			window.setScene(menuScene);
 			window.show();
 		}
-		else {
-			try {
-				_model = QuinzicalModel.createInstance();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			_model.setPreviousScene(1);
+		else if (model.getPreviousScene() == 2) {
+			model.setPreviousScene(1);
 			Parent menuView = FXMLLoader.load(getClass().getResource("GamesQuestionView.fxml"));
+			Scene menuScene = new Scene(menuView);
+
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+			window.setScene(menuScene);
+			window.show();
+		}
+		else {
+			model.setPreviousScene(1);
+			Parent menuView = FXMLLoader.load(getClass().getResource("PracticeQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
