@@ -77,7 +77,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setTitle("Answer");
 			_alert.setHeaderText(null);
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
-			_model.tts(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
+			_model.tts(String.format("Incorrect, the answer was %s! You have lost %d", _clue.getAnswers(), _clue.getValue()));
 			_alert.showAndWait();
 			returnToGames(event);
 		}

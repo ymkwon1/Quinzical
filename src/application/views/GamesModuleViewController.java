@@ -43,7 +43,7 @@ public class GamesModuleViewController implements Initializable{
 			_model.setAnsweredQuestions();
 			int currentWinnings = _model.getWinnings();
 			winningsLabel.setText(String.format("Current winnings: %d", currentWinnings));
-			System.out.println(_categories);
+			//System.out.println(_categories);
 			
 			int numRows=5;
 			int row=0;

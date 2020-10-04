@@ -135,7 +135,7 @@ public class QuinzicalModel {
 				reader = new BufferedReader(new FileReader("five_random_categories"));
 				String line = reader.readLine();
 				str = line;
-				System.out.println(str);
+				//System.out.println(str);
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -399,12 +399,12 @@ public class QuinzicalModel {
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
 		executeBashCmdNoOutput("rm answered_questions");
 		executeBashCmdNoOutput("rm five_random_categories");
-		System.out.println(getWinnings());
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {
 			_answeredQuestions[i]=0;
 		}
+		executeBashCmdNoOutput("touch answered_questions");
 		initialisecategories();
 		try {
 			readcategories();
