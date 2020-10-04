@@ -30,7 +30,7 @@ public class QuinzicalModel {
 	private Clue _currentClue;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
-	private int _ttsSpeed = 0;
+	private int _ttsSpeed = 175;
 	private int _previousScene = 1;
 
 	public QuinzicalModel() throws Exception {
@@ -48,11 +48,8 @@ public class QuinzicalModel {
 			executeBashCmdNoOutput("touch winnings");
 			executeBashCmdNoOutput("echo 0 >> winnings");
 		}
-		File tts_speed = new File("tts_speed");
-		if (!tts_speed.exists()) {
-			executeBashCmdNoOutput("touch tts_speed");
-			executeBashCmdNoOutput("echo 175 >> tts_speed");
-		}
+		executeBashCmdNoOutput("touch tts_speed");
+		loadTTSSpeed();
 	}
 
 	/**
@@ -281,14 +278,14 @@ public class QuinzicalModel {
 	public int getPreviousScene(){
 		return _previousScene;
 	}
-	
+
 	/**
 	 * set previous scene, 1 for menu 2 for game question scene
 	 */
 	public void setPreviousScene(int scene){
 		_previousScene = scene;
 	}
-	
+
 	/**
 	 * get all categories in the game as a list of strings
 	 * @return categories
@@ -367,37 +364,52 @@ public class QuinzicalModel {
 	 * increase tts speed
 	 */
 	public void increaseTTSSpeed() {
-		int ttsSpeed = getTTSSpeed();
-		ttsSpeed = ttsSpeed + 10;
-		String strTtsSpeed = Integer.toString(ttsSpeed);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
+		_ttsSpeed = _ttsSpeed + 10;
+		executeBashCmdNoOutput("> tts_speed");
+		executeBashCmdNoOutput(String.format("echo \"%d\" >> tts_speed", _ttsSpeed));
 	}
 
 	/**
 	 * decrease tts speed
 	 */
 	public void decreaseTTSSpeed() {
-		int ttsSpeed = getTTSSpeed();
-		ttsSpeed = ttsSpeed - 10;
-		String strTtsSpeed = Integer.toString(ttsSpeed);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
+		_ttsSpeed = _ttsSpeed - 10;
+		executeBashCmdNoOutput("> tts_speed");
+		executeBashCmdNoOutput(String.format("echo \"%d\" >> tts_speed", _ttsSpeed));
 	}
 
+	public int getTTSSpeed() {
+		return _ttsSpeed;
+	}
 	/**
 	 * get tts speed
 	 * @return ttsSpeed
 	 */
-	public int getTTSSpeed() {
-		BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader("tts_speed"));
-			String line = reader.readLine();
-			_ttsSpeed = Integer.parseInt(line.trim());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void loadTTSSpeed() {
+		Scanner sc;
+		File file = new File("tts_speed");
+		if(file.exists()) {
+			try {
+				sc = new Scanner(new File("tts_speed"));
+				if(sc.hasNextLine()) {
+					String speed = sc.nextLine();
+					_ttsSpeed = Integer.parseInt(speed.trim());
+					System.out.println(_ttsSpeed);
+				}
+				else {
+					executeBashCmdNoOutput("> tts_speed");
+					executeBashCmdNoOutput("echo \"175\" >> tts_speed");
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return _ttsSpeed;
+		else {
+			executeBashCmdNoOutput("touch tts_speed");
+			executeBashCmdNoOutput("> tts_speed");
+			executeBashCmdNoOutput("echo \"175\" >> tts_speed");
+		}
 	}
 
 	public int getWinnings() {
