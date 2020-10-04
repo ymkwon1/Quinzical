@@ -30,7 +30,7 @@ public class QuinzicalModel {
 	private Clue _currentClue;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
-	private int ttsSpeed = 175;
+	private int _ttsSpeed = 0;
 	private int _previousScene = 1;
 
 	public QuinzicalModel() throws Exception {
@@ -47,6 +47,11 @@ public class QuinzicalModel {
 		if (!winnings.exists()) {
 			executeBashCmdNoOutput("touch winnings");
 			executeBashCmdNoOutput("echo 0 >> winnings");
+		}
+		File tts_speed = new File("tts_speed");
+		if (!tts_speed.exists()) {
+			executeBashCmdNoOutput("touch tts_speed");
+			executeBashCmdNoOutput("echo 175 >> tts_speed");
 		}
 	}
 
@@ -345,7 +350,7 @@ public class QuinzicalModel {
 	 * text to speech a string
 	 */
 	public void tts(String string) {
-		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, ttsSpeed));
+		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, _ttsSpeed));
 
 	}
 
@@ -362,14 +367,20 @@ public class QuinzicalModel {
 	 * increase tts speed
 	 */
 	public void increaseTTSSpeed() {
+		int ttsSpeed = getTTSSpeed();
 		ttsSpeed = ttsSpeed + 10;
+		String strTtsSpeed = Integer.toString(ttsSpeed);
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
 	}
 
 	/**
 	 * decrease tts speed
 	 */
 	public void decreaseTTSSpeed() {
+		int ttsSpeed = getTTSSpeed();
 		ttsSpeed = ttsSpeed - 10;
+		String strTtsSpeed = Integer.toString(ttsSpeed);
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strTtsSpeed+" /\" tts_speed");
 	}
 
 	/**
@@ -377,7 +388,16 @@ public class QuinzicalModel {
 	 * @return ttsSpeed
 	 */
 	public int getTTSSpeed() {
-		return ttsSpeed;
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("tts_speed"));
+			String line = reader.readLine();
+			_ttsSpeed = Integer.parseInt(line.trim());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return _ttsSpeed;
 	}
 
 	public int getWinnings() {
@@ -410,6 +430,7 @@ public class QuinzicalModel {
 	public void reset(){
 		executeBashCmdNoOutput("rm -r games_module");
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"175"+" /\" tts_speed");
 		executeBashCmdNoOutput("rm answered_questions");
 		executeBashCmdNoOutput("rm five_random_categories");
 		_gamesData.clear();
