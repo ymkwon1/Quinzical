@@ -104,7 +104,6 @@ public class Clue {
 	 */
 	public boolean checkAnswer(String userInput) {
 			for (String answer: _answers) {
-				System.out.println(answer.replaceAll("[,]$|[.]$","").trim());
 				if (userInput.equalsIgnoreCase(answer.replaceAll("[,]$|[.]$","").trim())) {
 					_attempts=0;
 					return true;
