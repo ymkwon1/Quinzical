@@ -59,6 +59,7 @@ public class PracticeQuestionViewController implements Initializable{
 			_model = QuinzicalModel.createInstance();
 			_clue = _model.getCurrentClue();
 			_clue.ttsQuestion();
+			System.out.println(_clue.getAnswers());
 			questionLabel.setText(_clue.getQuestion());;
 			tagLabel.setText(_clue.getTag());;
 			hintsLabel.setText(_clue.getHint());

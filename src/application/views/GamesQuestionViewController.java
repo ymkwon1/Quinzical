@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 
 import application.model.Clue;
 import application.model.QuinzicalModel;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
