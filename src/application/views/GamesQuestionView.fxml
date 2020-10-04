@@ -19,5 +19,6 @@
       <Label fx:id="tagLabel" layoutX="62.0" layoutY="200.0" prefHeight="26.0" prefWidth="65.0" text="Label" />
       <Label fx:id="answerLabel" layoutX="172.0" layoutY="336.0" prefHeight="16.0" prefWidth="402.0" wrapText="true" />
       <Button fx:id="repeatBtn" layoutX="44.0" layoutY="141.0" mnemonicParsing="false" onAction="#repeatBtnClick" text="Repeat Question" />
+      <Button fx:id="ttsSettingsBtn" layoutX="224.0" layoutY="141.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="TTS settings" />
    </children>
 </AnchorPane>

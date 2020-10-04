@@ -41,6 +41,8 @@ public class GamesQuestionViewController implements Initializable {
 	private Label answerLabel;
 	@FXML
 	private Button repeatBtn;
+    @FXML
+    private Button ttsSettingsBtn;
 
 	private QuinzicalModel _model;
 
@@ -107,6 +109,18 @@ public class GamesQuestionViewController implements Initializable {
 		}
 	}
 
+    @FXML
+    void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+    	_model.setPreviousScene(2);
+		Parent settingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Scene settingsScene = new Scene(settingsView);
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(settingsScene);
+		window.show();
+    }
+	
 	/**
 	 * returns to Games model screen
 	 */

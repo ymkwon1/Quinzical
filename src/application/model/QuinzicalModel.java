@@ -31,6 +31,7 @@ public class QuinzicalModel {
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
 	private int ttsSpeed = 175;
+	private int _previousScene = 1;
 
 	public QuinzicalModel() throws Exception {
 		initialisecategories();
@@ -268,7 +269,21 @@ public class QuinzicalModel {
 
 
 	}
-
+	/**
+	 * get previous scene, 1 for menu 2 for game question scene
+	 * @return _previousScene;
+	 */
+	public int getPreviousScene(){
+		return _previousScene;
+	}
+	
+	/**
+	 * set previous scene, 1 for menu 2 for game question scene
+	 */
+	public void setPreviousScene(int scene){
+		_previousScene = scene;
+	}
+	
 	/**
 	 * get all categories in the game as a list of strings
 	 * @return categories

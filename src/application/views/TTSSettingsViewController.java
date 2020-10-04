@@ -56,13 +56,24 @@ public class TTSSettingsViewController implements Initializable{
 
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
-		Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
-		Scene menuScene = new Scene(menuView);
+		if (model.getPreviousScene() == 1) {
+			Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+			Scene menuScene = new Scene(menuView);
 
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-		window.setScene(menuScene);
-		window.show();
+			window.setScene(menuScene);
+			window.show();
+		}
+		else {
+			Parent menuView = FXMLLoader.load(getClass().getResource("GamesQuestionView.fxml"));
+			Scene menuScene = new Scene(menuView);
+
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+			window.setScene(menuScene);
+			window.show();
+		}
 	}
 
 	@Override
