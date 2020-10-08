@@ -107,6 +107,14 @@ public class GamesQuestionViewController implements Initializable {
 
 			window.setScene(menuScene);
 			window.show();
+			if (_model.gameCompleted()) {
+				_alert = new Alert(AlertType.INFORMATION);
+				_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				_alert.setTitle("Congratulations");
+				_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
+				_alert.setContentText("You have answered every question, return to menu to reset the game!");
+				_alert.showAndWait();
+			}
 		}
 	}
 
