@@ -71,7 +71,10 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setHeaderText(null);
 			_alert.setContentText("Correct! You have won "+ _clue.getValue());
 			_model.tts("Correct! You have won "+ _clue.getValue());
-			_alert.showAndWait();
+			Optional<ButtonType> result = _alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				_model.stopTts();
+			}
 			returnToGames(event);
 		} else {
 			_model.decreaseWinnings(_clue.getValue());
@@ -79,7 +82,10 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setHeaderText(null);
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
 			_model.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
-			_alert.showAndWait();
+			Optional<ButtonType> result = _alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				_model.stopTts();
+			}
 			returnToGames(event);
 		}
 	}
