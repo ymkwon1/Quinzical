@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.model.Clue;
+import application.model.Player;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 
@@ -106,21 +107,7 @@ public class GamesQuestionViewController implements Initializable {
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
-			Scene menuScene = new Scene(menuView);
-
-			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-			window.setScene(menuScene);
-			window.show();
-			if (_model.gameCompleted()) {
-				_alert = new Alert(AlertType.INFORMATION);
-				_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-				_alert.setTitle("Congratulations");
-				_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
-				_alert.setContentText("You have answered every question, return to menu to reset the game!");
-				_alert.showAndWait();
-			}
+			returnToGames(event);
 		}
 	}
 
@@ -154,6 +141,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
 			_alert.showAndWait();
+			Player player = new Player(_model.getCurrentPlayer(), String.valueOf(_model.getWinnings()));
 		}
 	}
 

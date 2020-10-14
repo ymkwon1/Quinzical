@@ -28,6 +28,7 @@ public class QuinzicalModel {
 	private Map<String, List<String>> _practiceData = new HashMap<String, List<String>>();
 	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
 	private Clue _currentClue;
+	private String _currentPlayer;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
 	private int _ttsSpeed = 175;
@@ -225,6 +226,15 @@ public class QuinzicalModel {
 		return _answeredQuestions[index];
 
 	}
+	
+	public String getCurrentPlayer() {
+		return _currentPlayer;
+	}
+	
+	public void setCurrentPlayer(String currentPlayer) {
+		_currentPlayer = currentPlayer;
+	}
+	
 
 	public void setAnsweredQuestions() {
 		File file = new File("answered_questions");

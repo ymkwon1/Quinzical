@@ -62,11 +62,9 @@ public class MenuViewController {
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
     	    _playerModel = new Player();
-    	    _playerModel.setCurrentPlayer(result.get());
+    	    _playerModel.setPlayer(result.get());
     	}
 
-    	// The Java 8 way to get the response value (with lambda expression).
-    	result.ifPresent(name -> System.out.println("Your name: " + name));
 		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
 		Scene gamesModuleScene = new Scene(gamesModuleView);
 		
@@ -75,12 +73,12 @@ public class MenuViewController {
 		window.setScene(gamesModuleScene);
 		window.show();
 		if (_model.gameCompleted()) {
-			alert = new Alert(AlertType.INFORMATION);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.setTitle("Congratulations");
-			alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
-			alert.setContentText("You have answered every question, return to menu to reset the game!");
-			alert.showAndWait();
+			_alert = new Alert(AlertType.INFORMATION);
+			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			_alert.setTitle("Congratulations");
+			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
+			_alert.setContentText("You have answered every question, return to menu to reset the game!");
+			_alert.showAndWait();
 		}
     }
 
