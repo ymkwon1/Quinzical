@@ -3,6 +3,7 @@ package application.views;
 import java.io.IOException;
 import java.util.Optional;
 
+import application.model.Player;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -29,7 +31,8 @@ public class MenuViewController {
     private Button resetBtn;
     
     private QuinzicalModel _model;
-    private Alert alert;
+    private Player _playerModel;
+    private Alert _alert;
 
     @FXML
     void practiceBtnClick(ActionEvent event) throws IOException {
@@ -49,6 +52,21 @@ public class MenuViewController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
+    	TextInputDialog dialog = new TextInputDialog("");
+    	dialog.setTitle("Player Name");
+    	dialog.setHeaderText("Please Enter A Name");
+    	dialog.setContentText("Name:");
+
+    	// Traditional way to get the response value.
+    	Optional<String> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    	    _playerModel = new Player();
+    	    _playerModel.setCurrentPlayer(result.get());
+    	}
+
+    	// The Java 8 way to get the response value (with lambda expression).
+    	result.ifPresent(name -> System.out.println("Your name: " + name));
 		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
 		Scene gamesModuleScene = new Scene(gamesModuleView);
 		
