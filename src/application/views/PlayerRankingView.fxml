@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.views.PlayerRankingViewController">
+   <children>
+      <TableView fx:id="table" layoutY="80.0" prefHeight="274.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" editable="false" prefWidth="302.0" sortable="false" text="Name" />
+            <TableColumn fx:id="pointsColumn" editable="false" prefWidth="297.0" sortable="false" text="Points" />
+        </columns>
+      </TableView>
+      <Label layoutX="225.0" layoutY="22.0" text="Ranking">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </Label>
+      <Button fx:id="returnBtn" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#returnBtnClick" text="&lt;--" />
+      <Button fx:id="resetBtn" layoutX="241.0" layoutY="360.0" mnemonicParsing="false" onAction="#resetBtnClick" text="Reset Rankings" />
+   </children>
+</AnchorPane>
