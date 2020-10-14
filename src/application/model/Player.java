@@ -1,28 +1,27 @@
 package application.model;
 
 public class Player {
-	private String _player;
-	private String _finalScore;
+	private String _name;
+	private String _points;
 	
-	public Player(String player, String finalScore) {
-		_player = player;
-		_finalScore = finalScore;
+	public Player(String name, String points) {
+		_name = name;
+		_points = points;
 	}
 	
-	
-	public String getPlayer() {
-		return _player;
+	public String getName() {
+		return _name;
 	}
 	
-	public void setPlayer(String player) {
-		_player = player;
+	public void setName(String name) {
+		_name = name;
 	}
 	
-	public String getFinalScore() {
-		return _finalScore;
+	public String getPoints() {
+		return _points;
 	}
 	
-	public void setFinalScore(String score) {
-		_player = _finalScore;
+	public void setPoints(String score) {
+		_name = _points;
 	}
 }

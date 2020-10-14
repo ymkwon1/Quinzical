@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 import application.model.Clue;
 import application.model.Player;
+import application.model.PlayerList;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 
@@ -46,6 +47,8 @@ public class GamesQuestionViewController implements Initializable {
     private Button ttsSettingsBtn;
 
 	private QuinzicalModel _model;
+	
+	private PlayerList _playerList;
 
 	private Clue _clue;
 
@@ -142,6 +145,8 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
 			_alert.showAndWait();
 			Player player = new Player(_model.getCurrentPlayer(), String.valueOf(_model.getWinnings()));
+			_playerList = PlayerList.getInstace();
+			_playerList.add(player);
 		}
 	}
 

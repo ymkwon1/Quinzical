@@ -29,6 +29,8 @@ public class MenuViewController {
 	private Button ttsSettingsBtn;
 	@FXML
 	private Button resetBtn;
+    @FXML
+    private Button playerRankBtn;
 
 	private QuinzicalModel _model;
 	private Alert _alert;
@@ -115,4 +117,15 @@ public class MenuViewController {
 			_model.reset();
 		}
 	}
+	
+    @FXML
+    void playerRankBtnClick(ActionEvent event) throws IOException {
+		Parent view = FXMLLoader.load(getClass().getResource("PlayerRankingView.fxml"));
+		Scene scene = new Scene(view);
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(scene);
+		window.show();
+    }
 }

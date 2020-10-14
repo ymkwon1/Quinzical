@@ -1,27 +1,52 @@
 package application.views;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import application.model.Player;
+import application.model.PlayerList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
-public class PlayerRankingViewController {
-
-    @FXML
-    private TableView<?> table;
-
-    @FXML
-    private TableColumn<?, ?> nameColumn;
+public class PlayerRankingViewController implements Initializable{
 
     @FXML
-    private TableColumn<?, ?> pointsColumn;
+    private TableView<Player> table;
+
+    @FXML
+    private TableColumn<Player, String> nameColumn;
+
+    @FXML
+    private TableColumn<Player, String> pointsColumn;
 
     @FXML
     private Button returnBtn;
 
     @FXML
     private Button resetBtn;
+    
+    private PlayerList _playerList;
+    
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
+		pointsColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Points"));
+		table.setSelectionModel(null);
+		_playerList = PlayerList.getInstace();
+		table.setItems(_playerList.getPlayerList());
+		
+	}
 
     @FXML
     void resetBtnClick(ActionEvent event) {
@@ -29,8 +54,15 @@ public class PlayerRankingViewController {
     }
 
     @FXML
-    void returnBtnClick(ActionEvent event) {
-
+    void returnBtnClick(ActionEvent event) throws IOException {
+    	Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+    	Scene menuScene = new Scene(menuView);
+    	
+    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    	
+    	window.setScene(menuScene);
+    	window.show();
     }
+
 
 }
