@@ -2,9 +2,9 @@ package application.model;
 
 public class Player {
 	private String _name;
-	private String _points;
+	private Integer _points;
 	
-	public Player(String name, String points) {
+	public Player(String name, Integer points) {
 		_name = name;
 		_points = points;
 	}
@@ -17,11 +17,11 @@ public class Player {
 		_name = name;
 	}
 	
-	public String getPoints() {
+	public Integer getPoints() {
 		return _points;
 	}
 	
-	public void setPoints(String score) {
-		_name = _points;
+	public void setPoints(Integer points) {
+		_points = points;
 	}
 }

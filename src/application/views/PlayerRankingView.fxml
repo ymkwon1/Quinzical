@@ -13,7 +13,7 @@
       <TableView fx:id="table" layoutY="80.0" prefHeight="274.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="nameColumn" editable="false" prefWidth="302.0" sortable="false" text="Name" />
-            <TableColumn fx:id="pointsColumn" editable="false" prefWidth="297.0" sortable="false" text="Points" />
+            <TableColumn fx:id="pointsColumn" editable="false" prefWidth="297.0" text="Points" />
         </columns>
       </TableView>
       <Label layoutX="225.0" layoutY="22.0" text="Ranking">

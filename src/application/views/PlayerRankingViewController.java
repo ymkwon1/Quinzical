@@ -28,7 +28,7 @@ public class PlayerRankingViewController implements Initializable{
     private TableColumn<Player, String> nameColumn;
 
     @FXML
-    private TableColumn<Player, String> pointsColumn;
+    private TableColumn<Player, Integer> pointsColumn;
 
     @FXML
     private Button returnBtn;
@@ -41,11 +41,20 @@ public class PlayerRankingViewController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
-		pointsColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Points"));
-		table.setSelectionModel(null);
+		pointsColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("Points"));
+		
+		
 		_playerList = PlayerList.getInstace();
 		table.setItems(_playerList.getPlayerList());
 		
+		if (!_playerList.getPlayerList().isEmpty()) {
+		pointsColumn.setSortType(TableColumn.SortType.DESCENDING);
+		table.getSortOrder().add(pointsColumn);
+		table.sort();
+		
+		nameColumn.setSortable(false);
+		table.setSelectionModel(null);
+		}
 	}
 
     @FXML
