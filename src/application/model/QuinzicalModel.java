@@ -28,7 +28,7 @@ public class QuinzicalModel {
 	private Map<String, List<String>> _practiceData = new HashMap<String, List<String>>();
 	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
 	private Clue _currentClue;
-	private String _currentPlayer;
+	private String _currentPlayer = null;
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
 	private int _ttsSpeed = 175;
@@ -454,6 +454,7 @@ public class QuinzicalModel {
 		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"175"+" /\" tts_speed");
 		executeBashCmdNoOutput("rm answered_questions");
 		executeBashCmdNoOutput("rm five_random_categories");
+		_currentPlayer = null;
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {

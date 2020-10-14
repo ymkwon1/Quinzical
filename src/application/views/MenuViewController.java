@@ -21,55 +21,55 @@ import javafx.stage.Stage;
 
 public class MenuViewController {
 
-    @FXML
-    private Button practiceBtn;
-    @FXML
-    private Button gamesBtn;
-    @FXML
-    private Button ttsSettingsBtn;
-    @FXML
-    private Button resetBtn;
-    
-    private QuinzicalModel _model;
-    private Player _playerModel;
-    private Alert _alert;
+	@FXML
+	private Button practiceBtn;
+	@FXML
+	private Button gamesBtn;
+	@FXML
+	private Button ttsSettingsBtn;
+	@FXML
+	private Button resetBtn;
 
-    @FXML
-    void practiceBtnClick(ActionEvent event) throws IOException {
+	private QuinzicalModel _model;
+	private Alert _alert;
+
+	@FXML
+	void practiceBtnClick(ActionEvent event) throws IOException {
 		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
 		Scene practiceModuleScene = new Scene(practiceModuleView);
-		
+
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
+
 		window.setScene(practiceModuleScene);
 		window.show();
-    }
-    
-    @FXML
-    void gamesBtnClick(ActionEvent event) throws IOException {
-    	try {
+	}
+
+	@FXML
+	void gamesBtnClick(ActionEvent event) throws IOException {
+		try {
 			_model = QuinzicalModel.createInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	
-    	TextInputDialog dialog = new TextInputDialog("");
-    	dialog.setTitle("Player Name");
-    	dialog.setHeaderText("Please Enter A Name");
-    	dialog.setContentText("Name:");
 
-    	// Traditional way to get the response value.
-    	Optional<String> result = dialog.showAndWait();
-    	if (result.isPresent()){
-    	    _playerModel = new Player();
-    	    _playerModel.setPlayer(result.get());
-    	}
+		if (_model.getCurrentPlayer() == null) {
+			TextInputDialog dialog = new TextInputDialog("");
+			dialog.setTitle("Player Name");
+			dialog.setHeaderText("Please Enter A Name");
+			dialog.setContentText("Name:");
+
+			// Traditional way to get the response value.
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()){
+				_model.setCurrentPlayer(result.get());
+			}
+		}
 
 		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
 		Scene gamesModuleScene = new Scene(gamesModuleView);
-		
+
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
+
 		window.setScene(gamesModuleScene);
 		window.show();
 		if (_model.gameCompleted()) {
@@ -80,39 +80,39 @@ public class MenuViewController {
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
 			_alert.showAndWait();
 		}
-    }
+	}
 
-    @FXML
-    void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-    	try {
+	@FXML
+	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+		try {
 			_model = QuinzicalModel.createInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
-		
+
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
+
 		window.setScene(TtsSettingsScene);
 		window.show();
-    }
-    
-    @FXML
-    void resetBtnClick (ActionEvent event) throws IOException {
-    	try {
+	}
+
+	@FXML
+	void resetBtnClick (ActionEvent event) throws IOException {
+		try {
 			_model = QuinzicalModel.createInstance();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("Confirmation Dialog");
-    	alert.setHeaderText(null);
-    	alert.setContentText("Are you sure you want to reset the game?");
-    	Optional<ButtonType> result = alert.showAndWait();
-    	if (result.get() == ButtonType.OK) {
-    		_model.reset();
-    	}
-    }
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Are you sure you want to reset the game?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			_model.reset();
+		}
+	}
 }
