@@ -58,7 +58,7 @@ public class TTSSettingsViewController implements Initializable{
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
 		if (model.getPreviousScene() == 1) {
-			Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -68,7 +68,7 @@ public class TTSSettingsViewController implements Initializable{
 		}
 		else if (model.getPreviousScene() == 2) {
 			model.setPreviousScene(1);
-			Parent menuView = FXMLLoader.load(getClass().getResource("GamesQuestionView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -78,7 +78,7 @@ public class TTSSettingsViewController implements Initializable{
 		}
 		else {
 			model.setPreviousScene(1);
-			Parent menuView = FXMLLoader.load(getClass().getResource("PracticeQuestionView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

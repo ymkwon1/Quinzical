@@ -44,12 +44,12 @@ public class QuinzicalModel {
 		//			System.out.println("Key = " + key);
 		//			System.out.println(values);
 		//		}
-		File winnings = new File("winnings");
+		File winnings = new File("data/winnings");
 		if (!winnings.exists()) {
-			executeBashCmdNoOutput("touch winnings");
-			executeBashCmdNoOutput("echo 0 >> winnings");
+			executeBashCmdNoOutput("touch data/winnings");
+			executeBashCmdNoOutput("echo 0 >> data/winnings");
 		}
-		executeBashCmdNoOutput("touch tts_speed");
+		executeBashCmdNoOutput("touch data/tts_speed");
 		loadTTSSpeed();
 	}
 
@@ -93,7 +93,8 @@ public class QuinzicalModel {
 
 	public void setFiveRandomCategories () {
 		//create a file to store the selected five categories
-		File five_random_categories = new File ("five_random_categories");
+		executeBashCmdNoOutput("mkdir -p data");
+		File five_random_categories = new File ("data/five_random_categories");
 		if (!five_random_categories.exists()) {
 			try {
 				five_random_categories.createNewFile();
@@ -111,7 +112,7 @@ public class QuinzicalModel {
 				try {
 					//create files that are used to store the clues of 
 					//the selected five categories
-					File dir = new File ("games_module");
+					File dir = new File ("data/games_module");
 					if (!dir.exists()) {
 						dir.mkdir();
 					}
@@ -128,13 +129,13 @@ public class QuinzicalModel {
 				str = str + shuffledCategories.get(i) + ",";
 				_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
 			}
-			executeBashCmdNoOutput(String.format("echo \"%s\" >> five_random_categories",str));
+			executeBashCmdNoOutput(String.format("echo \"%s\" >> data/five_random_categories",str));
 		}
 		else {
 			BufferedReader reader;
 			String str = "";
 			try {
-				reader = new BufferedReader(new FileReader("five_random_categories"));
+				reader = new BufferedReader(new FileReader("data/five_random_categories"));
 				String line = reader.readLine();
 				str = line;
 				//System.out.println(str);
@@ -162,7 +163,7 @@ public class QuinzicalModel {
 	 * Set five random clues and answers of a category
 	 */
 	public void setFiveRandomClues (String category){
-		File file = new File("games_module", category);
+		File file = new File("data/games_module", category);
 		if (file.length() == 0) {
 			List<String> clues = new ArrayList<String>();
 			clues = _practiceData.get(category);
@@ -170,7 +171,7 @@ public class QuinzicalModel {
 			List<String> temp = new ArrayList<String>();
 			for (int i = 0; i<5;i++) {
 				temp.add(clues.get(i));
-				executeBashCmdNoOutput(String.format("echo \"%s\" >> games_module/\"%s\"",clues.get(i), category));
+				executeBashCmdNoOutput(String.format("echo \"%s\" >> data/games_module/\"%s\"",clues.get(i), category));
 			}
 			_fiveRandomClues = temp;
 		}
@@ -237,20 +238,20 @@ public class QuinzicalModel {
 	
 
 	public void setAnsweredQuestions() {
-		File file = new File("answered_questions");
+		File file = new File("data/answered_questions");
 		if(!file.exists()) {
-			executeBashCmdNoOutput("touch answered_questions");
+			executeBashCmdNoOutput("touch data/answered_questions");
 
 			String answeredQuestions = "";
 			for (int i = 0;i<5;i++) {
 				answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
 			}
-			executeBashCmdNoOutput(String.format("echo \"%s\" >> answered_questions", answeredQuestions));
+			executeBashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
 
 		}
 		Scanner myReader;
 		try {
-			executeBashCmdNoOutput("touch answered_questions");
+			executeBashCmdNoOutput("touch data/answered_questions");
 			myReader = new Scanner(file);
 			while(myReader.hasNextLine()) {
 				String fileLine = myReader.nextLine();
@@ -270,13 +271,13 @@ public class QuinzicalModel {
 	public void addAnsweredQuestions (int index) {
 
 		_answeredQuestions[index]=_answeredQuestions[index]+1;
-		executeBashCmdNoOutput("rm answered_questions");
-		executeBashCmdNoOutput("touch answered_questions");
+		executeBashCmdNoOutput("rm data/answered_questions");
+		executeBashCmdNoOutput("touch data/answered_questions");
 		String answeredQuestions = "";
 		for (int i = 0;i<5;i++) {
 			answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
 		}
-		executeBashCmdNoOutput(String.format("echo \"%s\" >> answered_questions", answeredQuestions));
+		executeBashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
 
 
 
@@ -375,8 +376,8 @@ public class QuinzicalModel {
 	 */
 	public void increaseTTSSpeed() {
 		_ttsSpeed = _ttsSpeed + 10;
-		executeBashCmdNoOutput("> tts_speed");
-		executeBashCmdNoOutput(String.format("echo \"%d\" >> tts_speed", _ttsSpeed));
+		executeBashCmdNoOutput("> data/tts_speed");
+		executeBashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
 	}
 
 	/**
@@ -384,8 +385,8 @@ public class QuinzicalModel {
 	 */
 	public void decreaseTTSSpeed() {
 		_ttsSpeed = _ttsSpeed - 10;
-		executeBashCmdNoOutput("> tts_speed");
-		executeBashCmdNoOutput(String.format("echo \"%d\" >> tts_speed", _ttsSpeed));
+		executeBashCmdNoOutput("> data/tts_speed");
+		executeBashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
 	}
 
 	public int getTTSSpeed() {
@@ -397,17 +398,17 @@ public class QuinzicalModel {
 	 */
 	public void loadTTSSpeed() {
 		Scanner sc;
-		File file = new File("tts_speed");
+		File file = new File("data/tts_speed");
 		if(file.exists()) {
 			try {
-				sc = new Scanner(new File("tts_speed"));
+				sc = new Scanner(new File("data/tts_speed"));
 				if(sc.hasNextLine()) {
 					String speed = sc.nextLine();
 					_ttsSpeed = Integer.parseInt(speed.trim());
 				}
 				else {
-					executeBashCmdNoOutput("> tts_speed");
-					executeBashCmdNoOutput("echo \"175\" >> tts_speed");
+					executeBashCmdNoOutput("> data/tts_speed");
+					executeBashCmdNoOutput("echo \"175\" >> data/tts_speed");
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -415,16 +416,16 @@ public class QuinzicalModel {
 			}
 		}
 		else {
-			executeBashCmdNoOutput("touch tts_speed");
-			executeBashCmdNoOutput("> tts_speed");
-			executeBashCmdNoOutput("echo \"175\" >> tts_speed");
+			executeBashCmdNoOutput("touch data/tts_speed");
+			executeBashCmdNoOutput("> data/tts_speed");
+			executeBashCmdNoOutput("echo \"175\" >> data/tts_speed");
 		}
 	}
 
 	public int getWinnings() {
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader("winnings"));
+			reader = new BufferedReader(new FileReader("data/winnings"));
 			String line = reader.readLine();
 			_winnings = Integer.parseInt(line.trim());
 		} catch (IOException e) {
@@ -438,29 +439,25 @@ public class QuinzicalModel {
 		int winnings = getWinnings();
 		winnings = winnings + value;
 		String strWinnings = Integer.toString(winnings);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
 	public void decreaseWinnings(int value) {
 		int winnings = getWinnings();
 		winnings = winnings - value;
 		String strWinnings = Integer.toString(winnings);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" winnings");
+		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
 	public void reset(){
-		executeBashCmdNoOutput("rm -r games_module");
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" winnings");
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+"175"+" /\" tts_speed");
-		executeBashCmdNoOutput("rm answered_questions");
-		executeBashCmdNoOutput("rm five_random_categories");
+		executeBashCmdNoOutput("rm -r data");
 		_currentPlayer = null;
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {
 			_answeredQuestions[i]=0;
 		}
-		executeBashCmdNoOutput("touch answered_questions");
+		executeBashCmdNoOutput("touch data/answered_questions");
 		initialisecategories();
 		try {
 			readcategories();

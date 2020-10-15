@@ -3,11 +3,11 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class PlayerList {
+public class PlayerRankings {
 	private ObservableList<Player> _playerList = FXCollections.observableArrayList();
-	private static PlayerList single_instance = null;
+	private static PlayerRankings single_instance = null;
 	
-	private PlayerList(){
+	private PlayerRankings(){
 	}
 	
 	public void add(Player player) {
@@ -18,9 +18,9 @@ public class PlayerList {
 		return _playerList;
 	}
 	
-	public static PlayerList getInstace() {
+	public static PlayerRankings getInstace() {
 		if (single_instance == null) {
-			single_instance = new PlayerList();
+			single_instance = new PlayerRankings();
 		}
 		return single_instance;
 	}

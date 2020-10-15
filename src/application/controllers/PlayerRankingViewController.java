@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.model.Player;
-import application.model.PlayerList;
+import application.model.PlayerRankings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +36,7 @@ public class PlayerRankingViewController implements Initializable{
     @FXML
     private Button resetBtn;
     
-    private PlayerList _playerList;
+    private PlayerRankings _playerList;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -44,7 +44,7 @@ public class PlayerRankingViewController implements Initializable{
 		pointsColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("Points"));
 		
 		
-		_playerList = PlayerList.getInstace();
+		_playerList = PlayerRankings.getInstace();
 		table.setItems(_playerList.getPlayerList());
 		
 		if (!_playerList.getPlayerList().isEmpty()) {
