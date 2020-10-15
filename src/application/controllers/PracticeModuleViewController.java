@@ -11,10 +11,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
@@ -42,13 +45,21 @@ public class PracticeModuleViewController implements Initializable{
 			else {
 				numRows = _categories.size()/3 + 1;
 			}
-			
+			for (int i = 0; i < numRows; i++) {
+				gridPane.getRowConstraints().add(new RowConstraints(80));
+			}
+			for (int i = 0; i < 3; i++) {
+				ColumnConstraints cc = new ColumnConstraints(180);
+				cc.setHalignment(HPos.CENTER);
+				gridPane.getColumnConstraints().add(cc);
+			}
 
 			int col=0;
 			int row=0;
 			for (String category: _categories) {
 					Button button = new Button(category);
-					button.setWrapText(true);
+					button.setPrefWidth(150);
+					button.setPrefHeight(50);
 					gridPane.add(button, col, row,1,1);
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
@@ -67,12 +78,8 @@ public class PracticeModuleViewController implements Initializable{
 						row++;
 					}
 			}
-			RowConstraints rc = new RowConstraints();
-			rc.setPercentHeight(100d/numRows);
 			
-			for (int i = 0; i < numRows-1; i++) {
-				gridPane.getRowConstraints().add(rc);
-			}
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();

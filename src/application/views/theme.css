@@ -18,3 +18,27 @@
 	-fx-border-width: 2px;
 	-fx-border-radius: 4px;
 }
+
+.scroll-pane {
+	-fx-background: transparent;
+}
+
+.scroll-bar {
+	-fx-background-color: transparent;
+}
+
+.thumb {
+	-fx-background-color:derive(black, 60%);
+}
+
+.thumb:hover {
+	-fx-background-color:derive(black, 80%);
+}
+
+.decrement-button:hover {
+	-fx-background-color: transparent;
+}
+
+.increment-button:hover {
+	-fx-background-color: transparent;
+}
