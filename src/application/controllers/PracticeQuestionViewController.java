@@ -1,4 +1,4 @@
-package application.views;
+package application.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -78,7 +78,7 @@ public class PracticeQuestionViewController implements Initializable{
     void returnBtnClick(ActionEvent event) throws IOException {
     	_clue.resetAttempts();
     	_model.stopTts();
-    	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -127,7 +127,7 @@ public class PracticeQuestionViewController implements Initializable{
      */
     void returnToPractice(ActionEvent event) throws IOException {
     	_model.stopTts();
-    	Parent menuView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -145,7 +145,7 @@ public class PracticeQuestionViewController implements Initializable{
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
     	_model.setPreviousScene(3);
-		Parent settingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

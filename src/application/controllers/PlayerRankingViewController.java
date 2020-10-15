@@ -1,4 +1,4 @@
-package application.views;
+package application.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,7 +64,7 @@ public class PlayerRankingViewController implements Initializable{
 
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

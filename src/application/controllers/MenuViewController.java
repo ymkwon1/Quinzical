@@ -1,4 +1,4 @@
-package application.views;
+package application.controllers;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class MenuViewController {
 
 	@FXML
 	void practiceBtnClick(ActionEvent event) throws IOException {
-		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("PracticeModuleView.fxml"));
+		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
 		Scene practiceModuleScene = new Scene(practiceModuleView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -67,7 +67,7 @@ public class MenuViewController {
 			}
 		}
 
-		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
+		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 		Scene gamesModuleScene = new Scene(gamesModuleView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -91,7 +91,7 @@ public class MenuViewController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -120,7 +120,7 @@ public class MenuViewController {
 	
     @FXML
     void playerRankBtnClick(ActionEvent event) throws IOException {
-		Parent view = FXMLLoader.load(getClass().getResource("PlayerRankingView.fxml"));
+		Parent view = FXMLLoader.load(getClass().getResource("/application/views/PlayerRankingView.fxml"));
 		Scene scene = new Scene(view);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

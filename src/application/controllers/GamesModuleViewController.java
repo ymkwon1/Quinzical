@@ -1,4 +1,4 @@
-package application.views;
+package application.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -98,7 +98,7 @@ public class GamesModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("GamesQuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/application/views/GamesQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -109,7 +109,7 @@ public class GamesModuleViewController implements Initializable{
 	
 	@FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -1,4 +1,4 @@
-package application.views;
+package application.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -117,7 +117,7 @@ public class GamesQuestionViewController implements Initializable {
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
     	_model.setPreviousScene(2);
-		Parent settingsView = FXMLLoader.load(getClass().getResource("TTSSettingsView.fxml"));
+		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -130,7 +130,7 @@ public class GamesQuestionViewController implements Initializable {
 	 * returns to Games model screen
 	 */
 	void returnToGames(ActionEvent event) throws IOException {
-		Parent menuView = FXMLLoader.load(getClass().getResource("GamesModuleView.fxml"));
+		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 		Scene menuScene = new Scene(menuView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
