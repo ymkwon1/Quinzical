@@ -65,6 +65,7 @@ public class MenuViewController {
 			if (result.isPresent()){
 				_model.setCurrentPlayer(result.get());
 			}
+			_model.saveCurrentPlayer();
 		}
 
 		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));

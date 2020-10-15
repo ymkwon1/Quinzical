@@ -144,9 +144,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
 			_alert.showAndWait();
-			Player player = new Player(_model.getCurrentPlayer(), _model.getWinnings());
-			_playerList = PlayerRankings.getInstace();
-			_playerList.add(player);
+			_model.addPlayerRanking();
 		}
 	}
 

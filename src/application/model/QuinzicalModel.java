@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,17 +33,13 @@ public class QuinzicalModel {
 	private int _winnings = 0;
 	private int _ttsSpeed = 175;
 	private int _previousScene = 1;
+	private PlayerRankings _playerRankings;
 
 	public QuinzicalModel() throws Exception {
 		initialisecategories();
 		readcategories();
 		setFiveRandomCategories();
-		//		for (Map.Entry<String, List<String>> entry: data.entrySet()) {
-		//			String key = entry.getKey();
-		//			List<String> values = entry.getValue();
-		//			System.out.println("Key = " + key);
-		//			System.out.println(values);
-		//		}
+		loadCurrentPlayer();
 		File winnings = new File("data/winnings");
 		if (!winnings.exists()) {
 			BashCmdUtil.bashCmdNoOutput("touch data/winnings");
@@ -399,6 +395,13 @@ public class QuinzicalModel {
 		String strWinnings = Integer.toString(winnings);
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
+	
+	public void addPlayerRanking() {
+		Player player = new Player(_currentPlayer, _winnings);
+		_playerRankings = PlayerRankings.getInstance();
+		_playerRankings.add(player);
+		_playerRankings.savePlayerRankings();
+	}
 
 	public void reset(){
 		BashCmdUtil.bashCmdNoOutput("rm -r data/games_module");
@@ -406,6 +409,7 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+"175"+" /\" data/tts_speed");
 		BashCmdUtil.bashCmdNoOutput("rm data/answered_questions");
 		BashCmdUtil.bashCmdNoOutput("rm data/five_random_categories");
+		BashCmdUtil.bashCmdNoOutput("rm data/current_player");
 		_currentPlayer = null;
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
@@ -429,6 +433,36 @@ public class QuinzicalModel {
 		}
 		return false;
 	}	
+
+	public void saveCurrentPlayer() {
+		BashCmdUtil.bashCmdNoOutput("touch data/current_player");
+		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/current_player",_currentPlayer));
+	}
+	
+	public void loadCurrentPlayer() {
+		Scanner sc;
+		File file = new File("data/current_player");
+		if(file.exists()) {
+			try {
+				sc = new Scanner(new File("data/current_player"));
+				if(sc.hasNextLine()) {
+					String player = sc.nextLine();
+					_currentPlayer= player;
+				}
+				else {
+					_currentPlayer = null;
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			BashCmdUtil.bashCmdNoOutput("touch data/current_player");
+			_currentPlayer = null;
+		}
+	}
+	
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Quinzical
