@@ -46,10 +46,10 @@ public class QuinzicalModel {
 		//		}
 		File winnings = new File("data/winnings");
 		if (!winnings.exists()) {
-			executeBashCmdNoOutput("touch data/winnings");
-			executeBashCmdNoOutput("echo 0 >> data/winnings");
+			BashCmdUtil.bashCmdNoOutput("touch data/winnings");
+			BashCmdUtil.bashCmdNoOutput("echo 0 >> data/winnings");
 		}
-		executeBashCmdNoOutput("touch data/tts_speed");
+		BashCmdUtil.bashCmdNoOutput("touch data/tts_speed");
 		loadTTSSpeed();
 	}
 
@@ -58,7 +58,7 @@ public class QuinzicalModel {
 	 * each category is added to the list
 	 */
 	private void initialisecategories() {
-		_categories = executeBashCmdWithOutput("ls categories");
+		_categories = BashCmdUtil.bashCmdHasOutput("ls categories");
 		//		System.out.println(_categories);
 	}
 
@@ -93,7 +93,7 @@ public class QuinzicalModel {
 
 	public void setFiveRandomCategories () {
 		//create a file to store the selected five categories
-		executeBashCmdNoOutput("mkdir -p data");
+		BashCmdUtil.bashCmdNoOutput("mkdir -p data");
 		File five_random_categories = new File ("data/five_random_categories");
 		if (!five_random_categories.exists()) {
 			try {
@@ -129,7 +129,7 @@ public class QuinzicalModel {
 				str = str + shuffledCategories.get(i) + ",";
 				_gamesData.put(shuffledCategories.get(i), _fiveRandomClues);
 			}
-			executeBashCmdNoOutput(String.format("echo \"%s\" >> data/five_random_categories",str));
+			BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/five_random_categories",str));
 		}
 		else {
 			BufferedReader reader;
@@ -171,7 +171,7 @@ public class QuinzicalModel {
 			List<String> temp = new ArrayList<String>();
 			for (int i = 0; i<5;i++) {
 				temp.add(clues.get(i));
-				executeBashCmdNoOutput(String.format("echo \"%s\" >> data/games_module/\"%s\"",clues.get(i), category));
+				BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/games_module/\"%s\"",clues.get(i), category));
 			}
 			_fiveRandomClues = temp;
 		}
@@ -240,18 +240,18 @@ public class QuinzicalModel {
 	public void setAnsweredQuestions() {
 		File file = new File("data/answered_questions");
 		if(!file.exists()) {
-			executeBashCmdNoOutput("touch data/answered_questions");
+			BashCmdUtil.bashCmdNoOutput("touch data/answered_questions");
 
 			String answeredQuestions = "";
 			for (int i = 0;i<5;i++) {
 				answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
 			}
-			executeBashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
+			BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
 
 		}
 		Scanner myReader;
 		try {
-			executeBashCmdNoOutput("touch data/answered_questions");
+			BashCmdUtil.bashCmdNoOutput("touch data/answered_questions");
 			myReader = new Scanner(file);
 			while(myReader.hasNextLine()) {
 				String fileLine = myReader.nextLine();
@@ -271,13 +271,13 @@ public class QuinzicalModel {
 	public void addAnsweredQuestions (int index) {
 
 		_answeredQuestions[index]=_answeredQuestions[index]+1;
-		executeBashCmdNoOutput("rm data/answered_questions");
-		executeBashCmdNoOutput("touch data/answered_questions");
+		BashCmdUtil.bashCmdNoOutput("rm data/answered_questions");
+		BashCmdUtil.bashCmdNoOutput("touch data/answered_questions");
 		String answeredQuestions = "";
 		for (int i = 0;i<5;i++) {
 			answeredQuestions = answeredQuestions + " " + String.valueOf(_answeredQuestions[i]);
 		}
-		executeBashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
+		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/answered_questions", answeredQuestions));
 
 
 
@@ -306,65 +306,16 @@ public class QuinzicalModel {
 	}
 
 	/**
-	 * executes bash command that generates an output into a list of strings
-	 * @param command the command we are executing in bash
-	 * @return List<String> the output of bash command
-	 */
-	private List<String> executeBashCmdWithOutput(String command) {
-		List<String> bashOutput = new ArrayList<String>();
-		try {
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-
-			Process process = pb.start();
-
-			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			BufferedReader stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-			int exitStatus = process.waitFor();
-
-			if (exitStatus == 0) {
-				String line;
-				while ((line = stdout.readLine()) != null) {
-					bashOutput.add(line);
-				}
-			} else {
-				String line;
-				while ((line = stderr.readLine()) != null) {
-					System.err.println(line);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return bashOutput;
-	}
-
-	/**
-	 * execute a bash command that doesn't have an output
-	 * @param command
-	 */
-	@SuppressWarnings("unused")
-	private void executeBashCmdNoOutput(String command) {
-		try {
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-			Process process = pb.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * text to speech a string
 	 */
 	public void tts(String string) {
-		executeBashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, _ttsSpeed));
+		BashCmdUtil.bashCmdNoOutput(String.format("espeak \"%s\" --stdout -s %d | aplay", string, _ttsSpeed));
 
 	}
 
 	public void stopTts () {
 		//		String command = "pkill -f espeak";
-		//		executeBashCmdNoOutput(command);
+		//		BashCmdUtil.bashCmdNoOutput(command);
 		Stream<ProcessHandle> descendents = ProcessHandle.current().descendants();
 		descendents.filter(ProcessHandle::isAlive).forEach(ph -> {
 			ph.destroy();
@@ -376,8 +327,8 @@ public class QuinzicalModel {
 	 */
 	public void increaseTTSSpeed() {
 		_ttsSpeed = _ttsSpeed + 10;
-		executeBashCmdNoOutput("> data/tts_speed");
-		executeBashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
+		BashCmdUtil.bashCmdNoOutput("> data/tts_speed");
+		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
 	}
 
 	/**
@@ -385,8 +336,8 @@ public class QuinzicalModel {
 	 */
 	public void decreaseTTSSpeed() {
 		_ttsSpeed = _ttsSpeed - 10;
-		executeBashCmdNoOutput("> data/tts_speed");
-		executeBashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
+		BashCmdUtil.bashCmdNoOutput("> data/tts_speed");
+		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
 	}
 
 	public int getTTSSpeed() {
@@ -407,8 +358,8 @@ public class QuinzicalModel {
 					_ttsSpeed = Integer.parseInt(speed.trim());
 				}
 				else {
-					executeBashCmdNoOutput("> data/tts_speed");
-					executeBashCmdNoOutput("echo \"175\" >> data/tts_speed");
+					BashCmdUtil.bashCmdNoOutput("> data/tts_speed");
+					BashCmdUtil.bashCmdNoOutput("echo \"175\" >> data/tts_speed");
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -416,9 +367,9 @@ public class QuinzicalModel {
 			}
 		}
 		else {
-			executeBashCmdNoOutput("touch data/tts_speed");
-			executeBashCmdNoOutput("> data/tts_speed");
-			executeBashCmdNoOutput("echo \"175\" >> data/tts_speed");
+			BashCmdUtil.bashCmdNoOutput("touch data/tts_speed");
+			BashCmdUtil.bashCmdNoOutput("> data/tts_speed");
+			BashCmdUtil.bashCmdNoOutput("echo \"175\" >> data/tts_speed");
 		}
 	}
 
@@ -439,25 +390,29 @@ public class QuinzicalModel {
 		int winnings = getWinnings();
 		winnings = winnings + value;
 		String strWinnings = Integer.toString(winnings);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
+		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
 	public void decreaseWinnings(int value) {
 		int winnings = getWinnings();
 		winnings = winnings - value;
 		String strWinnings = Integer.toString(winnings);
-		executeBashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
+		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
 	public void reset(){
-		executeBashCmdNoOutput("rm -r data");
+		BashCmdUtil.bashCmdNoOutput("rm -r data/games_module");
+		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" data/winnings");
+		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+"175"+" /\" data/tts_speed");
+		BashCmdUtil.bashCmdNoOutput("rm data/answered_questions");
+		BashCmdUtil.bashCmdNoOutput("rm data/five_random_categories");
 		_currentPlayer = null;
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {
 			_answeredQuestions[i]=0;
 		}
-		executeBashCmdNoOutput("touch data/answered_questions");
+		BashCmdUtil.bashCmdNoOutput("touch data/answered_questions");
 		initialisecategories();
 		try {
 			readcategories();
