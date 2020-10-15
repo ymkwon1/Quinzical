@@ -52,11 +52,13 @@ public class TTSSettingsViewController implements Initializable{
 
 	@FXML
 	void testBtnClick(ActionEvent event) {
+		model.stopTts();
 		model.tts("Testing the speed at which text is read");
 	}
 
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
+		model.stopTts();
 		if (model.getPreviousScene() == 1) {
 			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
 			Scene menuScene = new Scene(menuView);
