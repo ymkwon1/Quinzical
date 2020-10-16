@@ -83,7 +83,6 @@ public class GamesQuestionViewController implements Initializable {
 			_secondsLeft--;
 		}
 		timerLabel.setText(String.valueOf(_secondsLeft));
-		System.out.println(_secondsLeft);
 		if(_secondsLeft == 0) {
 			_model.stopTts();
 			animation.stop();
@@ -149,7 +148,7 @@ public class GamesQuestionViewController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
-		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
