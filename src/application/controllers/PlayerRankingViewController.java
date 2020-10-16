@@ -48,6 +48,8 @@ public class PlayerRankingViewController implements Initializable{
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
 		pointsColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("Points"));
 		
+		nameColumn.setReorderable(false);
+		pointsColumn.setReorderable(false);
 		
 		_playerList = PlayerRankings.getInstance();
 		table.setItems(_playerList.getPlayerList());
