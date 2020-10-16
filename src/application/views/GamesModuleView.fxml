@@ -16,7 +16,7 @@
          </font>
       </Label>
       <Label layoutX="70.0" layoutY="105.0" prefHeight="15.0" prefWidth="146.0" text="Select a category" />
-      <Button fx:id="returnBtn" layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnBtnClick" text="&lt;--" />
+      <Button fx:id="returnBtn" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
       <GridPane fx:id="gridPane" layoutX="39.0" layoutY="148.0" prefHeight="224.0" prefWidth="523.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

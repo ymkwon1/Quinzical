@@ -27,7 +27,7 @@
             <Font size="37.0" />
          </font>
       </Label>
-      <Button fx:id="returnBtn" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#returnBtnClick" text="&lt;--" />
+      <Button fx:id="returnBtn" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
       <Button fx:id="resetBtn" layoutX="234.0" layoutY="362.0" mnemonicParsing="false" onAction="#resetBtnClick" text="Reset Rankings" />
    </children>
 </AnchorPane>
