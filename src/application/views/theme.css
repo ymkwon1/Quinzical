@@ -1,4 +1,4 @@
-.background {
+.background, .table-view .filler {
 	-fx-background-color: #50514F;
 }
 
@@ -40,7 +40,7 @@
 	-fx-background: transparent;
 }
 
-.scroll-bar {
+.scroll-bar, .decrement-button:hover, .increment-button:hover {
 	-fx-background-color: transparent;
 }
 
@@ -48,14 +48,26 @@
 	-fx-background-color:derive(black, 60%);
 }
 
-.thumb:hover {
+.thumb:hover{
 	-fx-background-color:derive(black, 80%);
 }
 
-.decrement-button:hover {
+.table-view {
 	-fx-background-color: transparent;
 }
 
-.increment-button:hover {
-	-fx-background-color: transparent;
+.table-view .column-header {
+	-fx-background-color: derive(black, 80%);
 }
+
+.table-view .arrow {
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+	-fx-shape: "";
+}
+
+.table-view .cell {
+	-fx-alignment: center;
+}
+
+
