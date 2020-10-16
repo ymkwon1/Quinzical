@@ -59,6 +59,8 @@ public class MenuViewController {
 			dialog.setTitle("Player Name");
 			dialog.setHeaderText("Please Enter A Name");
 			dialog.setContentText("Name:");
+			dialog.setGraphic(null);
+			dialog.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 
 			// Traditional way to get the response value.
 			Optional<String> result = dialog.showAndWait();
@@ -81,6 +83,8 @@ public class MenuViewController {
 			_alert.setTitle("Congratulations");
 			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
+			_alert.setGraphic(null);
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 			_alert.showAndWait();
 		}
 	}
@@ -109,11 +113,13 @@ public class MenuViewController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
-		alert.setHeaderText(null);
-		alert.setContentText("Are you sure you want to reset the game?");
-		Optional<ButtonType> result = alert.showAndWait();
+		_alert = new Alert(AlertType.CONFIRMATION);
+		_alert.setTitle("Reset Quinzical");
+		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+		_alert.setHeaderText(null);
+		_alert.setGraphic(null);
+		_alert.setContentText("Are you sure you want to reset the game?");
+		Optional<ButtonType> result = _alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			_model.reset();
 		}

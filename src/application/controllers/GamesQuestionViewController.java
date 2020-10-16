@@ -73,7 +73,9 @@ public class GamesQuestionViewController implements Initializable {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
 			_alert.setHeaderText(null);
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 			_alert.setContentText("Correct! You have won "+ _clue.getValue());
+			_alert.setGraphic(null);
 			_model.tts("Correct! You have won "+ _clue.getValue());
 			Optional<ButtonType> result = _alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
@@ -84,6 +86,8 @@ public class GamesQuestionViewController implements Initializable {
 			_model.decreaseWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
 			_alert.setHeaderText(null);
+			_alert.setGraphic(null);
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
 			_model.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
 			Optional<ButtonType> result = _alert.showAndWait();
@@ -107,6 +111,7 @@ public class GamesQuestionViewController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
+		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
@@ -140,6 +145,7 @@ public class GamesQuestionViewController implements Initializable {
 		if (_model.gameCompleted()) {
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 			_alert.setTitle("Congratulations");
 			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");

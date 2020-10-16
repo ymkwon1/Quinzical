@@ -56,7 +56,8 @@ public class GamesModuleViewController implements Initializable{
 				for (int col = 1;col < 6; col++) {
 					String value = String.valueOf(100*(col));
 					Button button = new Button(value);
-
+					button.getStylesheets().add("application/views/theme.css");
+					button.getStyleClass().add("button-1");
 					if(Integer.valueOf(value)/100 == _model.getAnsweredQuestions(row)+1) {
 						button.setDisable(false);
 					} else {

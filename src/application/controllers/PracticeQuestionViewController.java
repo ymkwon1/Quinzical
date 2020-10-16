@@ -98,8 +98,10 @@ public class PracticeQuestionViewController implements Initializable{
     	_model.stopTts();
     	if (_clue.checkAnswer(answerField.getText())) {
     		alert.setTitle("Answer");
+    		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
         	alert.setHeaderText(null);
         	alert.setContentText("Correct!");
+        	alert.setGraphic(null);
         	_model.tts("Correct");
         	alert.showAndWait();
         	returnToPractice(event);
@@ -107,8 +109,10 @@ public class PracticeQuestionViewController implements Initializable{
     	else {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
+        	alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
         	alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
         	_model.tts("Incorrect");
+        	alert.setGraphic(null);
         	alert.showAndWait();	
         	attemptsLabel.setText(_clue.getAttempts());
         	hintsLabel.setText(_clue.getHint());

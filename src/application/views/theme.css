@@ -1,4 +1,4 @@
-.background, .table-view .filler {
+.background, .table-view .filler, .dialog-pane, .dialog-pane:header .header-panel {
 	-fx-background-color: #50514F;
 }
 
@@ -92,5 +92,7 @@
 .table-view .cell {
 	-fx-alignment: center;
 }
+
+
 
 
