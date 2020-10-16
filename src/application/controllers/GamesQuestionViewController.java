@@ -56,7 +56,7 @@ public class GamesQuestionViewController implements Initializable {
 
 	private Clue _clue;
 	
-	private int _secondsLeft = 5;
+	private int _secondsLeft;
 	private Timeline animation;
 
 	private Alert _alert = new Alert(AlertType.INFORMATION);
@@ -71,6 +71,7 @@ public class GamesQuestionViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		_secondsLeft = 5;
 		timerLabel.setText(String.valueOf(_secondsLeft));
 		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> countDown()));
 		animation.setCycleCount(Timeline.INDEFINITE);
@@ -82,6 +83,7 @@ public class GamesQuestionViewController implements Initializable {
 			_secondsLeft--;
 		}
 		timerLabel.setText(String.valueOf(_secondsLeft));
+		System.out.println(_secondsLeft);
 		if(_secondsLeft == 0) {
 			_model.stopTts();
 			animation.stop();
@@ -105,7 +107,6 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
 		_model.stopTts();
-		animation.stop();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
@@ -145,7 +146,6 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
-		animation.stop();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
@@ -159,6 +159,7 @@ public class GamesQuestionViewController implements Initializable {
 
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+    	animation.stop();
     	_model.setPreviousScene(2);
 		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
@@ -173,6 +174,7 @@ public class GamesQuestionViewController implements Initializable {
 	 * returns to Games model screen
 	 */
 	void returnToGames(ActionEvent event) throws IOException {
+		animation.stop();
 		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 		Scene menuScene = new Scene(menuView);
 
