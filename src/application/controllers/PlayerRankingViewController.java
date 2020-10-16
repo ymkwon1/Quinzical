@@ -64,6 +64,7 @@ public class PlayerRankingViewController implements Initializable{
 			table.setPlaceholder(new Label(""));
 		}
 		pointsColumn.setSortable(false);
+		nameColumn.setSortable(false);
 		table.setSelectionModel(null);
 	}
 
