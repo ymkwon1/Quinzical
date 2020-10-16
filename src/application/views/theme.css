@@ -2,6 +2,14 @@
 	-fx-background-color: #50514F;
 }
 
+.text-field {
+	-fx-border-border: #F6E8EA;
+}
+
+.text-field:focused {
+	-fx-focus-color: #F6E8EA;
+}
+
 .label {
 	-fx-text-fill: #F6E8EA;
 }
