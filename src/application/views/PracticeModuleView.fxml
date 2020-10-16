@@ -15,13 +15,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PracticeModuleViewController">
    <children>
-      <Label layoutX="20.0" layoutY="50.0" style="-fx-font-weight: bold;" text="Practice Module">
+      <Label layoutX="20.0" layoutY="50.0" style="-fx-font-weight: Bold" text="Practice Module">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
       <Label layoutX="22.0" layoutY="95.0" prefHeight="15.0" prefWidth="168.0" text="Please select a category" />
-      <Button fx:id="returnBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnBtnClick" text="&lt;--" />
+      <Button fx:id="returnBtn" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
       <ScrollPane fitToWidth="true" layoutX="20.0" layoutY="130.0" prefHeight="240.0" prefViewportHeight="224.0" prefViewportWidth="540.0" prefWidth="560.0" styleClass="background" stylesheets="@theme.css">
          <content>
             <GridPane fx:id="gridPane" alignment="CENTER" layoutX="20.0" layoutY="130.0" prefHeight="240.0" prefWidth="540.0">
