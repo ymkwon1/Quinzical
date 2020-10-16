@@ -9,6 +9,7 @@
 .button {
 	-fx-background-color: #D7B377;
 	-fx-background-radius: 4px;
+	-fx-font-weight: bold;
 }
 
 .button:hover {
@@ -17,6 +18,22 @@
 	-fx-border-color: #F6E8EA;
 	-fx-border-width: 2px;
 	-fx-border-radius: 4px;
+	-fx-font-weight: bold;
+}
+
+.button-1 {
+	-fx-background-color: #D2D6EF;
+	-fx-background-radius: 4px;
+	-fx-font-weight: bold;
+}
+
+.button-1:hover {
+	-fx-background-color: #D2D6EF;
+	-fx-background-radius: 4px;
+	-fx-border-color: #F6E8EA;
+	-fx-border-width: 2px;
+	-fx-border-radius: 4px;
+	-fx-font-weight: bold;
 }
 
 .scroll-pane {

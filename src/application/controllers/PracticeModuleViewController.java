@@ -60,6 +60,8 @@ public class PracticeModuleViewController implements Initializable{
 					Button button = new Button(category);
 					button.setPrefWidth(150);
 					button.setPrefHeight(50);
+					button.getStylesheets().add("application/views/theme.css");
+					button.getStyleClass().add("button-1");
 					gridPane.add(button, col, row,1,1);
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
