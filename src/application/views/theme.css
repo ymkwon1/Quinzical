@@ -1,5 +1,13 @@
-.background, .table-view .filler {
+.background, .table-view .filler, .dialog-pane, .dialog-pane:header .header-panel {
 	-fx-background-color: #50514F;
+}
+
+.text-field {
+	-fx-border-border: #F6E8EA;
+}
+
+.text-field:focused {
+	-fx-focus-color: #F6E8EA;
 }
 
 .label {
@@ -84,5 +92,7 @@
 .table-view .cell {
 	-fx-alignment: center;
 }
+
+
 
 

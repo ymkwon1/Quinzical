@@ -61,7 +61,7 @@ public class PlayerRankingViewController implements Initializable{
 		
 		}
 		else {
-			table.setPlaceholder(new Label(""));
+			table.setPlaceholder(new Label("Awaiting a champion"));
 		}
 		pointsColumn.setSortable(false);
 		nameColumn.setSortable(false);
@@ -72,7 +72,9 @@ public class PlayerRankingViewController implements Initializable{
     void resetBtnClick(ActionEvent event) throws IOException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
+		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 		alert.setHeaderText(null);
+		alert.setGraphic(null);
 		alert.setContentText("Are you sure you want to reset the rankings");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
