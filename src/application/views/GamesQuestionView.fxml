@@ -20,5 +20,10 @@
       <Label fx:id="answerLabel" layoutX="172.0" layoutY="336.0" prefHeight="16.0" prefWidth="402.0" wrapText="true" />
       <Button fx:id="repeatBtn" layoutX="44.0" layoutY="141.0" mnemonicParsing="false" onAction="#repeatBtnClick" text="Repeat Question" />
       <Button fx:id="ttsSettingsBtn" layoutX="224.0" layoutY="141.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" text="TTS settings" />
+      <Label fx:id="timerLabel" layoutX="262.0" layoutY="281.0" prefHeight="38.0" prefWidth="77.0">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,11 +22,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.model.Clue;
-import application.model.Player;
-import application.model.PlayerRankings;
 import application.model.QuinzicalModel;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-
+import javafx.event.Event;
 import javafx.scene.control.Label;
 
 public class GamesQuestionViewController implements Initializable {
@@ -45,12 +46,15 @@ public class GamesQuestionViewController implements Initializable {
 	private Button repeatBtn;
     @FXML
     private Button ttsSettingsBtn;
+    @FXML
+    private Label timerLabel;
 
 	private QuinzicalModel _model;
-	
-	private PlayerRankings _playerList;
 
 	private Clue _clue;
+	
+	private int _secondsLeft = 5;
+	private Timeline animation;
 
 	private Alert _alert = new Alert(AlertType.INFORMATION);
 
@@ -64,11 +68,28 @@ public class GamesQuestionViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		timerLabel.setText(String.valueOf(_secondsLeft));
+		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> countDown()));
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.play();
 	}
+	
+	private void countDown() {
+		if (_secondsLeft > 0) {
+			_secondsLeft--;
+		}
+		timerLabel.setText(String.valueOf(_secondsLeft));
+		if(_secondsLeft == 0) {
+			_model.stopTts();
+			animation.stop();
+		}
+	}
+	
 	// Event Listener on Button[#submitBtn].onAction
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
 		_model.stopTts();
+		animation.stop();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
@@ -104,6 +125,7 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
+		animation.stop();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
