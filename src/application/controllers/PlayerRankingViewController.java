@@ -57,12 +57,12 @@ public class PlayerRankingViewController implements Initializable{
 		table.getSortOrder().add(pointsColumn);
 		table.sort();
 		
-		nameColumn.setSortable(false);
-		table.setSelectionModel(null);
 		}
 		else {
 			table.setPlaceholder(new Label(""));
 		}
+		pointsColumn.setSortable(false);
+		table.setSelectionModel(null);
 	}
 
     @FXML
