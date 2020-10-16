@@ -36,6 +36,21 @@
 	-fx-font-weight: bold;
 }
 
+.button-confirm {
+	-fx-background-color: #70C1B3;
+	-fx-background-radius: 4px;
+	-fx-font-weight: bold;
+}
+
+.button-confirm:hover {
+	-fx-background-color: #70C1B3;
+	-fx-background-radius: 4px;
+	-fx-border-color: #F6E8EA;
+	-fx-border-width: 2px;
+	-fx-border-radius: 4px;
+	-fx-font-weight: bold;
+}
+
 .scroll-pane {
 	-fx-background: transparent;
 }
