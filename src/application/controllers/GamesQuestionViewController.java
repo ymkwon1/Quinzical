@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -48,6 +49,8 @@ public class GamesQuestionViewController implements Initializable {
     private Button ttsSettingsBtn;
     @FXML
     private Label timerLabel;
+    @FXML
+    private AnchorPane anchorPane;
 
 	private QuinzicalModel _model;
 
@@ -82,6 +85,19 @@ public class GamesQuestionViewController implements Initializable {
 		if(_secondsLeft == 0) {
 			_model.stopTts();
 			animation.stop();
+
+			try {
+				Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+				Scene menuScene = new Scene(menuView);
+
+				Stage window = (Stage)anchorPane.getScene().getWindow();
+
+				window.setScene(menuScene);
+				window.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
