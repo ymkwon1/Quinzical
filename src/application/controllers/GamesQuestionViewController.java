@@ -27,7 +27,6 @@ import application.model.QuinzicalModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.scene.control.Label;
 
 public class GamesQuestionViewController implements Initializable {
@@ -85,20 +84,21 @@ public class GamesQuestionViewController implements Initializable {
 		timerLabel.setText(String.valueOf(_secondsLeft));
 		if(_secondsLeft == 0) {
 			_model.stopTts();
-			animation.stop();
+			animation.stop();					_alert = new Alert(AlertType.INFORMATION);
+			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			_alert.setTitle("Time out!");
+			_alert.setHeaderText("Time Out!");
+			_alert.setContentText("You've run out of time! No point deducted?");
+			_alert.setOnHidden(e -> {
+				try {
+					returnToGames();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				});
+			_alert.show();
 
-			try {
-				Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
-				Scene menuScene = new Scene(menuView);
-
-				Stage window = (Stage)anchorPane.getScene().getWindow();
-
-				window.setScene(menuScene);
-				window.show();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
@@ -106,6 +106,7 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
 		_model.stopTts();
+		animation.stop();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
@@ -118,7 +119,7 @@ public class GamesQuestionViewController implements Initializable {
 			if (result.get() == ButtonType.OK) {
 				_model.stopTts();
 			}
-			returnToGames(event);
+			returnToGames();
 		} else {
 			_model.decreaseWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
@@ -131,7 +132,7 @@ public class GamesQuestionViewController implements Initializable {
 			if (result.get() == ButtonType.OK) {
 				_model.stopTts();
 			}
-			returnToGames(event);
+			returnToGames();
 		}
 	}
 	@FXML
@@ -145,6 +146,7 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
+		animation.stop();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
@@ -152,7 +154,7 @@ public class GamesQuestionViewController implements Initializable {
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			returnToGames(event);
+			returnToGames();
 		}
 	}
 
@@ -172,12 +174,12 @@ public class GamesQuestionViewController implements Initializable {
 	/**
 	 * returns to Games model screen
 	 */
-	void returnToGames(ActionEvent event) throws IOException {
+	void returnToGames() throws IOException {
 		animation.stop();
 		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 		Scene menuScene = new Scene(menuView);
 
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Stage window = (Stage)anchorPane.getScene().getWindow();
 
 		window.setScene(menuScene);
 		window.show();
@@ -188,7 +190,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setTitle("Congratulations");
 			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
 			_alert.setContentText("You have answered every question, return to menu to reset the game!");
-			_alert.showAndWait();
+			_alert.show();
 			_model.addPlayerRanking();
 		}
 	}
