@@ -146,7 +146,6 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
-		animation.stop();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
@@ -155,6 +154,7 @@ public class GamesQuestionViewController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			returnToGames();
+			animation.stop();
 		}
 	}
 
