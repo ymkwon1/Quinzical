@@ -70,7 +70,7 @@ public class GamesQuestionViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		_secondsLeft = 5;
+		_secondsLeft = 60;
 		timerLabel.setText(String.valueOf(_secondsLeft));
 		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> countDown()));
 		animation.setCycleCount(Timeline.INDEFINITE);

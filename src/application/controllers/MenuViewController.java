@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.model.Player;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,17 +81,25 @@ public class MenuViewController implements Initializable{
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
 				_model.setCurrentPlayer(result.get());
+				_model.saveCurrentPlayer();
+				Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+				Scene gamesModuleScene = new Scene(gamesModuleView);
+
+				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+				window.setScene(gamesModuleScene);
+				window.show();
 			}
-			_model.saveCurrentPlayer();
 		}
+		else {
+			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+			Scene gamesModuleScene = new Scene(gamesModuleView);
 
-		Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
-		Scene gamesModuleScene = new Scene(gamesModuleView);
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-		window.setScene(gamesModuleScene);
-		window.show();
+			window.setScene(gamesModuleScene);
+			window.show();
+		}
 		if (_model.gameCompleted()) {
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
