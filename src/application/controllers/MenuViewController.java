@@ -1,13 +1,16 @@
 package application.controllers;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import application.model.Player;
 import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-public class MenuViewController {
+public class MenuViewController implements Initializable{
 
 	@FXML
 	private Button practiceBtn;
@@ -31,9 +34,28 @@ public class MenuViewController {
 	private Button resetBtn;
     @FXML
     private Button playerRankBtn;
+    @FXML
+    private Button internationalBtn;
 
 	private QuinzicalModel _model;
 	private Alert _alert;
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+			try {
+				_model = QuinzicalModel.createInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			if (_model.InternationalUnlocked()) {
+				internationalBtn.setDisable(false);
+			}
+			else {
+				internationalBtn.setDisable(true);
+			}
+		
+	}
 
 	@FXML
 	void practiceBtnClick(ActionEvent event) throws IOException {
@@ -48,11 +70,6 @@ public class MenuViewController {
 
 	@FXML
 	void gamesBtnClick(ActionEvent event) throws IOException {
-		try {
-			_model = QuinzicalModel.createInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		if (_model.getCurrentPlayer() == null) {
 			TextInputDialog dialog = new TextInputDialog("");
@@ -62,7 +79,6 @@ public class MenuViewController {
 			dialog.setGraphic(null);
 			dialog.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 
-			// Traditional way to get the response value.
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
 				_model.setCurrentPlayer(result.get());
@@ -89,13 +105,20 @@ public class MenuViewController {
 		}
 	}
 
+
+    @FXML
+    void internationalBtnClick(ActionEvent event) throws IOException {
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/InternationalModuleView.fxml"));
+    	Scene menuScene = new Scene(menuView);
+    	
+    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    	
+    	window.setScene(menuScene);
+    	window.show();
+    }
+	
 	@FXML
 	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-		try {
-			_model = QuinzicalModel.createInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
 
@@ -107,12 +130,6 @@ public class MenuViewController {
 
 	@FXML
 	void resetBtnClick (ActionEvent event) throws IOException {
-		try {
-			_model = QuinzicalModel.createInstance();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		_alert = new Alert(AlertType.CONFIRMATION);
 		_alert.setTitle("Reset Quinzical");
 		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
@@ -123,6 +140,13 @@ public class MenuViewController {
 		if (result.get() == ButtonType.OK) {
 			_model.reset();
 		}
+		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+		Scene TtsSettingsScene = new Scene(TtsSettingsView);
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(TtsSettingsScene);
+		window.show();
 	}
 	
     @FXML
@@ -135,4 +159,5 @@ public class MenuViewController {
 		window.setScene(scene);
 		window.show();
     }
+
 }

@@ -34,12 +34,14 @@ public class QuinzicalModel {
 	private int _ttsSpeed = 175;
 	private int _previousScene = 1;
 	private PlayerRankings _playerRankings;
+	private boolean _internationalUnlocked = false;
 
 	public QuinzicalModel() throws Exception {
 		initialisecategories();
 		readcategories();
 		setFiveRandomCategories();
 		loadCurrentPlayer();
+		setAnsweredQuestions();
 		File winnings = new File("data/winnings");
 		if (!winnings.exists()) {
 			BashCmdUtil.bashCmdNoOutput("touch data/winnings");
@@ -47,6 +49,7 @@ public class QuinzicalModel {
 		}
 		BashCmdUtil.bashCmdNoOutput("touch data/tts_speed");
 		loadTTSSpeed();
+		loadInternationalUnlocked();
 	}
 
 	/**
@@ -92,12 +95,7 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("mkdir -p data");
 		File five_random_categories = new File ("data/five_random_categories");
 		if (!five_random_categories.exists()) {
-			try {
-				five_random_categories.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			BashCmdUtil.bashCmdNoOutput("touch data/five_random_categories");
 		}
 		if (five_random_categories.length() == 0) {
 			//			List<String> temp = new ArrayList<String> ();
@@ -223,15 +221,15 @@ public class QuinzicalModel {
 		return _answeredQuestions[index];
 
 	}
-	
+
 	public String getCurrentPlayer() {
 		return _currentPlayer;
 	}
-	
+
 	public void setCurrentPlayer(String currentPlayer) {
 		_currentPlayer = currentPlayer;
 	}
-	
+
 
 	public void setAnsweredQuestions() {
 		File file = new File("data/answered_questions");
@@ -395,7 +393,7 @@ public class QuinzicalModel {
 		String strWinnings = Integer.toString(winnings);
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
-	
+
 	public void addPlayerRanking() {
 		Player player = new Player(_currentPlayer, _winnings);
 		_playerRankings = PlayerRankings.getInstance();
@@ -411,6 +409,7 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("rm data/five_random_categories");
 		BashCmdUtil.bashCmdNoOutput("rm data/current_player");
 		_currentPlayer = null;
+		_internationalUnlocked = false;
 		_gamesData.clear();
 		_fiveRandomCategories.clear();
 		for (int i= 0; i<5;i++) {
@@ -438,7 +437,7 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("touch data/current_player");
 		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/current_player",_currentPlayer));
 	}
-	
+
 	public void loadCurrentPlayer() {
 		Scanner sc;
 		File file = new File("data/current_player");
@@ -462,7 +461,55 @@ public class QuinzicalModel {
 			_currentPlayer = null;
 		}
 	}
-	
+
+	public boolean InternationalUnlocked() {
+		int count = 0;
+		for (int category: _answeredQuestions) {
+			if (category == 5) {
+				count++;
+			}
+		}
+		if (count >= 2) {
+			_internationalUnlocked = true;
+		}
+		else {
+			_internationalUnlocked = false;
+		}
+		saveInternationalUnlocked();
+		return _internationalUnlocked;
+	}
+
+
+	public void saveInternationalUnlocked() {
+		BashCmdUtil.bashCmdNoOutput("touch data/internatonal_unlocked");
+		BashCmdUtil.bashCmdNoOutput("> data/internatonal_unlocked");
+		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/internatonal_unlocked",Boolean.toString(_internationalUnlocked)));
+	}
+
+	public void loadInternationalUnlocked() {
+		Scanner sc;
+		File file = new File("data/internatonal_unlocked");
+		if(file.exists()) {
+			try {
+				sc = new Scanner(new File("data/internatonal_unlocked"));
+				if(sc.hasNextLine()) {
+					String interntionalUnlocked = sc.nextLine();
+					_internationalUnlocked = Boolean.parseBoolean(interntionalUnlocked.trim());
+				}
+				else {
+					_internationalUnlocked = false;
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			BashCmdUtil.bashCmdNoOutput("data/internatonal_unlocked");
+			_internationalUnlocked = false;
+		}
+	}
+
 	/**
 	 *  this static method is for creating a 
 	 *  singleton class of Quinzical

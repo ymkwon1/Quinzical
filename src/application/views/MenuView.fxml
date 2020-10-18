@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MenuViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MenuViewController">
    <children>
       <Label layoutX="199.0" layoutY="35.0" text="Quinzical">
          <font>
@@ -18,9 +13,10 @@
          </font>
       </Label>
       <Button fx:id="gamesBtn" layoutX="200.0" layoutY="120.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="30.0" prefWidth="200.0" text="Games Module" textAlignment="CENTER" />
-      <Button fx:id="practiceBtn" contentDisplay="CENTER" layoutX="200.0" layoutY="170.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="30.0" prefWidth="200.0" text="Practice Module" textAlignment="CENTER" />
-      <Button fx:id="ttsSettingsBtn" layoutX="200.0" layoutY="220.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" prefHeight="30.0" prefWidth="200.0" text="Text to Speech Settings" textAlignment="CENTER" />
-      <Button fx:id="resetBtn" layoutX="200.0" layoutY="320.0" mnemonicParsing="false" onAction="#resetBtnClick" prefHeight="30.0" prefWidth="200.0" text="Reset Quinzical" />
-      <Button fx:id="playerRankBtn" layoutX="200.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerRankBtnClick" prefHeight="30.0" prefWidth="200.0" text="View Player Rankings" />
+      <Button fx:id="practiceBtn" contentDisplay="CENTER" layoutX="200.0" layoutY="207.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="30.0" prefWidth="200.0" text="Practice Module" textAlignment="CENTER" />
+      <Button fx:id="ttsSettingsBtn" layoutX="200.0" layoutY="253.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" prefHeight="30.0" prefWidth="200.0" text="Text to Speech Settings" textAlignment="CENTER" />
+      <Button fx:id="resetBtn" layoutX="200.0" layoutY="346.0" mnemonicParsing="false" onAction="#resetBtnClick" prefHeight="30.0" prefWidth="200.0" text="Reset Quinzical" />
+      <Button fx:id="playerRankBtn" layoutX="200.0" layoutY="301.0" mnemonicParsing="false" onAction="#playerRankBtnClick" prefHeight="30.0" prefWidth="200.0" text="View Player Rankings" />
+      <Button fx:id="internationalBtn" layoutX="200.0" layoutY="162.0" mnemonicParsing="false" onAction="#internationalBtnClick" prefHeight="30.0" prefWidth="200.0" text="International Module" />
    </children>
 </AnchorPane>
