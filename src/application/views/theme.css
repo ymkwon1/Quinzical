@@ -1,5 +1,5 @@
 .background, .table-view .filler, .dialog-pane, .dialog-pane:header .header-panel {
-	-fx-background-color: #50514F;
+	-fx-background-color: #080808;
 }
 
 .text-field {
@@ -14,50 +14,85 @@
 	-fx-text-fill: #F6E8EA;
 }
 
-.button {
-	-fx-background-color: #D7B377;
-	-fx-background-radius: 4px;
+.label-categories {
+	-fx-font: 24px "Manjari";
+	-fx-text-fill: #F6E8EA;
 	-fx-font-weight: bold;
 }
 
+.button {
+	-fx-font: 16px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 4px;
+	-fx-text-fill: #F6E8EA;
+	-fx-font-weight: normal;
+}
+
 .button:hover {
-	-fx-background-color: #D7B377;
+	-fx-font: 16px "Manjari";
+	-fx-background-color: #8B0000;
 	-fx-background-radius: 4px;
 	-fx-border-color: #F6E8EA;
 	-fx-border-width: 2px;
 	-fx-border-radius: 4px;
+	-fx-font-weight: bold;
+}
+
+.button-menu {
+	-fx-font: 24px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 16px;
+	-fx-text-fill: #F6E8EA;
+	-fx-font-weight: normal;
+}
+
+.button-menu:hover {
+	-fx-font: 24px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 16px;
+	-fx-border-color: #F6E8EA;
+	-fx-border-width: 4px;
+	-fx-border-radius: 16px;
+	-fx-font-weight: bold;
+}
+
+.button-menu-1 {
+	-fx-font: 20px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 16px;
+	-fx-text-fill: #F6E8EA;
+	-fx-font-weight: normal;
+}
+
+.button-menu-1:hover {
+	-fx-font: 20px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 16px;
+	-fx-border-color: #F6E8EA;
+	-fx-border-width: 4px;
+	-fx-border-radius: 16px;
 	-fx-font-weight: bold;
 }
 
 .button-1 {
-	-fx-background-color: #D2D6EF;
-	-fx-background-radius: 4px;
-	-fx-font-weight: bold;
+	-fx-font: 24px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 0px;
+	-fx-font-weight: normal;
+	-fx-pref-height: 100px;
+	-fx-pref-width: 200px;
 }
 
 .button-1:hover {
-	-fx-background-color: #D2D6EF;
-	-fx-background-radius: 4px;
+	-fx-font: 24px "Manjari";
+	-fx-background-color: #8B0000;
+	-fx-background-radius: 0px;
 	-fx-border-color: #F6E8EA;
-	-fx-border-width: 2px;
-	-fx-border-radius: 4px;
+	-fx-border-width: 4px;
+	-fx-border-radius: 0px;
 	-fx-font-weight: bold;
 }
 
-.button-confirm {
-	-fx-background-color: #70C1B3;
-	-fx-background-radius: 4px;
-	-fx-font-weight: bold;
-}
-
-.button-confirm:hover {
-	-fx-background-color: #70C1B3;
-	-fx-background-radius: 4px;
-	-fx-border-color: #F6E8EA;
-	-fx-border-width: 2px;
-	-fx-border-radius: 4px;
-	-fx-font-weight: bold;
-}
 
 .scroll-pane {
 	-fx-background: transparent;
@@ -80,7 +115,7 @@
 }
 
 .table-view .column-header {
-	-fx-background-color: derive(black, 80%);
+	-fx-background-color: derive(black, 90%);
 }
 
 .table-view .arrow {

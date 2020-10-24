@@ -5,18 +5,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MenuViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MenuViewController">
    <children>
-      <Label layoutX="199.0" layoutY="35.0" text="Quinzical">
+      <Label layoutX="234.0" layoutY="79.0" text="Quinzical">
          <font>
-            <Font size="44.0" />
+            <Font name="Manjari Regular" size="57.0" />
          </font>
       </Label>
-      <Button fx:id="gamesBtn" layoutX="200.0" layoutY="120.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="30.0" prefWidth="200.0" text="Games Module" textAlignment="CENTER" />
-      <Button fx:id="practiceBtn" contentDisplay="CENTER" layoutX="200.0" layoutY="207.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="30.0" prefWidth="200.0" text="Practice Module" textAlignment="CENTER" />
-      <Button fx:id="ttsSettingsBtn" layoutX="200.0" layoutY="253.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" prefHeight="30.0" prefWidth="200.0" text="Text to Speech Settings" textAlignment="CENTER" />
-      <Button fx:id="resetBtn" layoutX="200.0" layoutY="346.0" mnemonicParsing="false" onAction="#resetBtnClick" prefHeight="30.0" prefWidth="200.0" text="Reset Quinzical" />
-      <Button fx:id="playerRankBtn" layoutX="200.0" layoutY="301.0" mnemonicParsing="false" onAction="#playerRankBtnClick" prefHeight="30.0" prefWidth="200.0" text="View Player Rankings" />
-      <Button fx:id="internationalBtn" layoutX="200.0" layoutY="162.0" mnemonicParsing="false" onAction="#internationalBtnClick" prefHeight="30.0" prefWidth="200.0" text="International Module" />
+      <Button fx:id="gamesBtn" layoutX="32.0" layoutY="215.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu" stylesheets="@theme.css" text="Play" textAlignment="CENTER">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="practiceBtn" contentDisplay="CENTER" layoutX="480.0" layoutY="215.0" mnemonicParsing="false" onAction="#practiceBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu" stylesheets="@theme.css" text="Practice" textAlignment="CENTER">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="ttsSettingsBtn" layoutX="32.0" layoutY="351.0" mnemonicParsing="false" onAction="#ttsSettingsBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu" stylesheets="@theme.css" text="Settings" textAlignment="CENTER">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="resetBtn" layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#resetBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu" stylesheets="@theme.css" text="Reset">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="playerRankBtn" layoutX="256.0" layoutY="351.0" mnemonicParsing="false" onAction="#playerRankBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu-1" stylesheets="@theme.css" text="Player Rankings" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Manjari Regular" size="20.0" />
+         </font></Button>
+      <Button fx:id="internationalBtn" alignment="CENTER" layoutX="256.0" layoutY="215.0" mnemonicParsing="false" onAction="#internationalBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu-1" stylesheets="@theme.css" text="International Mode" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Manjari Regular" size="20.0" />
+         </font></Button>
    </children>
 </AnchorPane>

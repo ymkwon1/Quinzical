@@ -42,7 +42,7 @@ public class GamesModuleViewController implements Initializable{
 			_categories = _model.getFiveRandomCategories();
 			_model.setAnsweredQuestions();
 			int currentWinnings = _model.getWinnings();
-			winningsLabel.setText(String.format("Current winnings: %d", currentWinnings));
+			winningsLabel.setText(String.format("Points: %d", currentWinnings));
 			//System.out.println(_categories);
 			
 			int numRows=5;
@@ -50,6 +50,8 @@ public class GamesModuleViewController implements Initializable{
 			for (String category: _categories) {
 				Label label = new Label(category);
 				label.setWrapText(true);
+				label.getStylesheets().add("application/views/theme.css");
+				label.getStyleClass().add("label-categories");
 				gridPane.add(label, 0, row,1,1);
 				
 				//The only button available is the lowest value unanswered question.

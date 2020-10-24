@@ -41,8 +41,6 @@ public class GamesQuestionViewController implements Initializable {
 	@FXML
 	private Label tagLabel;
 	@FXML
-	private Label answerLabel;
-	@FXML
 	private Button repeatBtn;
     @FXML
     private Button ttsSettingsBtn;
