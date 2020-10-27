@@ -43,17 +43,17 @@ public class GamesQuestionViewController implements Initializable {
 	private Label tagLabel;
 	@FXML
 	private Button repeatBtn;
-    @FXML
-    private Button ttsSettingsBtn;
-    @FXML
-    private Label timerLabel;
-    @FXML
-    private AnchorPane anchorPane;
+	@FXML
+	private Button ttsSettingsBtn;
+	@FXML
+	private Label timerLabel;
+	@FXML
+	private AnchorPane anchorPane;
 
 	private QuinzicalModel _model;
 
 	private Clue _clue;
-	
+
 	private Timeline animation;
 	private CustomTimer _customTimer;
 
@@ -70,12 +70,16 @@ public class GamesQuestionViewController implements Initializable {
 			e.printStackTrace();
 		}
 		_customTimer = CustomTimer.getInstance();
+		if (_customTimer.hasStarted()) {
+			_customTimer.resetTimer();
+		}
+		
 		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
 		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.play();
 	}
-	
+
 	private void updateTimer() {
 		if (_customTimer.getSecondsLeft() > 0) {
 			_customTimer.countDown();
@@ -97,12 +101,12 @@ public class GamesQuestionViewController implements Initializable {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				});
+			});
 			_alert.show();
 
 		}
 	}
-	
+
 	// Event Listener on Button[#submitBtn].onAction
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
@@ -160,10 +164,10 @@ public class GamesQuestionViewController implements Initializable {
 		}
 	}
 
-    @FXML
-    void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-    	animation.stop();
-    	_model.setPreviousScene(2);
+	@FXML
+	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
+		animation.stop();
+		_model.setPreviousScene(2);
 		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 
@@ -171,8 +175,8 @@ public class GamesQuestionViewController implements Initializable {
 
 		window.setScene(settingsScene);
 		window.show();
-    }
-	
+	}
+
 	/**
 	 * returns to Games model screen
 	 */

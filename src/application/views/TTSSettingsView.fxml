@@ -21,9 +21,9 @@
          </font>
       </Label>
       <Button fx:id="returnBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
-      <Label fx:id="timerLabel" layoutX="324.0" layoutY="354.0" prefHeight="37.0" prefWidth="54.0">
+      <Label fx:id="timerLabel" alignment="CENTER" layoutX="284.0" layoutY="343.0" prefHeight="79.0" prefWidth="134.0" textAlignment="CENTER">
          <font>
-            <Font name="Manjari Bold" size="32.0" />
+            <Font name="Manjari Bold" size="40.0" />
          </font>
       </Label>
    </children>
