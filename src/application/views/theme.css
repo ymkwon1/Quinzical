@@ -1,5 +1,6 @@
 .background, .table-view .filler, .dialog-pane, .dialog-pane:header .header-panel {
 	-fx-background-color: #080808;
+	-fx-background-image: url('/images/maoriPattern.png');
 }
 
 .text-field {

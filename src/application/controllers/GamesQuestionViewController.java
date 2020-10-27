@@ -124,6 +124,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setHeaderText(null);
 			_alert.setGraphic(null);
 			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
 			_model.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
 			Optional<ButtonType> result = _alert.showAndWait();
