@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.model.Clue;
+import application.model.CustomTimer;
 import application.model.QuinzicalModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -53,8 +54,8 @@ public class GamesQuestionViewController implements Initializable {
 
 	private Clue _clue;
 	
-	private int _secondsLeft;
 	private Timeline animation;
+	private CustomTimer _customTimer;
 
 	private Alert _alert = new Alert(AlertType.INFORMATION);
 
@@ -68,29 +69,31 @@ public class GamesQuestionViewController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		_secondsLeft = 60;
-		timerLabel.setText(String.valueOf(_secondsLeft));
-		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> countDown()));
+		_customTimer = CustomTimer.getInstance();
+		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
+		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.play();
 	}
 	
-	private void countDown() {
-		if (_secondsLeft > 0) {
-			_secondsLeft--;
+	private void updateTimer() {
+		if (_customTimer.getSecondsLeft() > 0) {
+			_customTimer.countDown();
 		}
-		timerLabel.setText(String.valueOf(_secondsLeft));
-		if(_secondsLeft == 0) {
+		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
+		if(_customTimer.getSecondsLeft() == 0) {
 			_model.stopTts();
-			animation.stop();					_alert = new Alert(AlertType.INFORMATION);
+			animation.stop();					
+			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
 			_alert.setTitle("Time out!");
 			_alert.setHeaderText("Time Out!");
-			_alert.setContentText("You've run out of time! No point deducted?");
+			_alert.setContentText("You've run out of time! Don't worry, no point deducted!");
 			_alert.setOnHidden(e -> {
 				try {
 					returnToGames();
+					_customTimer.resetTimer();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

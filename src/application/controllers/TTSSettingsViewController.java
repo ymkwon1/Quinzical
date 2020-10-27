@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.model.CustomTimer;
 import application.model.QuinzicalModel;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +15,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class TTSSettingsViewController implements Initializable{
 
@@ -33,8 +40,53 @@ public class TTSSettingsViewController implements Initializable{
 	@FXML
 	private Button returnBtn;
 
+	@FXML
+	private Label timerLabel;
+	private Timeline animation;
+	private CustomTimer _customTimer;
+
 	private QuinzicalModel model;
-	
+	private Alert _alert;
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		try {
+			model = QuinzicalModel.createInstance();
+			speedLabel.setText(String.format("%d wpm",model.getTTSSpeed()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (model.getPreviousScene() == 2) {
+			_customTimer = CustomTimer.getInstance();
+			timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
+			animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
+			animation.setCycleCount(Timeline.INDEFINITE);
+			animation.play();
+		}
+
+	}
+
+	private void updateTimer() {
+		if (_customTimer.getSecondsLeft() > 0) {
+			_customTimer.countDown();
+		}
+		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
+		if(_customTimer.getSecondsLeft() == 0) {
+			animation.stop();
+			if(_customTimer.getSecondsLeft() == 0) {
+				animation.stop();					
+				_alert = new Alert(AlertType.INFORMATION);
+				_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+				_alert.setTitle("Time out!");
+				_alert.setHeaderText("Time Out!");
+				_alert.setContentText("You've run out of time! But take your time changing settings!");
+				_alert.show();	
+			}
+		}
+	}
+
 
 	@FXML
 	void decreaseBtnClick(ActionEvent event) {
@@ -69,6 +121,7 @@ public class TTSSettingsViewController implements Initializable{
 			window.show();
 		}
 		else if (model.getPreviousScene() == 2) {
+			animation.stop();
 			model.setPreviousScene(1);
 			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
@@ -90,15 +143,5 @@ public class TTSSettingsViewController implements Initializable{
 		}
 	}
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			model = QuinzicalModel.createInstance();
-			speedLabel.setText(String.format("%d wpm",model.getTTSSpeed()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 }
