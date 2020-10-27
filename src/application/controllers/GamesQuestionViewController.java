@@ -70,10 +70,6 @@ public class GamesQuestionViewController implements Initializable {
 			e.printStackTrace();
 		}
 		_customTimer = CustomTimer.getInstance();
-		if (_customTimer.hasStarted()) {
-			_customTimer.resetTimer();
-		}
-		
 		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
 		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
 		animation.setCycleCount(Timeline.INDEFINITE);
@@ -182,6 +178,7 @@ public class GamesQuestionViewController implements Initializable {
 	 */
 	void returnToGames() throws IOException {
 		animation.stop();
+		_customTimer.resetTimer();
 		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 		Scene menuScene = new Scene(menuView);
 
