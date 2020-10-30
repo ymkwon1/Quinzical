@@ -179,14 +179,16 @@ public class GamesQuestionViewController implements Initializable {
 	void returnToGames() throws IOException {
 		animation.stop();
 		_customTimer.resetTimer();
+
 		if (_model.gameCompleted()) {
-			Parent rewardView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
-			Scene rewardScene = new Scene(rewardView);
+			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
+			Scene menuScene = new Scene(menuView);
 
-			Stage rewardWindow = (Stage)anchorPane.getScene().getWindow();
+			Stage window = (Stage)anchorPane.getScene().getWindow();
 
-			rewardWindow.setScene(rewardScene);
-			rewardWindow.show();
+			window.setScene(menuScene);
+			window.show();
+			_model.addPlayerRanking();
 		}
 		else {
 			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
