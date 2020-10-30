@@ -27,7 +27,7 @@ public class PlayerRankings {
 		BashCmdUtil.bashCmdNoOutput("touch data/player_rankings");
 		BashCmdUtil.bashCmdNoOutput("> data/player_rankings");
 		for (Player player: _playerList) {
-			BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s %d\" >> data/player_rankings", player.getName(), player.getPoints()));
+			BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s / %d\" >> data/player_rankings", player.getName(), player.getPoints()));
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class PlayerRankings {
 				sc = new Scanner(new File("data/player_rankings"));
 				while(sc.hasNextLine()) {
 					String line = sc.nextLine();
-					String[] playerData = line.split(" ");
+					String[] playerData = line.split("/");
 					Player player = new Player(playerData[0].trim(), Integer.valueOf(playerData[1].trim()));
 					_playerList.add(player);
 				}
