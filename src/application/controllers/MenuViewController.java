@@ -91,6 +91,15 @@ public class MenuViewController implements Initializable{
 				window.show();
 			}
 		}
+		else if (_model.gameCompleted()) {
+			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
+			Scene gamesModuleScene = new Scene(gamesModuleView);
+
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+			window.setScene(gamesModuleScene);
+			window.show();
+		}
 		else {
 			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
 			Scene gamesModuleScene = new Scene(gamesModuleView);
@@ -99,16 +108,6 @@ public class MenuViewController implements Initializable{
 
 			window.setScene(gamesModuleScene);
 			window.show();
-		}
-		if (_model.gameCompleted()) {
-			_alert = new Alert(AlertType.INFORMATION);
-			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			_alert.setTitle("Congratulations");
-			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
-			_alert.setContentText("You have answered every question, return to menu to reset the game!");
-			_alert.setGraphic(null);
-			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
-			_alert.showAndWait();
 		}
 	}
 

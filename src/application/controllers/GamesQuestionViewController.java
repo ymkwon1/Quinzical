@@ -179,22 +179,23 @@ public class GamesQuestionViewController implements Initializable {
 	void returnToGames() throws IOException {
 		animation.stop();
 		_customTimer.resetTimer();
-		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
-		Scene menuScene = new Scene(menuView);
-
-		Stage window = (Stage)anchorPane.getScene().getWindow();
-
-		window.setScene(menuScene);
-		window.show();
 		if (_model.gameCompleted()) {
-			_alert = new Alert(AlertType.INFORMATION);
-			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
-			_alert.setTitle("Congratulations");
-			_alert.setHeaderText(String.format("You had %s points!",_model.getWinnings()));
-			_alert.setContentText("You have answered every question, return to menu to reset the game!");
-			_alert.show();
-			_model.addPlayerRanking();
+			Parent rewardView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
+			Scene rewardScene = new Scene(rewardView);
+
+			Stage rewardWindow = (Stage)anchorPane.getScene().getWindow();
+
+			rewardWindow.setScene(rewardScene);
+			rewardWindow.show();
+		}
+		else {
+			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+			Scene menuScene = new Scene(menuView);
+
+			Stage window = (Stage)anchorPane.getScene().getWindow();
+
+			window.setScene(menuScene);
+			window.show();
 		}
 	}
 

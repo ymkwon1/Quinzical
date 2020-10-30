@@ -61,7 +61,7 @@ public class PlayerRankingViewController implements Initializable{
 		
 		}
 		else {
-			table.setPlaceholder(new Label("Awaiting a champion"));
+			table.setPlaceholder(new Label("Complete every category in the game to be ranked!"));
 		}
 		pointsColumn.setSortable(false);
 		nameColumn.setSortable(false);
