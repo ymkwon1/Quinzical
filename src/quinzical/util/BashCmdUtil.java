@@ -1,4 +1,4 @@
-package quinzical.model;
+package quinzical.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

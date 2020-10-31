@@ -17,8 +17,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import quinzical.model.Clue;
-import quinzical.model.CustomTimer;
 import quinzical.model.QuinzicalModel;
+import quinzical.util.CustomTimer;
 
 import java.io.IOException;
 import java.net.URL;

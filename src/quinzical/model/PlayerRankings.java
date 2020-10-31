@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import quinzical.util.BashCmdUtil;
 
 public class PlayerRankings {
 	private ObservableList<Player> _playerList = FXCollections.observableArrayList();

@@ -20,8 +20,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import quinzical.model.CustomTimer;
 import quinzical.model.QuinzicalModel;
+import quinzical.util.CustomTimer;
 
 public class TTSSettingsViewController implements Initializable{
 

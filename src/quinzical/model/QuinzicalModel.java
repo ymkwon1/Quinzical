@@ -16,6 +16,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import quinzical.util.BashCmdUtil;
+
 
 
 public class QuinzicalModel {

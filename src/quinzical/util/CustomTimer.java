@@ -1,4 +1,4 @@
-package quinzical.model;
+package quinzical.util;
 
 
 public class CustomTimer {
