@@ -20,7 +20,7 @@
             <Font name="Manjari Thin" size="22.0" />
          </font></Label>
       <Button fx:id="returnBtn" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
-      <GridPane fx:id="gridPane" alignment="CENTER" layoutX="59.0" layoutY="86.0" prefHeight="415.0" prefWidth="642.0">
+      <GridPane fx:id="gridPane" alignment="CENTER" layoutX="26.0" layoutY="85.0" prefHeight="416.0" prefWidth="675.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="113.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="98.0" />

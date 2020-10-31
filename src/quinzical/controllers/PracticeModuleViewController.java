@@ -45,10 +45,10 @@ public class PracticeModuleViewController implements Initializable{
 				numRows = _categories.size()/3 + 1;
 			}
 			for (int i = 0; i < numRows; i++) {
-				gridPane.getRowConstraints().add(new RowConstraints(80));
+				gridPane.getRowConstraints().add(new RowConstraints(100));
 			}
 			for (int i = 0; i < 3; i++) {
-				ColumnConstraints cc = new ColumnConstraints(180);
+				ColumnConstraints cc = new ColumnConstraints(200);
 				cc.setHalignment(HPos.CENTER);
 				gridPane.getColumnConstraints().add(cc);
 			}
@@ -60,7 +60,7 @@ public class PracticeModuleViewController implements Initializable{
 					button.setPrefWidth(150);
 					button.setPrefHeight(50);
 					button.getStylesheets().add("quinzical/views/theme.css");
-					button.getStyleClass().add("button-1");
+					button.getStyleClass().add("button--menu-1");
 					gridPane.add(button, col, row,1,1);
 					button.setOnAction(new EventHandler<ActionEvent>() {
 	    				@Override
