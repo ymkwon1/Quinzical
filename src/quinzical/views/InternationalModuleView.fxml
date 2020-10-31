@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.controllers.InternationalModuleViewController">
    <children>
-      <Label layoutX="20.0" layoutY="67.0" prefHeight="31.0" prefWidth="425.0" text="Please select a category">
+      <Label layoutX="20.0" layoutY="67.0" prefHeight="31.0" prefWidth="511.0" text="Test your knowledge on international countries!">
          <font>
             <Font name="Manjari Regular" size="21.0" />
          </font></Label>
