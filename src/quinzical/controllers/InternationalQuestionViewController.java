@@ -127,7 +127,7 @@ public class InternationalQuestionViewController implements Initializable{
     }
     
     /**
-     * returns to international _model screen
+     * returns to Practice _model screen
      */
     void returnToPractice(ActionEvent event) throws IOException {
     	_model.stopTts();
@@ -148,7 +148,7 @@ public class InternationalQuestionViewController implements Initializable{
 
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-    	_model.setPreviousScene(3);
+    	_model.setPreviousScene(4);
 		Parent settingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 

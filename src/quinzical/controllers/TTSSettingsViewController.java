@@ -131,9 +131,19 @@ public class TTSSettingsViewController implements Initializable{
 			window.setScene(menuScene);
 			window.show();
 		}
-		else {
+		else if (model.getPreviousScene() == 3){
 			model.setPreviousScene(1);
 			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
+			Scene menuScene = new Scene(menuView);
+
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+			window.setScene(menuScene);
+			window.show();
+		}
+		else if (model.getPreviousScene() == 4){
+			model.setPreviousScene(1);
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

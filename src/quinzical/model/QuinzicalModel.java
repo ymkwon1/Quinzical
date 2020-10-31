@@ -94,10 +94,10 @@ public class QuinzicalModel {
 			}
 		}
 		if (_intCategories.size() > 0) {
-			for (String category: _nzCategories) {
+			for (String category: _intCategories) {
 
 				try {
-					File file = new File("categories/nz/", category);
+					File file = new File("categories/international/", category);
 					Scanner myReader = new Scanner(file);
 					List<String> allLines = new ArrayList<String>();
 					while(myReader.hasNextLine()) {
