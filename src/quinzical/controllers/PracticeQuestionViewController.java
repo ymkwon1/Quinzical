@@ -143,6 +143,7 @@ public class PracticeQuestionViewController implements Initializable{
 
     @FXML
     void repeatBtnClick(ActionEvent event) {
+    	_model.stopTts();
     	_clue.ttsQuestion();
     }
 
