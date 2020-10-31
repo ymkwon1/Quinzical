@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import quinzical.model.Clue;
 import quinzical.model.QuinzicalModel;
 
-public class PracticeQuestionViewController implements Initializable{
+public class QuestionViewController implements Initializable{
 
 	private QuinzicalModel _model;
 	
