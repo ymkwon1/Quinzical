@@ -74,7 +74,7 @@ public class MenuViewController implements Initializable{
 		if (_model.getCurrentPlayer() == null) {
 			TextInputDialog dialog = new TextInputDialog("");
 			dialog.setTitle("Player Name");
-			dialog.setHeaderText("Please Enter A Name");
+			dialog.setHeaderText("Please enter a name");
 			dialog.setContentText("Name:");
 			dialog.setGraphic(null);
 			dialog.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());

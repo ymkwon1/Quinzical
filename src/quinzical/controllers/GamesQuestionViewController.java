@@ -86,6 +86,7 @@ public class GamesQuestionViewController implements Initializable {
 			animation.stop();					
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			_alert.setGraphic(null);
 			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.setTitle("Time out!");
 			_alert.setHeaderText("Time Out!");
@@ -149,8 +150,9 @@ public class GamesQuestionViewController implements Initializable {
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
+		alert.setTitle("I give up!");
 		alert.setHeaderText(null);
+		alert.setGraphic(null);
 		alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
