@@ -32,8 +32,10 @@ public class Main extends Application{
 			@Override
 			public void handle(WindowEvent event) {
 		    	Alert alert = new Alert(AlertType.CONFIRMATION);
-		    	alert.setTitle("Confirmation Dialog");
+		    	alert.setTitle("Quit Quinzical");
 		    	alert.setHeaderText(null);
+		    	alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
+		    	alert.setGraphic(null);
 		    	alert.setContentText("Are you sure you want to quit the game?");
 		    	Optional<ButtonType> result = alert.showAndWait();
 		    	if (result.get() == ButtonType.OK) {
