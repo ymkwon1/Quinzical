@@ -24,13 +24,11 @@ public class QuinzicalModel {
 
 	// for singleton class
 	private static QuinzicalModel instance = null;
-	private List<String> _nzCategories;
-	private List<String> _intCategories;
+	private List<String> _categories;
 	private List<String> _fiveRandomCategories = new ArrayList<String>();
 	private List<String> _fiveRandomClues;
-	private Map<String, List<String>> _nzData = new HashMap<String, List<String>>();
+	private Map<String, List<String>> _practiceData = new HashMap<String, List<String>>();
 	private Map<String, List<String>> _gamesData = new HashMap<String, List<String>>();
-	private Map<String, List<String>> _intData = new HashMap<String, List<String>>();
 	private Clue _currentClue;
 	private String _currentPlayer = null;
 	private int [] _answeredQuestions = {0,0,0,0,0};
@@ -39,7 +37,6 @@ public class QuinzicalModel {
 	private int _previousScene = 1;
 	private PlayerRankings _playerRankings;
 	private boolean _internationalUnlocked = false;
-	public boolean _internationalSelected = false;
 
 	public QuinzicalModel() throws Exception {
 		initialiseCategories();
@@ -62,8 +59,8 @@ public class QuinzicalModel {
 	 * each category is added to the list
 	 */
 	private void initialiseCategories() {
-		_nzCategories = BashCmdUtil.bashCmdHasOutput("ls categories/nz");
-		_intCategories = BashCmdUtil.bashCmdHasOutput("ls categories/international");
+		_categories = BashCmdUtil.bashCmdHasOutput("ls categories/nz");
+		//		System.out.println(_categories);
 	}
 
 	/**
@@ -73,8 +70,8 @@ public class QuinzicalModel {
 	 * countries line line line line line]
 	 */
 	private void readCategories() throws Exception {
-		if (_nzCategories.size() > 0) {
-			for (String category: _nzCategories) {
+		if (_categories.size() > 0) {
+			for (String category: _categories) {
 
 				try {
 					File file = new File("categories/nz/", category);
@@ -85,27 +82,7 @@ public class QuinzicalModel {
 						allLines.add(fileLine);
 					}
 					List<String> copy = new ArrayList<String>(allLines);
-					_nzData.put(category, copy);
-					allLines.clear();
-					myReader.close();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		if (_intCategories.size() > 0) {
-			for (String category: _nzCategories) {
-
-				try {
-					File file = new File("categories/nz/", category);
-					Scanner myReader = new Scanner(file);
-					List<String> allLines = new ArrayList<String>();
-					while(myReader.hasNextLine()) {
-						String fileLine = myReader.nextLine();
-						allLines.add(fileLine);
-					}
-					List<String> copy = new ArrayList<String>(allLines);
-					_intData.put(category, copy);
+					_practiceData.put(category, copy);
 					allLines.clear();
 					myReader.close();
 				} catch (FileNotFoundException e) {
@@ -124,7 +101,7 @@ public class QuinzicalModel {
 		}
 		if (five_random_categories.length() == 0) {
 			//			List<String> temp = new ArrayList<String> ();
-			List<String> shuffledCategories = new ArrayList<String>(_nzCategories);
+			List<String> shuffledCategories = new ArrayList<String>(_categories);
 			Collections.shuffle(shuffledCategories);
 			String str = "";
 			for (int i = 0; i < 5; i++) {
@@ -185,7 +162,7 @@ public class QuinzicalModel {
 		File file = new File("data/games_module", category);
 		if (file.length() == 0) {
 			List<String> clues = new ArrayList<String>();
-			clues = _nzData.get(category);
+			clues = _practiceData.get(category);
 			Collections.shuffle(clues);
 			List<String> temp = new ArrayList<String>();
 			for (int i = 0; i<5;i++) {
@@ -211,13 +188,9 @@ public class QuinzicalModel {
 
 	}
 
-	public void loadRandomClue(String module, String category) {
+	public void loadRandomClue(String category) {
 		List<String> clues = new ArrayList<String>();
-		if (module == "nz") {
-			clues = _nzData.get(category);
-		} else if (module == "int"){
-			clues = _intData.get(category);
-		}
+		clues = _practiceData.get(category);
 		int size = clues.size();
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(size);
@@ -324,13 +297,8 @@ public class QuinzicalModel {
 	 * get all categories in the game as a list of strings
 	 * @return categories
 	 */
-	public List<String> getCategories(Boolean internationalSelected){
-		if (internationalSelected) {
-			return _intCategories;
-		}
-		else {
-			return _nzCategories;
-		}
+	public List<String> getCategories(){
+		return _categories;
 	}
 
 	/**

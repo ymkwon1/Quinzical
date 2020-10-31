@@ -21,7 +21,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
-public class ModuleViewController implements Initializable{
+public class PracticeModuleViewController implements Initializable{
 
 	@FXML
 	private GridPane gridPane;
@@ -36,7 +36,7 @@ public class ModuleViewController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
 			model = QuinzicalModel.createInstance();
-			List<String> _categories = model.getCategories(model._internationalSelected);
+			List<String> _categories = model.getCategories();
 			int numRows;
 			if (_categories.size()%3 == 0) {
 				numRows = _categories.size()/3;
@@ -66,7 +66,7 @@ public class ModuleViewController implements Initializable{
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					try {
-								model.loadRandomClue("nz",category);
+								model.loadRandomClue(category);
 	    						askQuestion(e);    						
 							} catch (IOException e1) {
 								e1.printStackTrace();
@@ -92,7 +92,7 @@ public class ModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/QuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
