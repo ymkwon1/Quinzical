@@ -39,8 +39,8 @@ public class QuinzicalModel {
 	private boolean _internationalUnlocked = false;
 
 	public QuinzicalModel() throws Exception {
-		initialisecategories();
-		readcategories();
+		initialiseCategories();
+		readCategories();
 		setFiveRandomCategories();
 		loadCurrentPlayer();
 		setAnsweredQuestions();
@@ -58,8 +58,8 @@ public class QuinzicalModel {
 	 * using bash command to find the names of the categories in the category folder
 	 * each category is added to the list
 	 */
-	private void initialisecategories() {
-		_categories = BashCmdUtil.bashCmdHasOutput("ls categories");
+	private void initialiseCategories() {
+		_categories = BashCmdUtil.bashCmdHasOutput("ls categories/nz");
 		//		System.out.println(_categories);
 	}
 
@@ -69,12 +69,12 @@ public class QuinzicalModel {
 	 * [animals line line line line line
 	 * countries line line line line line]
 	 */
-	private void readcategories() throws Exception {
+	private void readCategories() throws Exception {
 		if (_categories.size() > 0) {
 			for (String category: _categories) {
 
 				try {
-					File file = new File("categories/", category);
+					File file = new File("categories/nz/", category);
 					Scanner myReader = new Scanner(file);
 					List<String> allLines = new ArrayList<String>();
 					while(myReader.hasNextLine()) {
@@ -418,9 +418,9 @@ public class QuinzicalModel {
 			_answeredQuestions[i]=0;
 		}
 		BashCmdUtil.bashCmdNoOutput("touch data/answered_questions");
-		initialisecategories();
+		initialiseCategories();
 		try {
-			readcategories();
+			readCategories();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
