@@ -1,4 +1,4 @@
-package application.model;
+package quinzical.model;
 
 import java.io.BufferedReader;
 import java.io.File;

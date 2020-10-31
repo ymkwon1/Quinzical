@@ -1,11 +1,10 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +19,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import quinzical.model.QuinzicalModel;
 
 public class MenuViewController implements Initializable{
 
@@ -58,7 +58,7 @@ public class MenuViewController implements Initializable{
 
 	@FXML
 	void practiceBtnClick(ActionEvent event) throws IOException {
-		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
+		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeModuleView.fxml"));
 		Scene practiceModuleScene = new Scene(practiceModuleView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -76,13 +76,13 @@ public class MenuViewController implements Initializable{
 			dialog.setHeaderText("Please Enter A Name");
 			dialog.setContentText("Name:");
 			dialog.setGraphic(null);
-			dialog.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			dialog.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
 				_model.setCurrentPlayer(result.get());
 				_model.saveCurrentPlayer();
-				Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+				Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesModuleView.fxml"));
 				Scene gamesModuleScene = new Scene(gamesModuleView);
 
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -92,7 +92,7 @@ public class MenuViewController implements Initializable{
 			}
 		}
 		else if (_model.gameCompleted()) {
-			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
+			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/quinzical/views/RewardView.fxml"));
 			Scene gamesModuleScene = new Scene(gamesModuleView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -101,7 +101,7 @@ public class MenuViewController implements Initializable{
 			window.show();
 		}
 		else {
-			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+			Parent gamesModuleView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesModuleView.fxml"));
 			Scene gamesModuleScene = new Scene(gamesModuleView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -114,7 +114,7 @@ public class MenuViewController implements Initializable{
 
     @FXML
     void internationalBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/InternationalModuleView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -125,7 +125,7 @@ public class MenuViewController implements Initializable{
 	
 	@FXML
 	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
+		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -138,7 +138,7 @@ public class MenuViewController implements Initializable{
 	void resetBtnClick (ActionEvent event) throws IOException {
 		_alert = new Alert(AlertType.CONFIRMATION);
 		_alert.setTitle("Reset Quinzical");
-		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 		_alert.setHeaderText(null);
 		_alert.setGraphic(null);
 		_alert.setContentText("Are you sure you want to reset the game?");
@@ -146,7 +146,7 @@ public class MenuViewController implements Initializable{
 		if (result.get() == ButtonType.OK) {
 			_model.reset();
 		}
-		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
 		Scene TtsSettingsScene = new Scene(TtsSettingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -157,7 +157,7 @@ public class MenuViewController implements Initializable{
 	
     @FXML
     void playerRankBtnClick(ActionEvent event) throws IOException {
-		Parent view = FXMLLoader.load(getClass().getResource("/application/views/PlayerRankingView.fxml"));
+		Parent view = FXMLLoader.load(getClass().getResource("/quinzical/views/PlayerRankingView.fxml"));
 		Scene scene = new Scene(view);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

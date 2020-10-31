@@ -1,12 +1,10 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.model.Player;
-import application.model.PlayerRankings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import quinzical.model.Player;
+import quinzical.model.PlayerRankings;
 
 public class PlayerRankingViewController implements Initializable{
 
@@ -72,14 +72,14 @@ public class PlayerRankingViewController implements Initializable{
     void resetBtnClick(ActionEvent event) throws IOException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
-		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+		alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 		alert.setHeaderText(null);
 		alert.setGraphic(null);
 		alert.setContentText("Are you sure you want to reset the rankings");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 	    	_playerList.reset();
-	    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PlayerRankingView.fxml"));
+	    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/PlayerRankingView.fxml"));
 	    	Scene menuScene = new Scene(menuView);
 	    	
 	    	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -91,7 +91,7 @@ public class PlayerRankingViewController implements Initializable{
 
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

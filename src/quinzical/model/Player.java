@@ -1,4 +1,4 @@
-package application.model;
+package quinzical.model;
 
 public class Player {
 	private String _name;

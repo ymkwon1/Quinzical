@@ -1,4 +1,4 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class InternationalModuleViewController {
 
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

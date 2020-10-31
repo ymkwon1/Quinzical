@@ -1,11 +1,9 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.model.CustomTimer;
-import application.model.QuinzicalModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -22,6 +20,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import quinzical.model.CustomTimer;
+import quinzical.model.QuinzicalModel;
 
 public class TTSSettingsViewController implements Initializable{
 
@@ -78,7 +78,7 @@ public class TTSSettingsViewController implements Initializable{
 				animation.stop();					
 				_alert = new Alert(AlertType.INFORMATION);
 				_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-				_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+				_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 				_alert.setTitle("Time out!");
 				_alert.setHeaderText("Time Out!");
 				_alert.setContentText("You've run out of time! But take your time changing settings!");
@@ -112,7 +112,7 @@ public class TTSSettingsViewController implements Initializable{
 	void returnBtnClick(ActionEvent event) throws IOException {
 		model.stopTts();
 		if (model.getPreviousScene() == 1) {
-			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -123,7 +123,7 @@ public class TTSSettingsViewController implements Initializable{
 		else if (model.getPreviousScene() == 2) {
 			animation.stop();
 			model.setPreviousScene(1);
-			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesQuestionView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -133,7 +133,7 @@ public class TTSSettingsViewController implements Initializable{
 		}
 		else {
 			model.setPreviousScene(1);
-			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeQuestionView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

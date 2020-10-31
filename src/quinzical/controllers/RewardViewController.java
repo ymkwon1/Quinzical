@@ -1,10 +1,9 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import quinzical.model.QuinzicalModel;
 
 public class RewardViewController implements Initializable{
 
@@ -62,7 +62,7 @@ public class RewardViewController implements Initializable{
 
 	@FXML
 	void playerRankingBtnClick(ActionEvent event) throws IOException {
-		Parent view = FXMLLoader.load(getClass().getResource("/application/views/PlayerRankingView.fxml"));
+		Parent view = FXMLLoader.load(getClass().getResource("/quinzical/views/PlayerRankingView.fxml"));
 		Scene scene = new Scene(view);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -73,7 +73,7 @@ public class RewardViewController implements Initializable{
 
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
-		Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+		Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
 		Scene menuScene = new Scene(menuView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

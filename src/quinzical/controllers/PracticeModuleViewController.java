@@ -1,11 +1,10 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +19,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import quinzical.model.QuinzicalModel;
 
 public class PracticeModuleViewController implements Initializable{
 
@@ -59,7 +59,7 @@ public class PracticeModuleViewController implements Initializable{
 					Button button = new Button(category);
 					button.setPrefWidth(150);
 					button.setPrefHeight(50);
-					button.getStylesheets().add("application/views/theme.css");
+					button.getStylesheets().add("quinzical/views/theme.css");
 					button.getStyleClass().add("button-1");
 					gridPane.add(button, col, row,1,1);
 					button.setOnAction(new EventHandler<ActionEvent>() {
@@ -92,7 +92,7 @@ public class PracticeModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/application/views/PracticeQuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -103,7 +103,7 @@ public class PracticeModuleViewController implements Initializable{
 	
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

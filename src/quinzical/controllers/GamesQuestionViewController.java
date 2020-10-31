@@ -1,4 +1,4 @@
-package application.controllers;
+package quinzical.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,15 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import quinzical.model.Clue;
+import quinzical.model.CustomTimer;
+import quinzical.model.QuinzicalModel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.model.Clue;
-import application.model.CustomTimer;
-import application.model.QuinzicalModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -86,7 +86,7 @@ public class GamesQuestionViewController implements Initializable {
 			animation.stop();					
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.setTitle("Time out!");
 			_alert.setHeaderText("Time Out!");
 			_alert.setContentText("You've run out of time! Don't worry, no point deducted!");
@@ -112,7 +112,7 @@ public class GamesQuestionViewController implements Initializable {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
 			_alert.setHeaderText(null);
-			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.setContentText("Correct! You have won "+ _clue.getValue());
 			_alert.setGraphic(null);
 			_model.tts("Correct! You have won "+ _clue.getValue());
@@ -126,7 +126,7 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.setTitle("Answer");
 			_alert.setHeaderText(null);
 			_alert.setGraphic(null);
-			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
 			_model.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
@@ -151,7 +151,7 @@ public class GamesQuestionViewController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
-		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+		alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 		alert.setContentText("Are you sure you want to give up?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
@@ -164,7 +164,7 @@ public class GamesQuestionViewController implements Initializable {
 	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
 		animation.stop();
 		_model.setPreviousScene(2);
-		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
+		Parent settingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -181,7 +181,7 @@ public class GamesQuestionViewController implements Initializable {
 		_customTimer.resetTimer();
 
 		if (_model.gameCompleted()) {
-			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/RewardView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/RewardView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)anchorPane.getScene().getWindow();
@@ -191,7 +191,7 @@ public class GamesQuestionViewController implements Initializable {
 			_model.addPlayerRanking();
 		}
 		else {
-			Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/GamesModuleView.fxml"));
+			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesModuleView.fxml"));
 			Scene menuScene = new Scene(menuView);
 
 			Stage window = (Stage)anchorPane.getScene().getWindow();

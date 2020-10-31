@@ -1,11 +1,9 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.model.Clue;
-import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import quinzical.model.Clue;
+import quinzical.model.QuinzicalModel;
 
 public class PracticeQuestionViewController implements Initializable{
 
@@ -78,7 +78,7 @@ public class PracticeQuestionViewController implements Initializable{
     void returnBtnClick(ActionEvent event) throws IOException {
     	_clue.resetAttempts();
     	_model.stopTts();
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -98,7 +98,7 @@ public class PracticeQuestionViewController implements Initializable{
     	_model.stopTts();
     	if (_clue.checkAnswer(answerField.getText())) {
     		alert.setTitle("Answer");
-    		alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+    		alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
         	alert.setHeaderText(null);
         	alert.setContentText("Correct!");
         	alert.setGraphic(null);
@@ -109,7 +109,7 @@ public class PracticeQuestionViewController implements Initializable{
     	else {
     		alert.setTitle("Answer");
         	alert.setHeaderText(null);
-        	alert.getDialogPane().getStylesheets().add(getClass().getResource("/application/views/theme.css").toExternalForm());
+        	alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
         	alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
         	_model.tts("Incorrect");
         	alert.setGraphic(null);
@@ -131,7 +131,7 @@ public class PracticeQuestionViewController implements Initializable{
      */
     void returnToPractice(ActionEvent event) throws IOException {
     	_model.stopTts();
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/PracticeModuleView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -149,7 +149,7 @@ public class PracticeQuestionViewController implements Initializable{
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
     	_model.setPreviousScene(3);
-		Parent settingsView = FXMLLoader.load(getClass().getResource("/application/views/TTSSettingsView.fxml"));
+		Parent settingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
 
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

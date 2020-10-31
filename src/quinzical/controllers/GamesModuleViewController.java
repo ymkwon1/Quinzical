@@ -1,11 +1,10 @@
-package application.controllers;
+package quinzical.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import application.model.QuinzicalModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import quinzical.model.QuinzicalModel;
 
 public class GamesModuleViewController implements Initializable{
 	
@@ -50,7 +50,7 @@ public class GamesModuleViewController implements Initializable{
 			for (String category: _categories) {
 				Label label = new Label(category);
 				label.setWrapText(true);
-				label.getStylesheets().add("application/views/theme.css");
+				label.getStylesheets().add("quinzical/views/theme.css");
 				label.getStyleClass().add("label-categories");
 				gridPane.add(label, 0, row,1,1);
 				
@@ -58,7 +58,7 @@ public class GamesModuleViewController implements Initializable{
 				for (int col = 1;col < 6; col++) {
 					String value = String.valueOf(100*(col));
 					Button button = new Button(value);
-					button.getStylesheets().add("application/views/theme.css");
+					button.getStylesheets().add("quinzical/views/theme.css");
 					button.getStyleClass().add("button-1");
 					if(Integer.valueOf(value)/100 == _model.getAnsweredQuestions(row)+1) {
 						button.setDisable(false);
@@ -101,7 +101,7 @@ public class GamesModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/application/views/GamesQuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -112,7 +112,7 @@ public class GamesModuleViewController implements Initializable{
 	
 	@FXML
     void returnBtnClick(ActionEvent event) throws IOException {
-    	Parent menuView = FXMLLoader.load(getClass().getResource("/application/views/MenuView.fxml"));
+    	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -1,4 +1,4 @@
-package application;
+package quinzical;
 
 import java.util.Optional;
 
