@@ -58,6 +58,7 @@ public class MenuViewController implements Initializable{
 
 	@FXML
 	void practiceBtnClick(ActionEvent event) throws IOException {
+		_model._internationalSelected = false;
 		Parent practiceModuleView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeModuleView.fxml"));
 		Scene practiceModuleScene = new Scene(practiceModuleView);
 
@@ -114,6 +115,7 @@ public class MenuViewController implements Initializable{
 
     @FXML
     void internationalBtnClick(ActionEvent event) throws IOException {
+    	_model._internationalSelected = true;
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
