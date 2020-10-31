@@ -17,7 +17,7 @@
       </Label>
       <Label layoutX="114.0" layoutY="25.0" text="Please select a category">
          <font>
-            <Font name="Manjari Thin" size="22.0" />
+            <Font name="Manjari Regular" size="22.0" />
          </font></Label>
       <Button fx:id="returnBtn" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnBtnClick" text="Return" />
       <GridPane fx:id="gridPane" alignment="CENTER" layoutX="26.0" layoutY="85.0" prefHeight="416.0" prefWidth="675.0">
