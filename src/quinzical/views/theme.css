@@ -115,6 +115,16 @@
 	-fx-background-color: transparent;
 }
 
+.table-view .table-cell{
+	-fx-background-color: transparent;
+}
+
+.table-row-cell{
+	-fx-font: 16px "Manjari";
+	-fx-background-color: transparent;
+	-fx-text-background-color: #F6E8EA;
+}
+
 .table-view .column-header {
 	-fx-background-color: derive(black, 90%);
 }
