@@ -66,7 +66,7 @@ public class InternationalModuleViewController implements Initializable{
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					try {
-								model.loadRandomClue("nz",category);
+								model.loadRandomClue("int",category);
 	    						askQuestion(e);    						
 							} catch (IOException e1) {
 								e1.printStackTrace();
@@ -92,7 +92,7 @@ public class InternationalModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/QuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

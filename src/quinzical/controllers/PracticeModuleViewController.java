@@ -21,7 +21,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
-public class ModuleViewController implements Initializable{
+public class PracticeModuleViewController implements Initializable{
 
 	@FXML
 	private GridPane gridPane;
@@ -92,7 +92,7 @@ public class ModuleViewController implements Initializable{
 	 * fires when any category button is clicked to go the askQuestion scene
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
-    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/QuestionView.fxml"));
+    	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
     	Scene askQuestionScene = new Scene(askQuestionView);
     	
     	Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
