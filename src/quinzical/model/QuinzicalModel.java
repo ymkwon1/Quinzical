@@ -20,6 +20,13 @@ import quinzical.util.BashCmdUtil;
 
 
 
+/**
+ * The QuinicalModel class has the main implementations of how the game is played
+ * being responsible for extracting data from the category files, saving data
+ * and storing data for the game
+ * @author Dylan Xin, Young Min Kwon
+ *
+ */
 public class QuinzicalModel {
 
 	// for singleton class
@@ -41,6 +48,12 @@ public class QuinzicalModel {
 	private boolean _internationalUnlocked = false;
 	public boolean _internationalSelected = false;
 
+	/**
+	 * Constructor for the QuinzicalModel class
+	 * loads all necessary data from data so that
+	 * the game is ready to go
+	 * @throws Exception
+	 */
 	public QuinzicalModel() throws Exception {
 		initialiseCategories();
 		readCategories();
@@ -73,9 +86,10 @@ public class QuinzicalModel {
 	 * countries line line line line line]
 	 */
 	private void readCategories() throws Exception {
+		//reads files in nz category
 		if (_nzCategories.size() > 0) {
 			for (String category: _nzCategories) {
-
+				// read each individual line from the category files and store it
 				try {
 					File file = new File("categories/nz/", category);
 					Scanner myReader = new Scanner(file);
@@ -93,9 +107,10 @@ public class QuinzicalModel {
 				}
 			}
 		}
+		//reads file in international categories
 		if (_intCategories.size() > 0) {
 			for (String category: _intCategories) {
-
+				// read each individual line from the category files and store it
 				try {
 					File file = new File("categories/international/", category);
 					Scanner myReader = new Scanner(file);
@@ -115,6 +130,10 @@ public class QuinzicalModel {
 		}
 	}
 
+	/**
+	 * Prepares 5 random categories to be played by the user in the game
+	 * selected from all the category files within the categories folder
+	 */
 	public void setFiveRandomCategories () {
 		//create a file to store the selected five categories
 		BashCmdUtil.bashCmdNoOutput("mkdir -p data");
@@ -122,8 +141,8 @@ public class QuinzicalModel {
 		if (!five_random_categories.exists()) {
 			BashCmdUtil.bashCmdNoOutput("touch data/five_random_categories");
 		}
+		// if five random categories dont exist, i.e. new game being started
 		if (five_random_categories.length() == 0) {
-			//			List<String> temp = new ArrayList<String> ();
 			List<String> shuffledCategories = new ArrayList<String>(_nzCategories);
 			Collections.shuffle(shuffledCategories);
 			String str = "";
@@ -150,14 +169,13 @@ public class QuinzicalModel {
 			}
 			BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/five_random_categories",str));
 		}
-		else {
+		else { // if files already exist, i.e. the game has already started
 			BufferedReader reader;
 			String str = "";
 			try {
 				reader = new BufferedReader(new FileReader("data/five_random_categories"));
 				String line = reader.readLine();
 				str = line;
-				//System.out.println(str);
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -179,10 +197,12 @@ public class QuinzicalModel {
 	}
 
 	/**
-	 * Set five random clues and answers of a category
+	 * Set five random clues for a given category
+	 * @param category the clues are set for
 	 */
 	public void setFiveRandomClues (String category){
 		File file = new File("data/games_module", category);
+		// writing 5 random clues to the category file chosen if file is empty
 		if (file.length() == 0) {
 			List<String> clues = new ArrayList<String>();
 			clues = _nzData.get(category);
@@ -211,6 +231,12 @@ public class QuinzicalModel {
 
 	}
 
+	/**
+	 * loading a random clue necessary for the 
+	 * practice module and the international module
+	 * @param module
+	 * @param category
+	 */
 	public void loadRandomClue(String module, String category) {
 		List<String> clues = new ArrayList<String>();
 		if (module == "nz") {
@@ -242,24 +268,50 @@ public class QuinzicalModel {
 		}
 	}	
 
+	
+	/**
+	 * getter for the current clue selected for the game
+	 * @return
+	 */
 	public Clue getCurrentClue() {
 		return _currentClue;
 	}
 
+	
+	/**
+	 * get how many questions in a category have been answered
+	 * @param index is the category
+	 * @return
+	 */
 	public int getAnsweredQuestions(int index){
 		return _answeredQuestions[index];
 
 	}
 
+
+	/**
+	 * getter for the current Player playing the game
+	 * @return
+	 */
 	public String getCurrentPlayer() {
 		return _currentPlayer;
 	}
 
+	
+	/**
+	 * sets the current player playing the game
+	 * @param currentPlayer
+	 */
 	public void setCurrentPlayer(String currentPlayer) {
 		_currentPlayer = currentPlayer;
 	}
 
 
+	
+	/**
+	 * save which questions have been answered already in the game
+	 * in an external file in "data/answered_questions"
+	 */
 	public void setAnsweredQuestions() {
 		File file = new File("data/answered_questions");
 		if(!file.exists()) {
@@ -291,6 +343,13 @@ public class QuinzicalModel {
 	}
 
 
+	
+	/**
+	 * how the questions being answered are being tracked, by adding 1
+	 * to the category index up to 5, where 5 means all questions have
+	 * been asnwered
+	 * @param index
+	 */
 	public void addAnsweredQuestions (int index) {
 
 		_answeredQuestions[index]=_answeredQuestions[index]+1;
@@ -341,9 +400,10 @@ public class QuinzicalModel {
 
 	}
 
+	/**
+	 * stops the TTS system from speaking
+	 */
 	public void stopTts () {
-		//		String command = "pkill -f espeak";
-		//		BashCmdUtil.bashCmdNoOutput(command);
 		Stream<ProcessHandle> descendents = ProcessHandle.current().descendants();
 		descendents.filter(ProcessHandle::isAlive).forEach(ph -> {
 			ph.destroy();
@@ -368,11 +428,17 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%d\" >> data/tts_speed", _ttsSpeed));
 	}
 
+	/**
+	 * gets the tts speed
+	 * @return
+	 */
 	public int getTTSSpeed() {
 		return _ttsSpeed;
 	}
+	
 	/**
-	 * get tts speed
+	 * loads the saved tts speed from "data/tts_speed"
+	 * and stores it
 	 * @return ttsSpeed
 	 */
 	public void loadTTSSpeed() {
@@ -401,6 +467,11 @@ public class QuinzicalModel {
 		}
 	}
 
+	
+	/**
+	 * get the players winnings from "data/winnings"
+	 * @return
+	 */
 	public int getWinnings() {
 		BufferedReader reader;
 		try {
@@ -414,6 +485,10 @@ public class QuinzicalModel {
 		return _winnings;
 	}
 
+	/**
+	 * adds to the users current winnings by the input value
+	 * @param value
+	 */
 	public void addWinnings(int value) {
 		int winnings = getWinnings();
 		winnings = winnings + value;
@@ -421,6 +496,10 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
+	/**
+	 * decrease the users current winnings by the input value
+	 * @param value
+	 */
 	public void decreaseWinnings(int value) {
 		int winnings = getWinnings();
 		winnings = winnings - value;
@@ -428,6 +507,9 @@ public class QuinzicalModel {
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
 
+	/**
+	 * adds player to player rankings
+	 */
 	public void addPlayerRanking() {
 		Player player = new Player(_currentPlayer, _winnings);
 		_playerRankings = PlayerRankings.getInstance();
@@ -435,6 +517,10 @@ public class QuinzicalModel {
 		_playerRankings.savePlayerRankings();
 	}
 
+	
+	/**
+	 * resets the entire game except for player rankings
+	 */
 	public void reset(){
 		BashCmdUtil.bashCmdNoOutput("rm -r data/games_module");
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+"0"+" /\" data/winnings");
@@ -459,6 +545,12 @@ public class QuinzicalModel {
 		setFiveRandomCategories();
 	}
 
+	
+	/**
+	 * returns true of the game is completed
+	 * otherwise returns false
+	 * @return
+	 */
 	public boolean gameCompleted() {
 		int[] expected = {5,5,5,5,5};
 		if(Arrays.equals(_answeredQuestions, expected)) {
@@ -467,11 +559,19 @@ public class QuinzicalModel {
 		return false;
 	}	
 
+	
+	/**
+	 * saves the name of the current player
+	 */
 	public void saveCurrentPlayer() {
 		BashCmdUtil.bashCmdNoOutput("touch data/current_player");
 		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/current_player",_currentPlayer));
 	}
 
+	
+	/**
+	 * loads the name of the current player in 'data/current_player'
+	 */
 	public void loadCurrentPlayer() {
 		Scanner sc;
 		File file = new File("data/current_player");
@@ -496,6 +596,13 @@ public class QuinzicalModel {
 		}
 	}
 
+	
+	/**
+	 * returns true if the internation mode is unlocked,
+	 * that is 2 full categories are completed in game
+	 * returns false otherwise
+	 * @return
+	 */
 	public boolean InternationalUnlocked() {
 		int count = 0;
 		for (int category: _answeredQuestions) {
@@ -514,12 +621,19 @@ public class QuinzicalModel {
 	}
 
 
+	/**
+	 * saves whether the international mode is unlocked
+	 */
 	public void saveInternationalUnlocked() {
 		BashCmdUtil.bashCmdNoOutput("touch data/internatonal_unlocked");
 		BashCmdUtil.bashCmdNoOutput("> data/internatonal_unlocked");
 		BashCmdUtil.bashCmdNoOutput(String.format("echo \"%s\" >> data/internatonal_unlocked",Boolean.toString(_internationalUnlocked)));
 	}
 
+
+	/**
+	 * loads and stores whether the international mode is unlocked
+	 */
 	public void loadInternationalUnlocked() {
 		Scanner sc;
 		File file = new File("data/internatonal_unlocked");

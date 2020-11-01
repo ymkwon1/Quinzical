@@ -122,7 +122,7 @@ public class InternationalQuestionViewController implements Initializable{
         	_alert.showAndWait();	
         	attemptsLabel.setText(_clue.getAttempts());
         	hintsLabel.setText(_clue.getHint());
-        	answerLabel.setText(_clue.getAnswer());
+        	answerLabel.setText(_clue.showAnswer());
         	if (answerLabel.getText() != null) {
         		_clue.resetAttempts();
         		_clue.ttsAnswer();
