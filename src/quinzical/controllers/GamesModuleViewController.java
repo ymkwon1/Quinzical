@@ -20,20 +20,25 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
+/**
+ * Controller for the games module view.
+ */
+
 public class GamesModuleViewController implements Initializable{
 	
 	@FXML
 	private Button returnBtn;
-	
 	@FXML
 	private GridPane gridPane;
     @FXML
     private Label winningsLabel;
-	
+    
 	private QuinzicalModel _model;
 	private List<String> _categories;
 
-	
+	/**
+	 * Initialize all components for the games module.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -43,8 +48,6 @@ public class GamesModuleViewController implements Initializable{
 			_model.setAnsweredQuestions();
 			int currentWinnings = _model.getWinnings();
 			winningsLabel.setText(String.format("Points: %d", currentWinnings));
-			//System.out.println(_categories);
-			
 			int numRows=5;
 			int row=0;
 			for (String category: _categories) {
@@ -72,7 +75,6 @@ public class GamesModuleViewController implements Initializable{
 	    				public void handle(ActionEvent e) {
 	    					_model.loadClue(category,questionIndex);
 	    					_model.addAnsweredQuestions(categoryIndex);
-//	    					_model.setAnsweredQuestions();
 	    					try {
 								askQuestion(e);
 							} catch (IOException e1) {
@@ -98,7 +100,9 @@ public class GamesModuleViewController implements Initializable{
 	}
 	
 	/**
-	 * fires when any category button is clicked to go the askQuestion scene
+	 * Ask a question.
+	 * @param event
+	 * @throws IOException
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
     	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesQuestionView.fxml"));
@@ -110,6 +114,11 @@ public class GamesModuleViewController implements Initializable{
     	window.show();
 	}
 	
+	/**
+	 * Return to the menu view.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));

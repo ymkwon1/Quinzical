@@ -21,6 +21,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
+/**
+ * Controller for the menu view.
+ */
 public class MenuViewController implements Initializable{
 
 	@FXML
@@ -39,6 +42,9 @@ public class MenuViewController implements Initializable{
 	private QuinzicalModel _model;
 	private Alert _alert;
 	
+	/**
+	 * Initialize all the components for the menu view.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 			try {
@@ -56,6 +62,11 @@ public class MenuViewController implements Initializable{
 		
 	}
 
+	/**
+	 * Go to the practice module.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void practiceBtnClick(ActionEvent event) throws IOException {
 		_model._internationalSelected = false;
@@ -68,9 +79,13 @@ public class MenuViewController implements Initializable{
 		window.show();
 	}
 
+	/**
+	 * Go to the game module.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void gamesBtnClick(ActionEvent event) throws IOException {
-
 		if (_model.getCurrentPlayer() == null) {
 			TextInputDialog dialog = new TextInputDialog("");
 			dialog.setTitle("Player Name");
@@ -112,7 +127,11 @@ public class MenuViewController implements Initializable{
 		}
 	}
 
-
+	/**
+	 * Go to the international module.
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void internationalBtnClick(ActionEvent event) throws IOException {
     	_model._internationalSelected = true;
@@ -125,6 +144,11 @@ public class MenuViewController implements Initializable{
     	window.show();
     }
 	
+    /**
+	 * Go to the text to speech setting.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
 		Parent TtsSettingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
@@ -136,6 +160,11 @@ public class MenuViewController implements Initializable{
 		window.show();
 	}
 
+	/**
+	 * Reset quinzical
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void resetBtnClick (ActionEvent event) throws IOException {
 		_alert = new Alert(AlertType.CONFIRMATION);
@@ -157,6 +186,11 @@ public class MenuViewController implements Initializable{
 		window.show();
 	}
 	
+	/**
+	 * Go the player rankings.
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void playerRankBtnClick(ActionEvent event) throws IOException {
 		Parent view = FXMLLoader.load(getClass().getResource("/quinzical/views/PlayerRankingView.fxml"));

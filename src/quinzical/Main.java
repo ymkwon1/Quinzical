@@ -14,11 +14,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Main class for the Quinzical application.
+ * @authors Youngmin Kwon, Dylan Xin
+ */
+
 public class Main extends Application{
 
 	/**
-	 * start with the menu scene, if x is clicked confirm with user if he wants to quit
-	 * then quit the program
+	 * Start the application.
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -27,7 +31,6 @@ public class Main extends Application{
 		primaryStage.setScene(new Scene(root));
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {

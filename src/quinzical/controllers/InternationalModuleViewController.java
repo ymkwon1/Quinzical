@@ -21,22 +21,27 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
+/**
+ * Controller for the international module view.
+ */
 public class InternationalModuleViewController implements Initializable{
 
 	@FXML
 	private GridPane gridPane;
-
+	
     @FXML
     private Button returnBtn;
-
 	
-	private QuinzicalModel model;
+	private QuinzicalModel _model;
 
+	/**
+	 * Initialize all the components in the international module.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
-			model = QuinzicalModel.createInstance();
-			List<String> _categories = model.getCategories(model._internationalSelected);
+			_model = QuinzicalModel.createInstance();
+			List<String> _categories = _model.getCategories(_model._internationalSelected);
 			int numRows;
 			if (_categories.size()%3 == 0) {
 				numRows = _categories.size()/3;
@@ -66,7 +71,7 @@ public class InternationalModuleViewController implements Initializable{
 	    				@Override
 	    				public void handle(ActionEvent e) {
 	    					try {
-								model.loadRandomClue("int",category);
+								_model.loadRandomClue("int",category);
 	    						askQuestion(e);    						
 							} catch (IOException e1) {
 								e1.printStackTrace();
@@ -79,17 +84,15 @@ public class InternationalModuleViewController implements Initializable{
 						row++;
 					}
 			}
-			
-
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	/**
-	 * fires when any category button is clicked to go the askQuestion scene
+	 * Ask a question.
+	 * @param event
+	 * @throws IOException
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
     	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalQuestionView.fxml"));
@@ -101,6 +104,11 @@ public class InternationalModuleViewController implements Initializable{
     	window.show();
 	}
 	
+	/**
+	 * Return to the menu.
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
@@ -111,5 +119,4 @@ public class InternationalModuleViewController implements Initializable{
     	window.setScene(menuScene);
     	window.show();
     }
-
 }

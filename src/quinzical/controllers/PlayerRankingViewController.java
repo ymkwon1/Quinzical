@@ -24,6 +24,10 @@ import javafx.stage.Stage;
 import quinzical.model.Player;
 import quinzical.model.PlayerRankings;
 
+/**
+ * Controller for the player rankings view.
+ */
+
 public class PlayerRankingViewController implements Initializable{
 
     @FXML
@@ -43,6 +47,9 @@ public class PlayerRankingViewController implements Initializable{
     
     private PlayerRankings _playerList;
     
+    /**
+     * Initialze all the components for the players ranking view.
+     */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
@@ -68,6 +75,11 @@ public class PlayerRankingViewController implements Initializable{
 		table.setSelectionModel(null);
 	}
 
+	/**
+	 * Reset the players rankings.
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void resetBtnClick(ActionEvent event) throws IOException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -89,6 +101,11 @@ public class PlayerRankingViewController implements Initializable{
 		}
     }
 
+    /**
+     * Return to the main menu.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));

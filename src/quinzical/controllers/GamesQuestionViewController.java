@@ -30,6 +30,10 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
+/**
+ * Controller for the game question view.
+ */
+
 public class GamesQuestionViewController implements Initializable {
 	@FXML
 	private Label questionLabel;
@@ -51,14 +55,14 @@ public class GamesQuestionViewController implements Initializable {
 	private AnchorPane anchorPane;
 
 	private QuinzicalModel _model;
-
 	private Clue _clue;
-
-	private Timeline animation;
+	private Timeline _animation;
 	private CustomTimer _customTimer;
-
 	private Alert _alert = new Alert(AlertType.INFORMATION);
 
+	/**
+	 * Initialize all the components for the game question view.
+	 */
 	@Override
 	public void initialize (URL arg0, ResourceBundle arg1) {
 		try {
@@ -71,19 +75,25 @@ public class GamesQuestionViewController implements Initializable {
 		}
 		_customTimer = CustomTimer.getInstance();
 		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
-		animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
-		animation.setCycleCount(Timeline.INDEFINITE);
-		animation.play();
+		_animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
+		_animation.setCycleCount(Timeline.INDEFINITE);
+		_animation.play();
 	}
 
+	/**
+	 * Updates the timer
+	 */
 	private void updateTimer() {
 		if (_customTimer.getSecondsLeft() > 0) {
 			_customTimer.countDown();
 		}
 		timerLabel.setText(String.valueOf(_customTimer.getSecondsLeft()));
+		/*
+		 * When time is up
+		 */
 		if(_customTimer.getSecondsLeft() == 0) {
 			_model.stopTts();
-			animation.stop();					
+			_animation.stop();					
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			_alert.setGraphic(null);
@@ -104,11 +114,15 @@ public class GamesQuestionViewController implements Initializable {
 		}
 	}
 
-	// Event Listener on Button[#submitBtn].onAction
+	/**
+	 * Check whether answer is correct or not.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
 		_model.stopTts();
-		animation.stop();
+		_animation.stop();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
 			_alert.setTitle("Answer");
@@ -138,14 +152,22 @@ public class GamesQuestionViewController implements Initializable {
 			returnToGames();
 		}
 	}
+	
+	/**
+	 * Repeat the question
+	 * @param event
+	 */
 	@FXML
 	void repeatBtnClick(ActionEvent event) {
 		_model.stopTts();
 		_clue.ttsQuestion();
-
 	}
 
-	// Event Listener on Button[#noIdeaBtn].onAction
+	/**
+	 * Give up on the question
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
 		_model.stopTts();
@@ -158,13 +180,18 @@ public class GamesQuestionViewController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			returnToGames();
-			animation.stop();
+			_animation.stop();
 		}
 	}
 
+	/**
+	 * Go the text to speech speed setting page
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void ttsSettingsBtnClick(ActionEvent event) throws IOException {
-		animation.stop();
+		_animation.stop();
 		_model.setPreviousScene(2);
 		Parent settingsView = FXMLLoader.load(getClass().getResource("/quinzical/views/TTSSettingsView.fxml"));
 		Scene settingsScene = new Scene(settingsView);
@@ -176,10 +203,11 @@ public class GamesQuestionViewController implements Initializable {
 	}
 
 	/**
-	 * returns to Games model screen
+	 * Return to the games module view or reward view if game is completed.
+	 * @throws IOException
 	 */
 	void returnToGames() throws IOException {
-		animation.stop();
+		_animation.stop();
 		_customTimer.resetTimer();
 
 		if (_model.gameCompleted()) {
@@ -202,6 +230,4 @@ public class GamesQuestionViewController implements Initializable {
 			window.show();
 		}
 	}
-
-
 }

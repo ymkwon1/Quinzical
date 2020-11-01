@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import quinzical.model.Clue;
 import quinzical.model.QuinzicalModel;
 
+/**
+ * Controller for the international question view.
+ */
 public class InternationalQuestionViewController implements Initializable{
 
 	private QuinzicalModel _model;
@@ -56,9 +59,12 @@ public class InternationalQuestionViewController implements Initializable{
     @FXML
     private Button ttsSettingsBtn;
     
-    Alert alert = new Alert(AlertType.INFORMATION);
+    private Alert _alert = new Alert(AlertType.INFORMATION);
 
 
+    /**
+     * Initialize all the components for the internatinal questionn view.
+     */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
@@ -97,23 +103,23 @@ public class InternationalQuestionViewController implements Initializable{
     void checkAnswer(ActionEvent event) throws IOException {
     	_model.stopTts();
     	if (_clue.checkAnswer(answerField.getText())) {
-    		alert.setTitle("Answer");
-    		alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
-        	alert.setHeaderText(null);
-        	alert.setContentText("Correct!");
-        	alert.setGraphic(null);
+    		_alert.setTitle("Answer");
+    		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
+        	_alert.setHeaderText(null);
+        	_alert.setContentText("Correct!");
+        	_alert.setGraphic(null);
         	_model.tts("Correct");
-        	alert.showAndWait();
+        	_alert.showAndWait();
         	returnToPractice(event);
     	}
     	else {
-    		alert.setTitle("Answer");
-        	alert.setHeaderText(null);
-        	alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
-        	alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
+    		_alert.setTitle("Answer");
+        	_alert.setHeaderText(null);
+        	_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
+        	_alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
         	_model.tts("Incorrect");
-        	alert.setGraphic(null);
-        	alert.showAndWait();	
+        	_alert.setGraphic(null);
+        	_alert.showAndWait();	
         	attemptsLabel.setText(_clue.getAttempts());
         	hintsLabel.setText(_clue.getHint());
         	answerLabel.setText(_clue.getAnswer());
