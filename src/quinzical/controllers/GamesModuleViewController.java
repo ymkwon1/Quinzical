@@ -100,7 +100,7 @@ public class GamesModuleViewController implements Initializable{
 	}
 	
 	/**
-	 * Ask a question.
+	 * Ask a question view.
 	 * @param event
 	 * @throws IOException
 	 */
