@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,6 +16,15 @@
             <Font name="Manjari Regular" size="57.0" />
          </font>
       </Label>
+      <ScrollPane layoutX="256.0" layoutY="215.0" prefHeight="94.0" prefWidth="189.0" style="-fx-background-color: transparent;">
+         <tooltip>
+            <Tooltip fx:id="tooltip" text="Complete 2 categories in game to unlock!">
+               <font>
+                  <Font name="Manjari Regular" size="15.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </ScrollPane>
       <Button fx:id="gamesBtn" layoutX="32.0" layoutY="215.0" mnemonicParsing="false" onAction="#gamesBtnClick" prefHeight="94.0" prefWidth="189.0" styleClass="button-menu" stylesheets="@theme.css" text="Play" textAlignment="CENTER">
          <font>
             <Font name="Manjari Regular" size="24.0" />
