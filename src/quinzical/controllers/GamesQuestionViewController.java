@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import quinzical.model.Clue;
 import quinzical.model.QuinzicalModel;
+import quinzical.model.TextToSpeech;
 import quinzical.util.CustomTimer;
 
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class GamesQuestionViewController implements Initializable {
 	private Clue _clue;
 	private Timeline _animation;
 	private CustomTimer _customTimer;
+	private TextToSpeech _tts = new TextToSpeech();
 	private Alert _alert = new Alert(AlertType.INFORMATION);
 
 	/**
@@ -92,7 +94,7 @@ public class GamesQuestionViewController implements Initializable {
 		 * When time is up
 		 */
 		if(_customTimer.getSecondsLeft() == 0) {
-			_model.stopTts();
+			_tts.stopTts();
 			_animation.stop();					
 			_alert = new Alert(AlertType.INFORMATION);
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -121,7 +123,7 @@ public class GamesQuestionViewController implements Initializable {
 	 */
 	@FXML
 	public void checkAnswer(ActionEvent event) throws IOException {
-		_model.stopTts();
+		_tts.stopTts();
 		_animation.stop();
 		if (_clue.checkAnswer(answerField.getText())) {
 			_model.addWinnings(_clue.getValue());
@@ -130,10 +132,10 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.setContentText("Correct! You have won "+ _clue.getValue());
 			_alert.setGraphic(null);
-			_model.tts("Correct! You have won "+ _clue.getValue());
+			_tts.tts("Correct! You have won "+ _clue.getValue());
 			Optional<ButtonType> result = _alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-				_model.stopTts();
+				_tts.stopTts();
 			}
 			returnToGames();
 		} else {
@@ -144,10 +146,10 @@ public class GamesQuestionViewController implements Initializable {
 			_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
 			_alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			_alert.setContentText(String.format("Incorrect, the answer was \"%s\"! You have lost %d", _clue.getAnswers(), _clue.getValue()));
-			_model.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
+			_tts.tts(String.format("Incorrect, the answer was %s!", _clue.getAnswers(), _clue.getValue()));
 			Optional<ButtonType> result = _alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
-				_model.stopTts();
+				_tts.stopTts();
 			}
 			returnToGames();
 		}
@@ -159,7 +161,7 @@ public class GamesQuestionViewController implements Initializable {
 	 */
 	@FXML
 	void repeatBtnClick(ActionEvent event) {
-		_model.stopTts();
+		_tts.stopTts();
 		_clue.ttsQuestion();
 	}
 
@@ -170,7 +172,7 @@ public class GamesQuestionViewController implements Initializable {
 	 */
 	@FXML
 	public void noIdeaBtnClick(ActionEvent event) throws IOException {
-		_model.stopTts();
+		_tts.stopTts();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("I give up!");
 		alert.setHeaderText(null);

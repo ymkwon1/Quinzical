@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import quinzical.model.QuinzicalModel;
+import quinzical.model.TextToSpeech;
 import quinzical.util.CustomTimer;
 
 public class TTSSettingsViewController implements Initializable{
@@ -47,13 +48,14 @@ public class TTSSettingsViewController implements Initializable{
 
 	private QuinzicalModel model;
 	private Alert _alert;
+	private TextToSpeech _tts = new TextToSpeech();
 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
 			model = QuinzicalModel.createInstance();
-			speedLabel.setText(String.format("%d wpm",model.getTTSSpeed()));
+			speedLabel.setText(String.format("%d wpm",_tts.getTTSSpeed()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,27 +92,27 @@ public class TTSSettingsViewController implements Initializable{
 
 	@FXML
 	void decreaseBtnClick(ActionEvent event) {
-		if (model.getTTSSpeed() > 10) {
-			model.decreaseTTSSpeed();
-			speedLabel.setText(String.format("%d wpm",model.getTTSSpeed()));
+		if (_tts.getTTSSpeed() > 10) {
+			_tts.decreaseTTSSpeed();
+			speedLabel.setText(String.format("%d wpm",_tts.getTTSSpeed()));
 		}
 	}
 
 	@FXML
 	void increaseBtnClick(ActionEvent event) {
-		model.increaseTTSSpeed();
-		speedLabel.setText(String.format("%d wpm",model.getTTSSpeed()));
+		_tts.increaseTTSSpeed();
+		speedLabel.setText(String.format("%d wpm",_tts.getTTSSpeed()));
 	}
 
 	@FXML
 	void testBtnClick(ActionEvent event) {
-		model.stopTts();
-		model.tts("Testing the speed at which text is read");
+		_tts.stopTts();
+		_tts.tts("Testing the speed at which text is read");
 	}
 
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
-		model.stopTts();
+		_tts.stopTts();
 		if (model.getPreviousScene() == 1) {
 			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));
 			Scene menuScene = new Scene(menuView);

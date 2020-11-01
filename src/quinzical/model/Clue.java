@@ -15,6 +15,7 @@ public class Clue {
 	private int _value;
 	private int _attempts;
 	private QuinzicalModel _model;
+	private TextToSpeech _tts;
 	
 	/**
 	 * Constructor for Clue class without the clue being associated with a value.
@@ -26,6 +27,7 @@ public class Clue {
 	 */
 	public Clue (String clue) throws Exception {
 		_model = QuinzicalModel.createInstance();
+		_tts = new TextToSpeech();
 		_clue = clue;
 		String[] splitString = _clue.split("[\\(\\)]");
 		String question = splitString[0].trim();
@@ -49,6 +51,7 @@ public class Clue {
 	 */
 	public Clue (String clue,int value) throws Exception {
 		_model = QuinzicalModel.createInstance();
+		_tts = new TextToSpeech();
 		_clue = clue;
 		String[] splitString = _clue.split("[\\(\\)]");
 		String question = splitString[0].trim();
@@ -66,14 +69,14 @@ public class Clue {
 	 * Reads out the question with the TTS system
 	 */
 	public void ttsQuestion() {
-		_model.tts(_question);
+		_tts.tts(_question);
 	}
 	
 	/**
 	 * Reads out the answer with the TTS system
 	 */
 	public void ttsAnswer() {
-		_model.tts(String.format("The answer was %s", _answer));
+		_tts.tts(String.format("The answer was %s", _answer));
 	}
 	
 	

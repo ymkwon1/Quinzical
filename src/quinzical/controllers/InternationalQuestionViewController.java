@@ -19,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import quinzical.model.Clue;
 import quinzical.model.QuinzicalModel;
+import quinzical.model.TextToSpeech;
 
 /**
  * Controller for the international question view.
@@ -59,6 +60,8 @@ public class InternationalQuestionViewController implements Initializable{
     @FXML
     private Button ttsSettingsBtn;
     
+    private TextToSpeech _tts = new TextToSpeech();
+    
     private Alert _alert = new Alert(AlertType.INFORMATION);
 
 
@@ -83,7 +86,7 @@ public class InternationalQuestionViewController implements Initializable{
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	_clue.resetAttempts();
-    	_model.stopTts();
+    	_tts.stopTts();
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
@@ -101,14 +104,14 @@ public class InternationalQuestionViewController implements Initializable{
      */
     @FXML
     void checkAnswer(ActionEvent event) throws IOException {
-    	_model.stopTts();
+    	_tts.stopTts();
     	if (_clue.checkAnswer(answerField.getText())) {
     		_alert.setTitle("Answer");
     		_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
         	_alert.setHeaderText(null);
         	_alert.setContentText("Correct!");
         	_alert.setGraphic(null);
-        	_model.tts("Correct");
+        	_tts.tts("Correct");
         	_alert.showAndWait();
         	returnToPractice(event);
     	}
@@ -117,7 +120,7 @@ public class InternationalQuestionViewController implements Initializable{
         	_alert.setHeaderText(null);
         	_alert.getDialogPane().getStylesheets().add(getClass().getResource("/quinzical/views/theme.css").toExternalForm());
         	_alert.setContentText(String.format("Incorrect you have %d attempts remaining", _clue.attemptsLeft()));
-        	_model.tts("Incorrect");
+        	_tts.tts("Incorrect");
         	_alert.setGraphic(null);
         	_alert.showAndWait();	
         	attemptsLabel.setText(_clue.getAttempts());
@@ -136,7 +139,7 @@ public class InternationalQuestionViewController implements Initializable{
      * returns to Practice _model screen
      */
     void returnToPractice(ActionEvent event) throws IOException {
-    	_model.stopTts();
+    	_tts.stopTts();
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/InternationalModuleView.fxml"));
     	Scene menuScene = new Scene(menuView);
     	
@@ -149,7 +152,7 @@ public class InternationalQuestionViewController implements Initializable{
 
     @FXML
     void repeatBtnClick(ActionEvent event) {
-    	_model.stopTts();
+    	_tts.stopTts();
     	_clue.ttsQuestion();
     }
 
