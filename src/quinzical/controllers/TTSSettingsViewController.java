@@ -24,6 +24,9 @@ import quinzical.model.QuinzicalModel;
 import quinzical.model.TextToSpeech;
 import quinzical.util.CustomTimer;
 
+/**
+ * Controller for the text to speech setting.
+ */
 public class TTSSettingsViewController implements Initializable{
 
 	@FXML
@@ -51,6 +54,9 @@ public class TTSSettingsViewController implements Initializable{
 	private TextToSpeech _tts = new TextToSpeech();
 
 
+	/**
+	 * Initialize all the components for the text to speech setting view.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
@@ -69,6 +75,9 @@ public class TTSSettingsViewController implements Initializable{
 
 	}
 
+	/**
+	 * Updates the timer.
+	 */
 	private void updateTimer() {
 		if (_customTimer.getSecondsLeft() > 0) {
 			_customTimer.countDown();
@@ -90,6 +99,10 @@ public class TTSSettingsViewController implements Initializable{
 	}
 
 
+	/**
+	 * Decrease the text to speech speed.
+	 * @param event
+	 */
 	@FXML
 	void decreaseBtnClick(ActionEvent event) {
 		if (_tts.getTTSSpeed() > 10) {
@@ -98,18 +111,32 @@ public class TTSSettingsViewController implements Initializable{
 		}
 	}
 
+	
+	/**
+	 * Increase the text to speech speed.
+	 * @param event
+	 */
 	@FXML
 	void increaseBtnClick(ActionEvent event) {
 		_tts.increaseTTSSpeed();
 		speedLabel.setText(String.format("%d wpm",_tts.getTTSSpeed()));
 	}
 
+	/**
+	 * Test the text to speech speed.
+	 * @param event
+	 */
 	@FXML
 	void testBtnClick(ActionEvent event) {
 		_tts.stopTts();
 		_tts.tts("Testing the speed at which text is read");
 	}
 
+	/**
+	 * Return to the previous scene
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void returnBtnClick(ActionEvent event) throws IOException {
 		_tts.stopTts();

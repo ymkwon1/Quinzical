@@ -11,8 +11,6 @@ import java.util.List;
 /**
  * BashCmdUtil class is a utility class solely made to use bash commands in
  * Linux, and object of this class cannot be created.
- * @author se206-2020
- *
  */
 public final class BashCmdUtil {
 	

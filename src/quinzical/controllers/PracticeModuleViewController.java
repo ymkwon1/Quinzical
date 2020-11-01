@@ -21,6 +21,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import quinzical.model.QuinzicalModel;
 
+/**
+ * Controller for the practice module view
+ */
 public class PracticeModuleViewController implements Initializable{
 
 	@FXML
@@ -32,6 +35,9 @@ public class PracticeModuleViewController implements Initializable{
 	
 	private QuinzicalModel model;
 
+	/**
+	 * Initialize all the components for the practice module view.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
@@ -89,7 +95,9 @@ public class PracticeModuleViewController implements Initializable{
 	}
 	
 	/**
-	 * fires when any category button is clicked to go the askQuestion scene
+	 * Ask a question.
+	 * @param event
+	 * @throws IOException
 	 */
 	void askQuestion(ActionEvent event) throws IOException {
     	Parent askQuestionView = FXMLLoader.load(getClass().getResource("/quinzical/views/PracticeQuestionView.fxml"));
@@ -101,6 +109,11 @@ public class PracticeModuleViewController implements Initializable{
     	window.show();
 	}
 	
+	/**
+	 * Return to the main menu.
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/MenuView.fxml"));

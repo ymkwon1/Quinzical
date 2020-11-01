@@ -3,8 +3,6 @@ package quinzical.util;
 
 /**
  * CustomTime class was made so that the timer can be tracked through multiple screens
- * @author se206-2020
- *
  */
 public class CustomTimer {
 	private final static int DEFAULT_TIMER = 60;

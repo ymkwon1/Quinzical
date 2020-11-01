@@ -21,6 +21,9 @@ import quinzical.model.Clue;
 import quinzical.model.QuinzicalModel;
 import quinzical.model.TextToSpeech;
 
+/**
+ * Controller for the practice question view
+ */
 public class PracticeQuestionViewController implements Initializable{
 
 	private QuinzicalModel _model;
@@ -62,6 +65,9 @@ public class PracticeQuestionViewController implements Initializable{
     private Alert alert = new Alert(AlertType.INFORMATION);
 
 
+    /**
+     * Initialize all the components for the practice question view.
+     */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
@@ -77,6 +83,11 @@ public class PracticeQuestionViewController implements Initializable{
 		}
 	}
 	
+	/**
+	 * Return to the practice module view
+	 * @param event
+	 * @throws IOException
+	 */
     @FXML
     void returnBtnClick(ActionEvent event) throws IOException {
     	_clue.resetAttempts();
@@ -91,10 +102,9 @@ public class PracticeQuestionViewController implements Initializable{
     }
 	
     /**
-     * fires when the submit button is clicked
-     * if its empty lets user know to type something
-     * if user input is correct then correct alert opens
-     * if user input is incorrect then incorrect alert opens with correct answer
+     * Check whether answer is correct or not.
+     * @param event
+     * @throws IOException
      */
     @FXML
     void checkAnswer(ActionEvent event) throws IOException {
@@ -130,7 +140,7 @@ public class PracticeQuestionViewController implements Initializable{
     }
     
     /**
-     * returns to Practice _model screen
+     * Return to practice module
      */
     void returnToPractice(ActionEvent event) throws IOException {
     	_tts.stopTts();
@@ -144,12 +154,21 @@ public class PracticeQuestionViewController implements Initializable{
     }
     
 
+    /**
+     * Repeat the question
+     * @param event
+     */
     @FXML
     void repeatBtnClick(ActionEvent event) {
     	_tts.stopTts();
     	_clue.ttsQuestion();
     }
 
+    /**
+     * Go to the text to speech setting
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void ttsSettingsBtnClick(ActionEvent event) throws IOException {
     	_model.setPreviousScene(3);
