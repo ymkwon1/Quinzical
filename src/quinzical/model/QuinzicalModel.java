@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 import quinzical.util.BashCmdUtil;
 
@@ -43,7 +42,6 @@ public class QuinzicalModel {
 	private int [] _answeredQuestions = {0,0,0,0,0};
 	private int _winnings = 0;
 	private int _previousScene = 1;
-	private PlayerRankings _playerRankings;
 	private boolean _internationalUnlocked = false;
 	public boolean _internationalSelected = false;
 
@@ -428,17 +426,6 @@ public class QuinzicalModel {
 		String strWinnings = Integer.toString(winnings);
 		BashCmdUtil.bashCmdNoOutput("sed -i \"1s/.*/ "+strWinnings+" /\" data/winnings");
 	}
-
-	/**
-	 * adds player to player rankings
-	 */
-	public void addPlayerRanking() {
-		Player player = new Player(_currentPlayer, _winnings);
-		_playerRankings = PlayerRankings.getInstance();
-		_playerRankings.add(player);
-		_playerRankings.savePlayerRankings();
-	}
-
 	
 	/**
 	 * resets the entire game except for player rankings

@@ -14,7 +14,6 @@ public class Clue {
 	private String _hint;
 	private int _value;
 	private int _attempts;
-	private QuinzicalModel _model;
 	private TextToSpeech _tts;
 	
 	/**
@@ -26,7 +25,6 @@ public class Clue {
 	 * @throws Exception
 	 */
 	public Clue (String clue) throws Exception {
-		_model = QuinzicalModel.createInstance();
 		_tts = new TextToSpeech();
 		_clue = clue;
 		String[] splitString = _clue.split("[\\(\\)]");
@@ -50,7 +48,6 @@ public class Clue {
 	 * @throws Exception
 	 */
 	public Clue (String clue,int value) throws Exception {
-		_model = QuinzicalModel.createInstance();
 		_tts = new TextToSpeech();
 		_clue = clue;
 		String[] splitString = _clue.split("[\\(\\)]");
@@ -81,7 +78,7 @@ public class Clue {
 	
 	
 	/**
-	 * getter method to return the quesiton of the clue
+	 * getter method to return the question of the clue
 	 * @return String, the question
 	 */
 	public String getQuestion() {

@@ -34,8 +34,10 @@ public class PlayerRankings {
 	 * adds a Player to the rankings
 	 * @param player
 	 */
-	public void add(Player player) {
+	public void add(String playerName, Integer playerPoints) {
+		Player player = new Player(playerName, playerPoints);
 		_playerList.add(player);
+		savePlayerRankings();
 	}
 	
 	/**

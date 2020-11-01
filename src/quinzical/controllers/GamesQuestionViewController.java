@@ -17,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import quinzical.model.Clue;
+import quinzical.model.PlayerRankings;
 import quinzical.model.QuinzicalModel;
 import quinzical.model.TextToSpeech;
 import quinzical.util.CustomTimer;
@@ -61,12 +62,14 @@ public class GamesQuestionViewController implements Initializable {
 	private CustomTimer _customTimer;
 	private TextToSpeech _tts = new TextToSpeech();
 	private Alert _alert = new Alert(AlertType.INFORMATION);
+	private PlayerRankings _playerRankings;
 
 	/**
 	 * Initialize all the components for the game question view.
 	 */
 	@Override
 	public void initialize (URL arg0, ResourceBundle arg1) {
+		_playerRankings = PlayerRankings.getInstance();
 		try {
 			_model = QuinzicalModel.createInstance();
 			_clue = _model.getCurrentClue();
@@ -220,7 +223,7 @@ public class GamesQuestionViewController implements Initializable {
 
 			window.setScene(menuScene);
 			window.show();
-			_model.addPlayerRanking();
+			_playerRankings.add(_model.getCurrentPlayer(),_model.getWinnings());
 		}
 		else {
 			Parent menuView = FXMLLoader.load(getClass().getResource("/quinzical/views/GamesModuleView.fxml"));
